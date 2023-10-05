@@ -1,2 +1,2 @@
 # ClubHub
-Capstone projecy
+Capstone project
