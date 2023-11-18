@@ -8,6 +8,8 @@ NPM version: 10.2.4
 
 ## Client
 
-Run `npm install` in the `client` folder to install dependencies, then `npm run dev` to run the dev server.
+Run `npm install` in the `client` folder to install dependencies, then `npm run dev` to run the dev client
 
 ## Server
+
+Run `npm install` in the `server` folder to install dependencies, then run `npm run start` to run the dev server
