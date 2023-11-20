@@ -2,8 +2,19 @@ import express from "express";
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.use(express.static(__dirname+'/view'))
+
+app.get('/', (req, res) => {
+  res.render('/index');
+});
+app.get('/MyClubs', (req, res) => {
+  res.render('/view/MyClubs');
+});
+app.get('/AllClubs', (req, res) => {
+  res.render('/views/AllClubs');
+});
+app.get('/profile', (req, res) => {
+  res.render('/views/profile');
 });
 
 app.listen(port, () => {
