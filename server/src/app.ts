@@ -11,9 +11,9 @@ const serverPort = 3000;
 
 const databaseConnection = getDatabaseConnection();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+//Serve static front-end
+const clientBuild = path.join(__dirname, "../../client/dist");
+app.use(express.static(clientBuild));
 
 app.listen(serverPort, () => {
   return console.log(`Express is listening at http://localhost:${serverPort}`);
