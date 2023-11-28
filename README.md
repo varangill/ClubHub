@@ -15,3 +15,5 @@ Run `npm install` in the `client` folder to install dependencies, then `npm run 
 ## Server
 
 Run `npm install` in the `server` folder to install dependencies, then run `npm run start` to run the dev server
+
+Database: PostgreSQL v16.1.1
