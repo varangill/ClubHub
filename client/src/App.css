@@ -6,7 +6,8 @@ body {
 
 nav {
   overflow: hidden;
-  background-color: #660066;
+  background-color: purple;
+  font-weight: bold;
   color: white;
 }
 
