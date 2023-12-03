@@ -1,11 +1,10 @@
 import NavBar from "./NavigationBar";
 
-export default function HomePage() {
-
+export default function AllClubs() {
   return (
     <div>
       <NavBar />
-      <h1 id="home-header">Welcome to ClubHub!</h1>
+      All Clubs
     </div>
   );
 }
