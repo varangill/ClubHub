@@ -6,6 +6,8 @@ export async function up(knex: Knex): Promise<void> {
       table.increments("id");
       table.string("clubName").notNullable();
       table.string("clubDesc").notNullable();
+      table.datetime("creationDate");
+      table.string("joinStatus");
     })
     .createTable("users", function (table) {
       table.increments("id");
