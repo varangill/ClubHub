@@ -8,6 +8,7 @@ import routes from "./routes";
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 const app = express();
+app.use(express.json());
 const serverPort = 3000;
 
 app.use("/api", routes);
