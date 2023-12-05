@@ -9,28 +9,48 @@ nav {
   background-color: purple;
   font-weight: bold;
   color: white;
+  height: 60px;
 }
 
-a {
-  color: white;
+.nav-items {
+  width: 100%;
+  display: inline-flex;
+}
+
+.nav-link {
+  color: white !important;
   font-size: 20px;
   text-decoration: none;
   text-align: center;
-  padding: 14px 16px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
 }
 
-a.left {
-  float: left;
-}
-
-a.right {
+.navbar-brand {
+  color: white !important;
+  font-size: 40px;
   float: right;
 }
 
-a:hover {
+.nav-link:hover {
   background-color: #993399;
+  color: white;
 }
 
 .lucide {
   margin-right: 10px;
+}
+
+#nav-title {
+  margin-left: 20px;
+}
+
+.justify-content-end {
+  display: flex;
+  column-gap: 5px;
+  justify-content: space-between;
+  margin-right: 20px;
+  float: right;
 }

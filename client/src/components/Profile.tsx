@@ -1,12 +1,10 @@
 import NavBar from "./NavigationBar";
 
-export default function HomePage() {
-
+export default function Profile() {
   return (
     <div>
       <NavBar />
-      <h1 id="home-header">Welcome to ClubHub!</h1>
+      Profile
     </div>
   );
 }
-//
