@@ -2,14 +2,16 @@ import express from "express";
 
 import dotenv from "dotenv";
 import path from "path";
-import getDatabaseConnection from "./database/database";
+
+import routes from "./routes";
 
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 const app = express();
+app.use(express.json());
 const serverPort = 3000;
 
-const databaseConnection = getDatabaseConnection();
+app.use("/api", routes);
 
 //Serve static front-end
 const clientBuild = path.join(__dirname, "../../client/dist");

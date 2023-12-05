@@ -1,15 +1,21 @@
 import { Pool } from "pg";
+import dotenv from "dotenv";
+import path from "path";
 
-const getDatabaseConnection = () => {
-  const databasePool = new Pool({
-    host: process.env.HOST,
-    port: Number(process.env.PORT),
-    database: process.env.DATABASE,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-  });
+dotenv.config({ path: path.join(__dirname, "..", "..", ".env") });
 
-  return databasePool;
+const dbPool = new Pool({
+  host: process.env.HOST,
+  port: Number(process.env.PORT),
+  database: process.env.DATABASE,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+});
+
+const query = (text, params) => dbPool.query(text, params);
+
+const db = {
+  query,
 };
 
-export default getDatabaseConnection;
+export default db;
