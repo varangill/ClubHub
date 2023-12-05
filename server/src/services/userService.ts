@@ -23,4 +23,25 @@ async function createNewUser(name, email, password) {
   return res;
 }
 
-export { fetchUserInfo, fetchUserClubs, createNewUser };
+async function joinClub(userId, clubId, membershipType) {
+  const query = `INSERT INTO memberships ("userId", "clubId", "membershipType") VALUES ($1, $2, $3)`;
+  const res = await db.query(query, [userId, clubId, membershipType]);
+
+  return res;
+}
+
+async function getMembership(userId, clubId) {
+  const query = `SELECT * FROM memberships WHERE "userId" = $1 AND "clubId" = $2`;
+  const res = await db.query(query, [userId, clubId]);
+
+  const membership = res.rows[0];
+  return membership;
+}
+
+export {
+  fetchUserInfo,
+  fetchUserClubs,
+  createNewUser,
+  joinClub,
+  getMembership,
+};
