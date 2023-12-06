@@ -1,0 +1,38 @@
+.split-container {
+    display: flex;
+    height: 200px; /* Set a fixed height for visualization */
+  }
+
+  /* Apply styling to the left and right halves */
+  .left-side, .right-side {
+    flex: 1;
+    /*border: 1px solid #ccc; /* Optional: Add a border for visualization */
+  }
+
+  ul {
+    list-style: none; /* Remove default list styles */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+
+  .announcement {
+    margin-left: 0; /* Remove left margin */
+    border: 1px solid black; /* Black border for list items */
+    margin: 5px; /* Add some margin between list items for better spacing */
+    padding: 10px; /* Add padding to provide space inside the list items */
+    cursor: pointer; /* Show pointer cursor on hover for clickable items */
+  }
+
+  .club-members {
+    margin-left: 0; /* Remove left margin */
+    border: 1px solid black; /* Black border for list items */
+    margin: 5px; /* Add some margin between list items for better spacing */
+    padding: 10px; /* Add padding to provide space inside the list items */
+    cursor: pointer; /* Show pointer cursor on hover for clickable items */
+    width: 500px; /* Set the desired fixed width */
+  }
+
+  li:hover {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* Change text color for better visibility */
+  }

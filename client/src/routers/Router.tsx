@@ -4,6 +4,7 @@ import ClubPage from "../components/ClubPage";
 import AllClubs from "../components/AllClubs";
 import MyClubs from "../components/MyClubs";
 import Profile from "../components/Profile";
+import ClubOverviewPage from "../components/ClubOverviewPage";
 
 export default function Router() {
   return (
@@ -14,6 +15,8 @@ export default function Router() {
         <Route path="/all_clubs" element={<AllClubs />} />
         <Route path="/my_clubs" element={<MyClubs />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/clubs" element={<ClubPage />} />
+        <Route path="/clubs/:id" element={<ClubOverviewPage />} />
       </Routes>
     </BrowserRouter>
   );
