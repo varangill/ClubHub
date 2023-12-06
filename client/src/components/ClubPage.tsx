@@ -2,8 +2,8 @@ import NavBar from "./NavigationBar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import "../ClubPage.css"
-import { useEffect, useState } from "react";
-import fetchData from "../api/index";
+// import { useEffect, useState } from "react";
+// import fetchData from "../api/index";
 
 export default function ClubPage() {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ export default function ClubPage() {
             Club Page {id}
           </h1>
           <h2>
-            {data}
           </h2>
         </div>
         <div>
