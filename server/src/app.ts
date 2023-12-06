@@ -2,6 +2,7 @@ import express from "express";
 
 import dotenv from "dotenv";
 import path from "path";
+import cors from "cors";
 
 import routes from "./routes";
 
@@ -9,6 +10,7 @@ dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const serverPort = 3000;
 
 app.use("/api", routes);
