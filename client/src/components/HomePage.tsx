@@ -1,6 +1,8 @@
 import React from "react";
 import NavBar from "./NavigationBar";
-import welcomeImage from "/Users/keerthenravichandran/Downloads/ClubHub/UWO.jpeg";
+
+// URL of the image
+const welcomeImageUrl = "https://www.uwo.ca/finance/images/homepage_images/westernu-campus.jpg";
 
 export default function HomePage() {
   const welcomeToStyle = {
@@ -29,7 +31,7 @@ export default function HomePage() {
       {/* Photo Section */}
       <div id="photo-section" style={{ position: "absolute", top: "40%", left: "70%", transform: "translate(-50%, -50%)" }}>
         <div id="image-content" style={{ marginLeft: "1em" }}>
-          <img src={welcomeImage} alt="Welcome Image" style={{ width: "120%", height: "auto" }} />
+          <img src={welcomeImageUrl} alt="Welcome Image" style={{ width: "120%", height: "auto" }} />
         </div>
       </div>
 
