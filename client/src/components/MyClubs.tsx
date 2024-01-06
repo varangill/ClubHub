@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from "./NavigationBar";
+import NavBar from './NavigationBar';
+import { Link } from 'react-router-dom';
 
 export default function MyClubs() {
   const initialClubs = [
@@ -15,25 +16,25 @@ export default function MyClubs() {
 
   // Function to handle leaving a club
   const leaveClub = (clubId) => {
-    const leftClub = clubs.find(club => club.id === clubId);
-    setClubs(clubs.filter(club => club.id !== clubId));
+    const leftClub = clubs.find((club) => club.id === clubId);
+    setClubs(clubs.filter((club) => club.id !== clubId));
     setLeftClubs([...leftClubs, leftClub]);
 
     // Set a timer to automatically remove the undo option after 30 seconds
     setTimeout(() => {
-      setLeftClubs(leftClubs => leftClubs.filter(club => club.id !== clubId));
+      setLeftClubs((leftClubs) => leftClubs.filter((club) => club.id !== clubId));
     }, 5000); // 30 seconds
   };
 
   // Function to handle undoing leave action
   const undoLeave = (clubId) => {
-    const returnedClub = leftClubs.find(club => club.id === clubId);
+    const returnedClub = leftClubs.find((club) => club.id === clubId);
     setClubs([...clubs, returnedClub]);
-    setLeftClubs(leftClubs.filter(club => club.id !== clubId));
+    setLeftClubs(leftClubs.filter((club) => club.id !== clubId));
   };
 
   // Filter clubs based on query
-  const filteredClubs = clubs.filter(club =>
+  const filteredClubs = clubs.filter((club) =>
     club.name.toLowerCase().includes(query.toLowerCase())
   );
 
@@ -42,34 +43,55 @@ export default function MyClubs() {
       <NavBar />
 
       {/* Total Club Count and Search Bar */}
-      <div style={{ position: 'absolute', top: '60px', right: '10px', fontSize: '18px', color: 'black' }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '60px',
+          right: '10px',
+          fontSize: '18px',
+          color: 'black'
+        }}
+      >
         Total Clubs Joined: {filteredClubs.length + leftClubs.length}
       </div>
-      
-      <h2 style={{
-        fontSize: '36px',
-        color: '#333',
-        margin: '20px 0',
-        fontFamily: 'Arial, sans-serif'
-      }}>My Clubs</h2>
+
+      <h2
+        style={{
+          fontSize: '36px',
+          color: '#333',
+          margin: '20px 0',
+          fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        My Clubs
+      </h2>
 
       <input
         type="text"
         placeholder="Search clubs..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{ fontSize: '18px', padding: '10px', margin: '20px', width: '300px' }}
+        style={{
+          fontSize: '18px',
+          padding: '10px',
+          margin: '20px',
+          width: '300px'
+        }}
       />
 
       {/* Display Active Clubs */}
       <table style={{ margin: 'auto' }}>
         <tbody>
-          {filteredClubs.map(club => (
+          {filteredClubs.map((club) => (
             <tr key={club.id}>
               <td>
-                <button style={buttonStyle} onClick={() => console.log(`Navigating to the ${club.id} page...`)}>
+                {/* Use Link to navigate to ClubPage with the club's ID and name */}
+                <Link
+                  to={`/club/${club.id}?clubName=${encodeURIComponent(club.name)}`}
+                  style={buttonStyle}
+                >
                   {club.name}
-                </button>
+                </Link>
                 <button style={leaveButtonStyle} onClick={() => leaveClub(club.id)}>
                   Leave
                 </button>
@@ -77,7 +99,7 @@ export default function MyClubs() {
             </tr>
           ))}
           {/* Display Clubs with Undo Option */}
-          {leftClubs.map(club => (
+          {leftClubs.map((club) => (
             <tr key={club.id}>
               <td style={{ textAlign: 'center' }}>
                 <button style={undoButtonStyle} onClick={() => undoLeave(club.id)}>
@@ -92,26 +114,29 @@ export default function MyClubs() {
   );
 }
 
+// Button styles
 const buttonStyle = {
-  width: '150px',
-  padding: '10px',
-  margin: '10px',
+  width: '200px',
+  padding: '15px 20px',
+  margin: '15px',
   cursor: 'pointer',
   border: 'none',
-  borderRadius: '5px',
+  borderRadius: '10px',
   background: '#007bff',
   color: 'white',
-  fontSize: '18px'
-}
+  fontSize: '20px',
+  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
+  transition: 'all 0.2s'
+};
 
 const leaveButtonStyle = {
   ...buttonStyle,
-  background: '#dc3545', // Red color for leave button
-  marginLeft: '5px',
-}
+  background: '#dc3545',
+  marginLeft: '15px'
+};
 
 const undoButtonStyle = {
   ...buttonStyle,
-  background: '#28a745', // Green color for undo button
-  width: '100%', // Make it full width for emphasis
-}
+  background: '#28a745',
+  width: '100%'
+};
