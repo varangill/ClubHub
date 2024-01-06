@@ -54,3 +54,56 @@ nav {
   margin-right: 20px;
   float: right;
 }
+
+.main-page {
+  background-color: #993399;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  top: 0;
+}
+
+.main-menu-image-container {
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: white;
+}
+
+.main-page-header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 450%;
+
+  .header-text-1 {
+    color:white;
+    font-weight:lighter;
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000; 
+  }
+
+  .header-text-2 {
+    color:#993399;
+    font-weight:bolder;
+    text-shadow: 0 0 20px white;
+  }
+}
+
+.main-menu-image {
+  width:95%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 70%;
+  border-radius: 50%;
+  filter: grayscale(30%);
+  filter: blur(6px);
+}
+
+.main-menu-lower {
+  margin: 40px;
+  color: white;
+  font-size: 30px;
+  text-align: center;
+}
