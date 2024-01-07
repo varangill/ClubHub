@@ -2,13 +2,12 @@ import NavBar from "./NavigationBar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import "../ClubPage.css"
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import fetchData from "../api/index";
 
 export default function ClubPage() {
   const navigate = useNavigate();
 
-  const text = "Club Overview" //get description text for specific club using id
   const {id} = useParams(); 
   // const [list, setList] = useState([]); 
 
@@ -16,17 +15,31 @@ export default function ClubPage() {
   //    setList(fetchData("users/getUser/1", "GET"));
   // }, []);
 
-  interface Listitem {
-    member: string;
-    announcementHeader: string;
-    announcementId: int;
-    }
+  type dataItem = {
+    id: Number;
+    clubName: string;
+    clubDesc: string;
+    creationDate: string;
+    joinStatus: string;
+  }
 
   const myList: Listitem[] = [
     {member: "Justin", announcementHeader: "announcement1", announcementId: 1},
     {member: "Justin2", announcementHeader: "announcement2", announcementId: 2},
     {member: "Justin3", announcementHeader: "announcement3", announcementId: 3}
-]
+  ]
+
+  const [clubData, setClubData] = useState<dataItem>({id: -1, clubName: "", clubDesc: "", creationDate: "", joinStatus: ""}); 
+
+  const [clubJoined, setClubJoined] = useState(false);
+
+  useEffect(() => {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setClubData(data);
+      });
+  });
 
   return (
     <div>
@@ -40,7 +53,7 @@ export default function ClubPage() {
           </h2>
         </div>
         <div>
-          <button>Join Club</button>
+          <button onClick={() => {alert(clubJoined ? "Left Club" : "Joined Club"); setClubJoined(!clubJoined)}}>{clubJoined ? "Leave Club" : "Join Club"}</button>
         </div>
       </header>
 
@@ -50,7 +63,7 @@ export default function ClubPage() {
             Club Description
           </h1>
           <p className="description">
-            {text}
+            {clubData.clubDesc}
           </p>
           <h1>
             Club Members

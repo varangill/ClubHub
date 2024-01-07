@@ -1,25 +1,32 @@
 import NavBar from "./NavigationBar";
 import { useNavigate } from "react-router-dom";
 import "../Club.css"
+import { useEffect, useState } from "react";
+import fetchData from "../api/index";
+
+type Listitem = {
+  id: Number;
+  clubName: string;
+  clubDesc: string;
+  creationDate: string;
+  joinStatus: string;
+}
 
 export default function AllClubs() {
   const navigate = useNavigate();
 
-  interface Listitem {
-    name: string;
-    id: int;
-    }
+  const [list, setList] = useState<Listitem[]>([]); 
 
-const myList: Listitem[] = [//use club list on club data
-    {name: "Club1", id: 1},
-    {name: "Club2", id: 2},
-    {name: "Club3", id: 3}
-]
-
+  useEffect(() => {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs`)
+      .then((res) => res.json())
+      .then((data) => {
+        setList(data);
+      });
+  });
 
   return (
     <div>
-        
       <NavBar />
       <header>
         <h1>
@@ -28,8 +35,9 @@ const myList: Listitem[] = [//use club list on club data
       </header>
 
       <div id="list-container">
-        {myList.map((item) => 
-            <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
+        {list &&
+        list.map((item) => 
+            <ul className="club-list-item" id={item.id} key={item.id} onClick={() => navigate("/club/" + item.id)}>{item.clubName}</ul>
         )}
       </div>
     </div>

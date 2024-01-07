@@ -30,6 +30,7 @@
     padding: 10px; /* Add padding to provide space inside the list items */
     cursor: pointer; /* Show pointer cursor on hover for clickable items */
     width: 500px; /* Set the desired fixed width */
+    margin-left: 0; /* Remove left margin */
   }
 
   li:hover {
