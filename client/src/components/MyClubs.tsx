@@ -11,26 +11,26 @@ export default function MyClubs() {
   ];
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [leftClubs, setLeftClubs] = useState([]);
+  const [undoableClubs, setundoableClubs] = useState([]);
   const [query, setQuery] = useState('');
 
   // Function to handle leaving a club
   const leaveClub = (clubId) => {
     const leftClub = clubs.find((club) => club.id === clubId);
     setClubs(clubs.filter((club) => club.id !== clubId));
-    setLeftClubs([...leftClubs, leftClub]);
+    setundoableClubs([...undoableClubs, leftClub]);
 
     // Set a timer to automatically remove the undo option after 30 seconds
     setTimeout(() => {
-      setLeftClubs((leftClubs) => leftClubs.filter((club) => club.id !== clubId));
+      setundoableClubs((undoableClubs) => undoableClubs.filter((club) => club.id !== clubId));
     }, 5000); // 30 seconds
   };
 
   // Function to handle undoing leave action
   const undoLeave = (clubId) => {
-    const returnedClub = leftClubs.find((club) => club.id === clubId);
+    const returnedClub = undoableClubs.find((club) => club.id === clubId);
     setClubs([...clubs, returnedClub]);
-    setLeftClubs(leftClubs.filter((club) => club.id !== clubId));
+    setundoableClubs(undoableClubs.filter((club) => club.id !== clubId));
   };
 
   // Filter clubs based on query
@@ -52,7 +52,7 @@ export default function MyClubs() {
           color: 'black'
         }}
       >
-        Total Clubs Joined: {filteredClubs.length + leftClubs.length}
+        Total Clubs Joined: {filteredClubs.length + undoableClubs.length}
       </div>
 
       <h2
@@ -99,7 +99,7 @@ export default function MyClubs() {
             </tr>
           ))}
           {/* Display Clubs with Undo Option */}
-          {leftClubs.map((club) => (
+          {undoableClubs.map((club) => (
             <tr key={club.id}>
               <td style={{ textAlign: 'center' }}>
                 <button style={undoButtonStyle} onClick={() => undoLeave(club.id)}>
