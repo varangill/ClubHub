@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NavBar from './NavigationBar';
 import { Link } from 'react-router-dom';
 
@@ -11,26 +11,11 @@ export default function MyClubs() {
   ];
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [undoableClubs, setundoableClubs] = useState([]);
   const [query, setQuery] = useState('');
 
   // Function to handle leaving a club
   const leaveClub = (clubId) => {
-    const leftClub = clubs.find((club) => club.id === clubId);
     setClubs(clubs.filter((club) => club.id !== clubId));
-    setundoableClubs([...undoableClubs, leftClub]);
-
-    // Set a timer to automatically remove the undo option after 30 seconds
-    setTimeout(() => {
-      setundoableClubs((undoableClubs) => undoableClubs.filter((club) => club.id !== clubId));
-    }, 5000); // 30 seconds
-  };
-
-  // Function to handle undoing leave action
-  const undoLeave = (clubId) => {
-    const returnedClub = undoableClubs.find((club) => club.id === clubId);
-    setClubs([...clubs, returnedClub]);
-    setundoableClubs(undoableClubs.filter((club) => club.id !== clubId));
   };
 
   // Filter clubs based on query
@@ -41,19 +26,6 @@ export default function MyClubs() {
   return (
     <div style={{ textAlign: 'center' }}>
       <NavBar />
-
-      {/* Total Club Count and Search Bar */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '60px',
-          right: '10px',
-          fontSize: '18px',
-          color: 'black'
-        }}
-      >
-        Total Clubs Joined: {filteredClubs.length + undoableClubs.length}
-      </div>
 
       <h2
         style={{
@@ -98,16 +70,6 @@ export default function MyClubs() {
               </td>
             </tr>
           ))}
-          {/* Display Clubs with Undo Option */}
-          {undoableClubs.map((club) => (
-            <tr key={club.id}>
-              <td style={{ textAlign: 'center' }}>
-                <button style={undoButtonStyle} onClick={() => undoLeave(club.id)}>
-                  Undo - {club.name}
-                </button>
-              </td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>
@@ -133,10 +95,4 @@ const leaveButtonStyle = {
   ...buttonStyle,
   background: '#dc3545',
   marginLeft: '15px'
-};
-
-const undoButtonStyle = {
-  ...buttonStyle,
-  background: '#28a745',
-  width: '100%'
 };

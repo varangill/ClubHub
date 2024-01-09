@@ -101,7 +101,7 @@ export default function AllClubs() {
               </td>
             </tr>
           ))}
-          {/* Display Joined Clubs with Leave Option */}
+          {/* Display Joined Clubs */}
           {joinedClubs.map((club) => (
             <tr key={club.id}>
               <td>
