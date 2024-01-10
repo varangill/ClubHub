@@ -7,5 +7,6 @@ router.get("/clubs/:id", userController.getUserClubs);
 router.post("/create-user", userController.createUser);
 router.get("/membership", userController.getClubMembership);
 router.post("/join-club", userController.userJoinClub);
+router.post("/getUserWithName/:name", userController.getUserInfoWithName);
 
 export default router;

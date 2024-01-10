@@ -6,7 +6,7 @@ import { Home, ClipboardCheck, ClipboardList, User2 } from 'lucide-react';
 
 export default function NavigationBar() {
   const navigate = useNavigate();
-  const is_loggedin = true; //TODO: login treatment
+  const is_loggedin = false; //TODO: login treatment
 
   return (
     <Navbar id="navbar-main">
@@ -87,8 +87,7 @@ export default function NavigationBar() {
                 variant="light"
                 size="lg"
                 onClick={() => {
-                  console.log("clicked login");
-                  //TO-DO: pop open login modal/pop-up
+                  navigate("/login");
                 }}
                 >
                 Login
@@ -98,8 +97,7 @@ export default function NavigationBar() {
                 variant="light"
                 size="lg"
                 onClick={() => {
-                  console.log("clicked signup");
-                //TO-DO: pop open signup modal/pop-up
+                  navigate("/sign-up");
                 }}
                 >
                 Sign up

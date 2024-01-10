@@ -4,11 +4,22 @@ import {
   createNewUser,
   joinClub,
   getMembership,
+  fetchUserInfoWithName,
 } from "../services/userService";
 
 async function getUserInfo(req, res, next) {
   try {
     const fetchedData = await fetchUserInfo(req.params.id);
+    res.json(fetchedData);
+  } catch (err) {
+    console.error(`Error fetching user info`, err.message);
+    next(err);
+  }
+}
+
+async function getUserInfoWithName(req, res, next) {
+  try {
+    const fetchedData = await fetchUserInfoWithName(req.params.name);
     res.json(fetchedData);
   } catch (err) {
     console.error(`Error fetching user info`, err.message);
@@ -62,6 +73,7 @@ const userController = {
   createUser,
   getClubMembership,
   userJoinClub,
+  getUserInfoWithName,
 };
 
 export default userController;
