@@ -1,27 +1,95 @@
+/* Reset default margin and padding */
+body, ul {
+  margin: 0;
+  padding: 0;
+}
 
-  .custom-header {
-    background-color: #333;
-    color: white;
-    padding: 10px; /* Add padding to the entire header */
-    display: flex; /* Use flexbox for horizontal alignment of child elements */
-    justify-content: space-between; /* Add space between child elements */
-    align-items: center; /* Center child elements vertically */
-  }
+/* Page background */
+body {
+  background-color: #f5f5f5;
+  font-family: 'Roboto', Arial, sans-serif;
+}
 
-  ul {
-    padding: 0; /* Remove default padding */
-    list-style: none; /* Remove default list styles */
-  }
+/* Header styling */
+.custom-header {
+  background-color: #333;
+  color: white;
+  padding: 20px 0; /* Increased padding */
+  text-align: center;
+}
 
-  .club-list-item {
-    border: 1px solid black; /* Black border for list items */
-    margin: 5px; /* Add some margin between list items for better spacing */
-    padding: 10px; /* Add padding to provide space inside the list items */
-    cursor: pointer; /* Show pointer cursor on hover for clickable items */
-    width: 1000px;
-  }
+.custom-header h1 {
+  font-size: 60px; /* Significantly larger font size */
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+}
 
-  .club-list-item:hover {
-    background-color: #333; /* Darker background color */
-    color: #fff; /* Change text color for better visibility */
-  }
+/* Main content container */
+.container {
+  width: 100%; /* Full width of the viewport */
+  padding: 40px; /* Increased padding */
+  text-align: center;
+}
+
+/* Club list styling */
+.club-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Increased gap */
+  justify-content: space-evenly;
+}
+
+.club-list-item {
+  background-color: #ff4d4d;
+  border: 2px solid #ff3333; /* Adjusted border size */
+  border-radius: 10px; /* Increased border radius */
+  padding: 40px; /* Increased padding */
+  width: 100%; /* Full width for larger items */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjusted shadow for larger items */
+  transition: background-color 0.3s, transform 0.2s;
+  color: white;
+  text-align: center;
+}
+
+.club-list-item:hover {
+  background-color: #ff3333;
+  transform: translateY(-10px); /* Increased transform for hover effect */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.club-list-item h2 {
+  font-size: 50px; /* Significantly larger font size */
+  margin-top: 0;
+  color: white;
+}
+
+.club-list-item p {
+  font-size: 40px; /* Significantly larger font size */
+  color: #fff;
+  margin: 20px 0; /* Increased margin */
+  text-align: center;
+}
+
+/* Join and Leave buttons with larger font size */
+.join-button, .leave-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 10px; /* Increased border radius */
+  padding: 20px 40px; /* Increased padding */
+  cursor: pointer;
+  font-size: 50px; /* Significantly larger font size for buttons */
+  transition: background-color 0.3s;
+  margin-top: 20px; /* Increased margin */
+  font-family: 'Roboto', Arial, sans-serif;
+  width: 100%; /* Full width of container */
+}
+
+.leave-button {
+  background-color: #dc3545;
+}
+
+.join-button:hover, .leave-button:hover {
+  background-color: #218838; /* Adjusted hover background color */
+}
