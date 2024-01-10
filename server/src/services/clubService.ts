@@ -23,4 +23,12 @@ async function createNewClub(clubName, desc, joinStatus) {
   return res;
 }
 
-export { fetchClubInfo, fetchClubs, createNewClub };
+async function fetchClubMemberships(clubId) {
+  const query = `SELECT * FROM memberships WHERE "clubId" = $1`;
+  const res = await db.query(query, [clubId]);
+
+  const clubs = res.rows;
+  return clubs;
+}
+
+export { fetchClubInfo, fetchClubs, createNewClub, fetchClubMemberships };

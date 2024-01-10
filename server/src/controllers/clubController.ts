@@ -2,6 +2,7 @@ import {
   fetchClubInfo,
   fetchClubs,
   createNewClub,
+  fetchClubMemberships,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -10,6 +11,16 @@ async function getClubInfo(req, res, next) {
     res.json(fetchedData);
   } catch (err) {
     console.error(`Error fetching club info`, err.message);
+    next(err);
+  }
+}
+
+async function getClubMemberships(req, res, next) {
+  try {
+    const fetchedData = await fetchClubMemberships(req.params.id);
+    res.json(fetchedData);
+  } catch (err) {
+    console.error(`Error fetching club memberships, err.message`);
     next(err);
   }
 }
@@ -38,6 +49,7 @@ const clubController = {
   getClubInfo,
   getClubs,
   createClub,
+  getClubMemberships,
 };
 
 export default clubController;
