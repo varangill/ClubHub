@@ -5,6 +5,8 @@ import "../ClubPage.css"
 import { useEffect, useState } from "react";
 // import fetchData from "../api/index";
 
+window.globalVar = false;
+
 export default function ClubPage() {
   const navigate = useNavigate();
 
@@ -14,13 +16,19 @@ export default function ClubPage() {
   //  useEffect(() => {
   //    setList(fetchData("users/getUser/1", "GET"));
   // }, []);
-
+  
   type dataItem = {
     id: Number;
     clubName: string;
     clubDesc: string;
     creationDate: string;
     joinStatus: string;
+  }
+
+  type clubItem = {
+    clubId: Number;
+    userId: Number;
+    membershipType: string;
   }
 
   const myList: Listitem[] = [
@@ -31,9 +39,17 @@ export default function ClubPage() {
 
   const [clubData, setClubData] = useState<dataItem>({id: -1, clubName: "", clubDesc: "", creationDate: "", joinStatus: ""}); 
 
+  const [memberData, setMemberData] = useState<clubItem>({clubId: -1, userId: -1, membershipType: ""});
+
   const [clubJoined, setClubJoined] = useState(false);
 
   useEffect(() => {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setClubData(data);
+      });
+
     fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -47,7 +63,7 @@ export default function ClubPage() {
       <header className="custom-header">
         <div>
           <h1>
-            Club Page {id}
+            {clubData.clubName}
           </h1>
           <h2>
           </h2>

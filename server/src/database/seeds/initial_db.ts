@@ -8,9 +8,11 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   await knex("clubs").insert([
-    { id: "1", clubName: "UWOc1", clubDesc: "A club for ppl" },
-    { id: "2", clubName: "LoremIpsum2", clubDesc: "Another club desc" },
-    { id: "3", clubName: "club3", clubDesc: "more descs" },
+    { id: "1", clubName: "Chess Club", clubDesc: "A club for ppl" },
+    { id: "2", clubName: "Tennis Club", clubDesc: "Another club desc" },
+    { id: "3", clubName: "Reading Club", clubDesc: "more descs" },
+    { id: "4", clubName: "Science Club", clubDesc: "This is the science club" },
+    { id: "5", clubName: "Art Club", clubDesc: "Art Club"} 
   ]);
 
   await knex("users").insert([
