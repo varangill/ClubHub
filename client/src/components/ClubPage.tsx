@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 import AllClubs from "./AllClubs";
 // import fetchData from "../api/index";
 
-var joinedArray = []
-
 export default function ClubPage() {
   const navigate = useNavigate();
 
-  joinedArray = [1, 2, 3]
+  var isJoined;
 
   const {id} = useParams(); 
   // const [list, setList] = useState([]); 
@@ -60,13 +58,39 @@ export default function ClubPage() {
       });
   });
 
-  // function joinClub(clubId: any, userId: any): void {
-  //   fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`, {POST})
-  //     .then((res) => res.json())
-  //     .then((data) => {
+  function joinClub(clubId: any, userId: any): void {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/users/join-club`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        "userId": userId,
+        "clubId": clubId
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        return data.text;
+      });
+  }
 
-  //     });
-  // } 
+  function leaveClub(clubId: any, userId: any): void {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/users/join-club`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        "userId": userId,
+        "clubId": clubId
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        return data.text;
+      });
+  }
 
   return (
     <div>
@@ -80,7 +104,7 @@ export default function ClubPage() {
           </h2>
         </div>
         <div>
-          <button onClick={() => {alert(clubJoined ? "Left Club" : "Joined Club"); setClubJoined(!clubJoined); clubJoined ? window.globalArray.push({id}) : window.globalArray=window.globalArray.filter((value) => value !== {id})}}>{clubJoined ? "Leave Club" : "Join Club"}</button>
+          <button onClick={() => {alert(clubJoined ? "Left Club" : "Joined Club"); setClubJoined(!clubJoined); clubJoined ? joinClub(id, 1) : leaveClub()}}>{clubJoined ? "Leave Club" : "Join Club"}</button>
         </div>
       </header>
 
@@ -116,5 +140,3 @@ export default function ClubPage() {
     </div>
   );
 }
-
-export const myVariable: Number[]=joinedArray
