@@ -1,24 +1,47 @@
 import NavBar from "./NavigationBar";
 import { useNavigate } from "react-router-dom";
 import "../Club.css"
+import { useEffect, useState } from "react";
 
 export default function MyClubs() {
   const navigate = useNavigate();
 
-  const myGlobalArray = window.globalArray;
+  const [list, setList] = useState<Listitem[]>([]); 
+  const [joinedList, setJoinedList] = useState<userData[]>([])
 
-  const temp = [1, 2, 3]
+  var joinedClubIds = []
 
-  interface Listitem {
-    name: string;
-    id: int;
-    }
+  type Listitem = {
+    id: Number;
+    clubName: string;
+    clubDesc: string;
+    creationDate: string;
+    joinStatus: string;
+  }
 
-const myList: Listitem[] = [ //use club list from user
-    {name: "Club1", id: 1},
-    {name: "Club2", id: 2},
-    {name: "Club3", id: 3}
-]
+  type userData = {
+    clubId: Number;
+    userId: Number;
+    membershipType: string;
+  }
+
+  joinedList.map((club) => {
+    joinedClubIds.push(club.clubId)
+  })
+
+  useEffect(() => {
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs`)
+      .then((res) => res.json())
+      .then((data) => {
+        setList(data);
+      });
+    
+    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/users/clubs/1`)
+      .then((res) => res.json())
+      .then((data) => {
+        setJoinedList(data);
+      });
+  });
 
   return (
     <div>
@@ -30,19 +53,11 @@ const myList: Listitem[] = [ //use club list from user
       </header>
 
       <div id="list-container">
-        {myList.map((item) => {
-          if(myGlobalArray.includes(item.id)) {
-            return <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
+        {list.map((club) => {
+          if(joinedClubIds.includes(club.id)) {
+            return <ul className="club-list-item" id={club.id} onClick={() => navigate("/club/" + club.id)}>{club.clubName}</ul>
           }
         })}
-        {/* {myList.map((item) => {
-          temp.map((item2) => { 
-            if(item.id==item2){
-              <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
-            }
-          }
-        )}
-        )} */}
       </div>
     </div>
   );

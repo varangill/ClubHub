@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import AllClubs from "./AllClubs";
 // import fetchData from "../api/index";
 
-window.globalArray = [1, 2];
+var joinedArray = []
 
 export default function ClubPage() {
   const navigate = useNavigate();
+
+  joinedArray = [1, 2, 3]
 
   const {id} = useParams(); 
   // const [list, setList] = useState([]); 
@@ -57,6 +59,14 @@ export default function ClubPage() {
         setClubData(data);
       });
   });
+
+  // function joinClub(clubId: any, userId: any): void {
+  //   fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`, {POST})
+  //     .then((res) => res.json())
+  //     .then((data) => {
+
+  //     });
+  // } 
 
   return (
     <div>
@@ -106,3 +116,5 @@ export default function ClubPage() {
     </div>
   );
 }
+
+export const myVariable: Number[]=joinedArray
