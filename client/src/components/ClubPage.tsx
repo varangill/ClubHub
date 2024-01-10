@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import "../ClubPage.css"
 import { useEffect, useState } from "react";
+import AllClubs from "./AllClubs";
 // import fetchData from "../api/index";
 
-window.globalVar = false;
+window.globalArray = [1, 2];
 
 export default function ClubPage() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function ClubPage() {
   //  useEffect(() => {
   //    setList(fetchData("users/getUser/1", "GET"));
   // }, []);
-  
+
   type dataItem = {
     id: Number;
     clubName: string;
@@ -69,7 +70,7 @@ export default function ClubPage() {
           </h2>
         </div>
         <div>
-          <button onClick={() => {alert(clubJoined ? "Left Club" : "Joined Club"); setClubJoined(!clubJoined)}}>{clubJoined ? "Leave Club" : "Join Club"}</button>
+          <button onClick={() => {alert(clubJoined ? "Left Club" : "Joined Club"); setClubJoined(!clubJoined); clubJoined ? window.globalArray.push({id}) : window.globalArray=window.globalArray.filter((value) => value !== {id})}}>{clubJoined ? "Leave Club" : "Join Club"}</button>
         </div>
       </header>
 

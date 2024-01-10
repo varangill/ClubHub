@@ -32,7 +32,6 @@ export default function AllClubs() {
     club.clubName.toLowerCase().includes(query.toLowerCase())
   );
 
-
   return (
     <div>
       <NavBar />
@@ -43,6 +42,7 @@ export default function AllClubs() {
         </h1>
       </header>
 
+      <div className="searchBar">
       <input
         type="text"
         placeholder="Search clubs..."
@@ -50,6 +50,7 @@ export default function AllClubs() {
         onChange={(e) => setQuery(e.target.value)}
         className="search-input"
       />
+      </div>
 
       <div id="list-container">
         {filteredClubs &&

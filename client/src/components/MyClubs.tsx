@@ -5,6 +5,10 @@ import "../Club.css"
 export default function MyClubs() {
   const navigate = useNavigate();
 
+  const myGlobalArray = window.globalArray;
+
+  const temp = [1, 2, 3]
+
   interface Listitem {
     name: string;
     id: int;
@@ -26,9 +30,19 @@ const myList: Listitem[] = [ //use club list from user
       </header>
 
       <div id="list-container">
-        {myList.map((item) => 
-            <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
+        {myList.map((item) => {
+          if(myGlobalArray.includes(item.id)) {
+            return <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
+          }
+        })}
+        {/* {myList.map((item) => {
+          temp.map((item2) => { 
+            if(item.id==item2){
+              <ul className="club-list-item" id={item.id} onClick={() => navigate("/club/" + item.id)}>{item.name}</ul>
+            }
+          }
         )}
+        )} */}
       </div>
     </div>
   );
