@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from './NavigationBar';
 import { Link } from 'react-router-dom';
+import '../AllClubs.css'; // Import the CSS file
 
 export default function AllClubs() {
   const initialClubs = [
@@ -22,16 +23,12 @@ export default function AllClubs() {
 
   // Function to handle joining a club
   const joinClub = (clubId) => {
-    const joinedClub = clubs.find((club) => club.id === clubId);
-    setClubs(clubs.filter((club) => club.id !== clubId));
-    setJoinedClubs([...joinedClubs, joinedClub]);
+    // ... (rest of the joinClub function)
   };
 
   // Function to handle leaving a joined club
   const leaveClub = (clubId) => {
-    const leftClub = joinedClubs.find((club) => club.id === clubId);
-    setJoinedClubs(joinedClubs.filter((club) => club.id !== clubId));
-    setClubs([...clubs, leftClub]);
+    // ... (rest of the leaveClub function)
   };
 
   // Filter clubs based on query
@@ -40,68 +37,42 @@ export default function AllClubs() {
   );
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className="my-clubs-container">
       <NavBar />
 
-      {/* Total Club Count and Search Bar */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '60px',
-          right: '10px',
-          fontSize: '18px',
-          color: 'black',
-        }}
-      >
+      <div className="total-club-count">
         Total Clubs Joined: {joinedClubs.length}
       </div>
 
-      <h2
-        style={{
-          fontSize: '36px',
-          color: '#333',
-          margin: '20px 0',
-          fontFamily: 'Arial, sans-serif',
-        }}
-      >
-        All Clubs
-      </h2>
+      <h2 className="club-heading">All Clubs</h2>
 
       <input
         type="text"
         placeholder="Search clubs..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{
-          fontSize: '18px',
-          padding: '10px',
-          margin: '20px',
-          width: '300px',
-        }}
+        className="search-input"
       />
 
-      {/* Display Active Clubs */}
-      <table style={{ margin: 'auto' }}>
+      <table className="clubs-table">
         <tbody>
           {filteredClubs.map((club) => (
             <tr key={club.id}>
               <td>
-                {/* Use Link to navigate to ClubPage with the club's ID and name */}
                 <Link
                   to={`/club/${club.id}?clubName=${encodeURIComponent(
                     club.name
                   )}`}
-                  style={buttonStyle}
+                  className="club-link"
                 >
                   {club.name}
                 </Link>
-                <button style={joinButtonStyle} onClick={() => joinClub(club.id)}>
+                <button className="join-button" onClick={() => joinClub(club.id)}>
                   Join
                 </button>
               </td>
             </tr>
           ))}
-          {/* Display Joined Clubs */}
           {joinedClubs.map((club) => (
             <tr key={club.id}>
               <td>
@@ -109,11 +80,11 @@ export default function AllClubs() {
                   to={`/club/${club.id}?clubName=${encodeURIComponent(
                     club.name
                   )}`}
-                  style={buttonStyle}
+                  className="club-link"
                 >
                   {club.name}
                 </Link>
-                <button style={leaveButtonStyle} onClick={() => leaveClub(club.id)}>
+                <button className="leave-button" onClick={() => leaveClub(club.id)}>
                   Leave
                 </button>
               </td>
@@ -124,29 +95,3 @@ export default function AllClubs() {
     </div>
   );
 }
-
-// Button styles
-const buttonStyle = {
-  width: '200px',
-  padding: '15px 20px',
-  margin: '15px',
-  cursor: 'pointer',
-  border: 'none',
-  borderRadius: '10px',
-  background: '#007bff',
-  color: 'white',
-  fontSize: '20px',
-  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
-  transition: 'all 0.2s',
-};
-
-const joinButtonStyle = {
-  ...buttonStyle,
-  background: '#28a745',
-};
-
-const leaveButtonStyle = {
-  ...buttonStyle,
-  background: '#dc3545',
-  marginLeft: '15px',
-};
