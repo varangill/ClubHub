@@ -29,11 +29,15 @@ async function createUser(req, res, next) {
 
 async function loginUser(req, res, next) {
   try {
-    const loginSuccessful = await authenticateLogin(
+    const loginAuth = await authenticateLogin(
       req.body.email,
       req.body.password
     );
-    res.send(loginSuccessful);
+    if (loginAuth.isValid) {
+      res.send({ authenticated: true, id: loginAuth.id, name: loginAuth.name });
+    } else {
+      res.send({ authenticated: false });
+    }
   } catch (err) {
     console.error(`Error logging user in`, err.message);
     next(err);
