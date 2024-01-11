@@ -1,4 +1,5 @@
 import db from "../database/database";
+import { hashPassword, validatePassword } from "../utils/authUtils";
 
 async function fetchUserInfo(userId) {
   const query = "SELECT id, email, name FROM users WHERE id = $1";
@@ -25,10 +26,20 @@ async function fetchUserClubs(userId) {
 }
 
 async function createNewUser(name, email, password) {
+  const hashedPassword = await hashPassword(password);
   const query = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-  const res = await db.query(query, [name, email, password]);
+  const res = await db.query(query, [name, email, hashedPassword]);
 
   return res;
+}
+
+async function authenticateLogin(email, passwordInput) {
+  const query = "SELECT password FROM users WHERE email = $1";
+  const res = await db.query(query, [email]);
+  const hashedPassword = res.rows[0]["password"];
+
+  const isValid = await validatePassword(passwordInput, hashedPassword);
+  return isValid;
 }
 
 async function joinClub(userId, clubId, membershipType) {
@@ -50,6 +61,7 @@ export {
   fetchUserInfo,
   fetchUserClubs,
   createNewUser,
+  authenticateLogin,
   joinClub,
   getMembership,
   fetchUserInfoWithName,
