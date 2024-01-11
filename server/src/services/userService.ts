@@ -9,14 +9,6 @@ async function fetchUserInfo(userId) {
   return user;
 }
 
-async function fetchUserInfoWithName(name) {
-  const query = "SELECT id, email, name, password FROM users WHERE name = $1";
-  const res = await db.query(query, [name]);
-
-  const user = res.rows[0];
-  return user;
-}
-
 async function fetchUserClubs(userId) {
   const query = `SELECT * FROM memberships WHERE "userId" = $1`;
   const res = await db.query(query, [userId]);
@@ -74,5 +66,4 @@ export {
   authenticateLogin,
   joinClub,
   getMembership,
-  fetchUserInfoWithName,
 };

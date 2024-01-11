@@ -1,24 +1,30 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { postData } from '../api';
 
 export default function Login() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const navigate = useNavigate();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e:any) => {
+        e.preventDefault();
         try {
-            await fetch(`http://localhost:3000/api/user/getUser/1`)
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                    alert(data)
-                });
+            const res = await postData(`users/login`, {
+                email: email,
+                password: password,
+            });
+            if (res.authenticated) {
+                navigate("/");
+            }
+            else {
+                setErrorMessage("Username or password is incorrect.");
+            }
         }
         catch (error) {
-            console.log(error);
-            alert(error);
+            setErrorMessage("Username or password is incorrect.");
         }
     };
 
@@ -30,12 +36,12 @@ export default function Login() {
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="login-input-fields">
                     <div className="username-login-section">
-                        <p className="username-label">Username:</p>
+                        <p className="username-label">Email:</p>
                         <input
                             type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="password-login-section">
@@ -50,6 +56,7 @@ export default function Login() {
                     <a className="forgot-pswd" href="/">Forgot password?</a>
                 </div>
                 <button className="login-submit-btn" type="submit">Confirm</button>
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 <a className="sign-up-link" href="/sign-up">Sign up</a>
             </form>
         </div>

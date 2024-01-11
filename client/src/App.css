@@ -70,6 +70,7 @@ nav {
   width:100px;
   color:white;
   background-color:purple;
+  margin-bottom:5px;
 }
 
 .login-submit-btn:hover {
