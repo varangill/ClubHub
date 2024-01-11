@@ -26,12 +26,22 @@ async function createNewUser(name, email, password) {
 }
 
 async function authenticateLogin(email, passwordInput) {
-  const query = "SELECT password FROM users WHERE email = $1";
+  const query = "SELECT * FROM users WHERE email = $1";
   const res = await db.query(query, [email]);
-  const hashedPassword = res.rows[0]["password"];
+  const userInfo = res.rows[0];
+  const hashedPassword = userInfo["password"];
 
   const isValid = await validatePassword(passwordInput, hashedPassword);
-  return isValid;
+
+  if (isValid) {
+    //If password matches, send user data
+    const id = userInfo["id"];
+    const name = userInfo["name"];
+    return { isValid, id, name };
+  } else {
+    //If password doesn't match, do not sent user data
+    return { isValid };
+  }
 }
 
 async function joinClub(userId, clubId, membershipType) {
