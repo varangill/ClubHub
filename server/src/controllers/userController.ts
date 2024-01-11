@@ -2,6 +2,7 @@ import {
   fetchUserInfo,
   fetchUserClubs,
   createNewUser,
+  authenticateLogin,
   joinClub,
   getMembership,
 } from "../services/userService";
@@ -22,6 +23,19 @@ async function createUser(req, res, next) {
     res.send("User successfully created");
   } catch (err) {
     console.error(`Error creating user`, err.message);
+    next(err);
+  }
+}
+
+async function loginUser(req, res, next) {
+  try {
+    const loginSuccessful = await authenticateLogin(
+      req.body.email,
+      req.body.password
+    );
+    res.send(loginSuccessful);
+  } catch (err) {
+    console.error(`Error logging user in`, err.message);
     next(err);
   }
 }
@@ -60,6 +74,7 @@ const userController = {
   getUserInfo,
   getUserClubs,
   createUser,
+  loginUser,
   getClubMembership,
   userJoinClub,
 };
