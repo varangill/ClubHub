@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { postData } from '../api';
+import { useAuth } from '../AuthContext';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e:any) => {
         e.preventDefault();
@@ -17,6 +19,8 @@ export default function Login() {
                 password: password,
             });
             if (res.authenticated) {
+                const account = { id: res.id, name: res.name, email: email };
+                login(account);
                 navigate("/");
             }
             else {

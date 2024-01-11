@@ -3,17 +3,23 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { Home, ClipboardCheck, ClipboardList, User2 } from 'lucide-react';
+import { useAuth } from "../AuthContext";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
-  const is_loggedin = false; //TODO: login treatment
+  const { user, logout } = useAuth();
+
+  function logoutUser () {
+    logout();
+    navigate('/');
+  }
 
   return (
     <Navbar id="navbar-main">
       <Navbar.Brand id="nav-title">ClubHub</Navbar.Brand>
         <Navbar.Collapse>
 
-          {is_loggedin ? 
+          {user ? 
             <div className="nav-items">
             <Nav>
               <Nav.Link
@@ -54,8 +60,7 @@ export default function NavigationBar() {
                 variant="light"
                 size="lg"
                 onClick={() => {
-                  console.log("clicked signout");
-                  //TO-DO: pop open signup modal/pop-up
+                  logoutUser();
                 }}
                 >
                 Sign Out
