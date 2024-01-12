@@ -66,7 +66,8 @@ export default function ClubPage() {
       },
       body: JSON.stringify({
         "userId": userId,
-        "clubId": clubId
+        "clubId": clubId,
+        "membershipType": "member"
       }),
     })
       .then((res) => res.json())

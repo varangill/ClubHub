@@ -55,7 +55,7 @@ export default function MyClubs() {
       <div id="list-container">
         {list.map((club) => {
           if(joinedClubIds.includes(club.id)) {
-            return <ul className="club-list-item" id={club.id} onClick={() => navigate("/club/" + club.id)}>{club.clubName}</ul>
+            return <ul className="club-list-item" id={club.clubName} onClick={() => navigate("/club/" + club.id)}>{club.clubName}</ul>
           }
         })}
       </div>
