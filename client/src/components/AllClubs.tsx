@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import NavBar from './NavigationBar';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import NavBar from "./NavigationBar";
+import { Link } from "react-router-dom";
 
 export default function AllClubs() {
   const initialClubs = [
-    { name: 'Tennis Club', id: 'tennis' },
-    { name: 'Chess Club', id: 'chess' },
-    { name: 'Reading Club', id: 'reading' },
-    { name: 'Science Club', id: 'science' },
-    { name: 'Art Club', id: 'art' },
-    { name: 'Music Club', id: 'music' },
-    { name: 'Cooking Club', id: 'cooking' },
-    { name: 'Photography Club', id: 'photography' },
-    { name: 'Gaming Club', id: 'gaming' },
-    { name: 'Dance Club', id: 'dance' },
+    { name: "Tennis Club", id: "tennis" },
+    { name: "Chess Club", id: "chess" },
+    { name: "Reading Club", id: "reading" },
+    { name: "Science Club", id: "science" },
+    { name: "Art Club", id: "art" },
+    { name: "Music Club", id: "music" },
+    { name: "Cooking Club", id: "cooking" },
+    { name: "Photography Club", id: "photography" },
+    { name: "Gaming Club", id: "gaming" },
+    { name: "Dance Club", id: "dance" },
   ];
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   // Filter clubs based on query
   const filteredClubs = clubs.filter((club) =>
@@ -43,16 +43,8 @@ export default function AllClubs() {
           {filteredClubs.map((club) => (
             <tr key={club.id}>
               <td>
-                <Link
-                  to={`/club/${club.id}?clubName=${encodeURIComponent(
-                    club.name
-                  )}`}
-                  className="club-link"
-                >
+                <Link to={`/club/${club.id}`} className="club-link">
                   {club.name}
-                </Link>
-                <Link to={`/club/${club.id}`} className="view-club-button">
-                  View Club
                 </Link>
               </td>
             </tr>

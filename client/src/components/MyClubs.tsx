@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import NavBar from './NavigationBar';
-import { Link } from 'react-router-dom';
-import '../MyClubs.css'; // Import the CSS file
+import { useState } from "react";
+import NavBar from "./NavigationBar";
+import { Link } from "react-router-dom";
 
 export default function MyClubs() {
   const initialClubs = [
-    { name: 'Tennis Club', id: 'tennis' },
-    { name: 'Chess Club', id: 'chess' },
-    { name: 'Reading Club', id: 'reading' },
-    { name: 'Science Club', id: 'science' }
+    { name: "Tennis Club", id: "tennis" },
+    { name: "Chess Club", id: "chess" },
+    { name: "Reading Club", id: "reading" },
+    { name: "Science Club", id: "science" },
   ];
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   // Function to handle leaving a club
   const leaveClub = (clubId) => {
@@ -25,33 +24,31 @@ export default function MyClubs() {
   );
 
   return (
-    <div className="my-clubs-container"> {/* Use CSS class for styling */}
+    <div className="my-clubs-container">
       <NavBar />
-
-      <h2 className="club-heading">My Clubs</h2> {/* Use CSS class for styling */}
-
+      <h2 className="club-heading">My Clubs</h2>
       <input
         type="text"
         placeholder="Search clubs..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="search-input" // Use CSS class for styling
+        className="search-input"
       />
-
       {/* Display Active Clubs */}
-      <table className="clubs-table"> {/* Use CSS class for styling */}
+      <table className="clubs-table">
         <tbody>
           {filteredClubs.map((club) => (
             <tr key={club.id}>
               <td>
-                {/* Use Link to navigate to ClubPage with the club's ID and name */}
-                <Link
-                  to={`/club/${club.id}?clubName=${encodeURIComponent(club.name)}`}
-                  className="club-link" // Use CSS class for styling
-                >
+                <Link to={`/club/${club.id}`} className="club-link">
                   {club.name}
                 </Link>
-                <button className="leave-button" onClick={() => leaveClub(club.id)}>Leave</button> {/* Use CSS class for styling */}
+                <button
+                  className="leave-button"
+                  onClick={() => leaveClub(club.id)}
+                >
+                  Leave
+                </button>
               </td>
             </tr>
           ))}
