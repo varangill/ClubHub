@@ -1,6 +1,5 @@
-import { useState } from "react";
+import ClubList from "./ClubList";
 import NavBar from "./NavigationBar";
-import { Link } from "react-router-dom";
 
 export default function AllClubs() {
   const initialClubs = [
@@ -16,41 +15,13 @@ export default function AllClubs() {
     { name: "Dance Club", id: "dance" },
   ];
 
-  const [clubs, setClubs] = useState(initialClubs);
-  const [query, setQuery] = useState("");
-
   // Filter clubs based on query
-  const filteredClubs = clubs.filter((club) =>
-    club.name.toLowerCase().includes(query.toLowerCase())
-  );
 
   return (
     <div className="my-clubs-container">
       <NavBar />
-
       <h2 className="club-heading">All Clubs</h2>
-
-      <input
-        type="text"
-        placeholder="Search clubs..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="search-input"
-      />
-
-      <table className="clubs-table">
-        <tbody>
-          {filteredClubs.map((club) => (
-            <tr key={club.id}>
-              <td>
-                <Link to={`/club/${club.id}`} className="club-link">
-                  {club.name}
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ClubList clubs={initialClubs} />
     </div>
   );
 }
