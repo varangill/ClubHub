@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from './NavigationBar';
 import { Link } from 'react-router-dom';
-import '../AllClubs.css'; // Import the CSS file
 
 export default function AllClubs() {
   const initialClubs = [
@@ -18,18 +17,7 @@ export default function AllClubs() {
   ];
 
   const [clubs, setClubs] = useState(initialClubs);
-  const [joinedClubs, setJoinedClubs] = useState([]);
   const [query, setQuery] = useState('');
-
-  // Function to handle joining a club
-  const joinClub = (clubId) => {
-    // ... (rest of the joinClub function)
-  };
-
-  // Function to handle leaving a joined club
-  const leaveClub = (clubId) => {
-    // ... (rest of the leaveClub function)
-  };
 
   // Filter clubs based on query
   const filteredClubs = clubs.filter((club) =>
@@ -39,10 +27,6 @@ export default function AllClubs() {
   return (
     <div className="my-clubs-container">
       <NavBar />
-
-      <div className="total-club-count">
-        Total Clubs Joined: {joinedClubs.length}
-      </div>
 
       <h2 className="club-heading">All Clubs</h2>
 
@@ -67,26 +51,9 @@ export default function AllClubs() {
                 >
                   {club.name}
                 </Link>
-                <button className="join-button" onClick={() => joinClub(club.id)}>
-                  Join
-                </button>
-              </td>
-            </tr>
-          ))}
-          {joinedClubs.map((club) => (
-            <tr key={club.id}>
-              <td>
-                <Link
-                  to={`/club/${club.id}?clubName=${encodeURIComponent(
-                    club.name
-                  )}`}
-                  className="club-link"
-                >
-                  {club.name}
+                <Link to={`/club/${club.id}`} className="view-club-button">
+                  View Club
                 </Link>
-                <button className="leave-button" onClick={() => leaveClub(club.id)}>
-                  Leave
-                </button>
               </td>
             </tr>
           ))}

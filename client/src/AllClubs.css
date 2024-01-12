@@ -1,74 +1,28 @@
-/* AllClubs.css */
-
-.my-clubs-container {
-    text-align: center;
+.clubs-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Adjust as needed */
   }
   
-  .total-club-count {
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    font-size: 18px;
-    color: black;
-  }
-  
-  .club-heading {
-    font-size: 36px;
-    color: #333;
-    margin: 20px 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .search-input {
-    font-size: 18px;
+  .clubs-table td {
     padding: 10px;
-    margin: 20px;
-    width: 300px;
+    text-align: center; /* Aligns content to the left */
   }
   
-  .clubs-table {
-    margin: auto;
-  }
-  
-  .club-link {
-    width: 200px;
-    padding: 15px 20px;
-    margin: 15px;
-    cursor: pointer;
+  .view-club-button {
+    margin-left: 20px; /* Adds space between the club link and the button */
+    padding: 10px 20px;
     border: none;
-    border-radius: 10px;
-    background: #007bff;
+    border-radius: 5px;
+    background-color: green;
     color: white;
-    font-size: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none; /* Removes underline from Link component */
+    display: inline-block; /* Aligns the link as a block element */
   }
   
-  .join-button {
-    width: 200px;
-    padding: 15px 20px;
-    margin: 15px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    background: #28a745;
-    color: white;
-    font-size: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
-  }
-  
-  .leave-button {
-    width: 200px;
-    padding: 15px 20px;
-    margin: 15px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    background: #dc3545;
-    color: white;
-    font-size: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
+  .view-club-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
   }
   
