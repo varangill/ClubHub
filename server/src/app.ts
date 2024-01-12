@@ -17,15 +17,16 @@ const serverPort = 3000;
 
 app.use("/api", routes);
 
+//API documentation setup
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "ClubHub API Docs",
-      version: "1.0.0",
+      version: "1.0",
     },
   },
-  apis: ["./src/routes/*.ts"], // Point to your API route files
+  apis: ["./src/routes/*.ts"],
 };
 const specs = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
