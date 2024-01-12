@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { postData } from '../api';
 
-export default function SIgnUp() {
+export default function SignUp() {
     const [name, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
