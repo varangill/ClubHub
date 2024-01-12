@@ -41,7 +41,7 @@
  *     responses:
  *       '200':
  *         description: Successful response
- * /users/create-club:
+ * /clubs/create-club:
  *   post:
  *     summary: Create a new club
  *     description: Create a new club with the provided data
