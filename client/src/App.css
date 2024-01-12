@@ -12,6 +12,92 @@ nav {
   height: 60px;
 }
 
+.login-background {
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  filter: blur(10px);
+}
+
+.login-section {
+  margin: auto;
+  position:absolute;
+  text-align: center;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  padding-top:10%;
+  background-color: white;
+  opacity: 80%;
+  width:35%;
+  color:purple;
+  border:5px, solid, purple;
+}
+
+.login-header {
+  font-weight: 700;
+  font-size: 60px;
+}
+
+.login-input-fields {
+  display:block;
+}
+
+.login-header {
+  margin-bottom:70px;
+}
+
+.password-login-section, .email-login-section {
+  margin-top:20px;
+}
+
+.login-submit-btn {
+  margin-top: 30px;
+}
+
+.forgot-pswd {
+  color:#993399;
+}
+
+.login-submit-btn {
+  border:none;
+  border-radius: 5px;
+  width:100px;
+  color:white;
+  background-color:purple;
+  margin-bottom:5px;
+}
+
+.login-submit-btn:hover {
+  background-color:#993399;
+}
+
+.login-go-back-btn {
+  position:absolute;
+  left:0;
+  top:0;
+  margin-left:10px !important;
+  margin-top:10px !important;
+  border:none !important;
+  background-color: purple !important;
+  width:100px;
+}
+
+.login-go-back-btn:hover {
+  background-color:#993399 !important;
+}
+
+.sign-up-link {
+  display:block;
+  margin-top: 15px;
+  color: #993399;
+}
+
 .nav-items {
   width: 100%;
   display: inline-flex;

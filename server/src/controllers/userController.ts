@@ -19,8 +19,8 @@ async function getUserInfo(req, res, next) {
 
 async function createUser(req, res, next) {
   try {
-    await createNewUser(req.body.name, req.body.email, req.body.password);
-    res.send("User successfully created");
+    const fetchedData = await createNewUser(req.body.name, req.body.email, req.body.password);
+    res.send(fetchedData);
   } catch (err) {
     console.error(`Error creating user`, err.message);
     next(err);
