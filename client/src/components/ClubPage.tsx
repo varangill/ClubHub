@@ -9,9 +9,11 @@ export default function ClubPage() {
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
   const [memberType, setMemberType] = useState("");
+  const [members, setMembers] = useState([]); //Stores the current members of the club
   const { id } = useParams();
   const { user } = useAuth();
 
+  //Fetch relevant data on render
   useEffect(() => {
     getData(`clubs/${id}`).then((res) => {
       setClubDesc(res.clubDesc);
@@ -19,6 +21,9 @@ export default function ClubPage() {
     });
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
+    });
+    getData(`clubs/memberships/${id}`).then((res) => {
+      setMembers(res);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -77,6 +82,12 @@ export default function ClubPage() {
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
+      <div>
+        Members
+        {members.map((member) => {
+          return <div key={member["id"]}>{member["name"]}</div>;
+        })}
+      </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
   );
