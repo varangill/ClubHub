@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
+import { getData } from "../api";
 
 export default function ClubDetailPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const [clubName, setClubName] = useState("");
+  const [clubDesc, setClubDesc] = useState("");
+  const { id } = useParams();
+
+  useEffect(() => {
+    getData(`clubs/${id}`).then((res) => {
+      setClubDesc(res.clubDesc);
+      setClubName(res.clubName);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const joinClub = () => {
     setShowPopup(true);
@@ -15,7 +28,8 @@ export default function ClubDetailPage() {
     <div className="club-detail-container">
       <NavBar />
 
-      <h2 className="club-heading">Club</h2>
+      <h2 className="club-heading">{clubName}</h2>
+      <h5>{clubDesc}</h5>
 
       <div className="join-button-container">
         <button onClick={joinClub} className="join-button">

@@ -6,7 +6,7 @@ export default function ClubList(props) {
 
   // Filter clubs based on query
   const filteredClubs = props.clubs.filter((club) =>
-    club.name.toLowerCase().includes(query.toLowerCase())
+    club.clubName.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -25,7 +25,7 @@ export default function ClubList(props) {
             <tr key={club.id}>
               <td>
                 <Link to={`/club/${club.id}`} className="club-link">
-                  {club.name}
+                  {club.clubName}
                 </Link>
               </td>
             </tr>
