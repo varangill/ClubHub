@@ -2,17 +2,23 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import { getData } from "../api";
+import { useAuth } from "../AuthContext";
 
-export default function ClubDetailPage() {
+export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
+  const [memberType, setMemberType] = useState("");
   const { id } = useParams();
+  const { user } = useAuth();
 
   useEffect(() => {
     getData(`clubs/${id}`).then((res) => {
       setClubDesc(res.clubDesc);
       setClubName(res.clubName);
+    });
+    getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
+      setMemberType(res.membershipType);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

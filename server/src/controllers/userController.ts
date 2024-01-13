@@ -19,7 +19,11 @@ async function getUserInfo(req, res, next) {
 
 async function createUser(req, res, next) {
   try {
-    const fetchedData = await createNewUser(req.body.name, req.body.email, req.body.password);
+    const fetchedData = await createNewUser(
+      req.body.name,
+      req.body.email,
+      req.body.password
+    );
     res.send(fetchedData);
   } catch (err) {
     console.error(`Error creating user`, err.message);
@@ -56,7 +60,7 @@ async function getUserClubs(req, res, next) {
 
 async function getClubMembership(req, res, next) {
   try {
-    const membership = await getMembership(req.body.userId, req.body.clubId);
+    const membership = await getMembership(req.query.userId, req.query.clubId);
     res.json(membership);
   } catch (err) {
     console.error(`Error creating user`, err.message);
