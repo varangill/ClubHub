@@ -51,9 +51,17 @@ async function authenticateLogin(email, passwordInput) {
   }
 }
 
-async function joinClub(userId, clubId, membershipType) {
+async function joinClub(userId, clubId) {
+  const membershipType = "member";
   const query = `INSERT INTO memberships ("userId", "clubId", "membershipType") VALUES ($1, $2, $3)`;
   const res = await db.query(query, [userId, clubId, membershipType]);
+
+  return res;
+}
+
+async function leaveClub(userId, clubId) {
+  const query = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
 
   return res;
 }
@@ -77,5 +85,6 @@ export {
   createNewUser,
   authenticateLogin,
   joinClub,
+  leaveClub,
   getMembership,
 };

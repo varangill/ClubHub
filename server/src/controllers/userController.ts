@@ -4,6 +4,7 @@ import {
   createNewUser,
   authenticateLogin,
   joinClub,
+  leaveClub,
   getMembership,
 } from "../services/userService";
 
@@ -70,10 +71,20 @@ async function getClubMembership(req, res, next) {
 
 async function userJoinClub(req, res, next) {
   try {
-    await joinClub(req.body.userId, req.body.clubId, req.body.membershipType);
-    res.send("Successfully joined club");
+    await joinClub(req.body.userId, req.body.clubId);
+    res.send({ membershipType: "member" });
   } catch (err) {
     console.error(`Error joining club`, err.message);
+    next(err);
+  }
+}
+
+async function userLeaveClub(req, res, next) {
+  try {
+    await leaveClub(req.body.userId, req.body.clubId);
+    res.send({ membershipType: "none" });
+  } catch (err) {
+    console.error(`Error leaving club`, err.message);
     next(err);
   }
 }
@@ -85,6 +96,7 @@ const userController = {
   loginUser,
   getClubMembership,
   userJoinClub,
+  userLeaveClub,
 };
 
 export default userController;
