@@ -14,7 +14,14 @@ async function fetchUserClubs(userId) {
   const res = await db.query(query, [userId]);
 
   const clubs = res.rows;
-  return clubs;
+  const clubIds = clubs.map((club) => club["clubId"]);
+
+  const clubQuery = `SELECT * FROM clubs WHERE id IN (${clubIds
+    .map((_, index) => `$${index + 1}`)
+    .join(", ")})`;
+  const clubRes = await db.query(clubQuery, clubIds);
+
+  return clubRes.rows;
 }
 
 async function createNewUser(name, email, password) {
