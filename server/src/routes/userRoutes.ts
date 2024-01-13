@@ -112,17 +112,60 @@
  *                 type: ID
  *                 format: ID
  *                 description: Club's ID
- *               membershipType:
- *                 type: string {'owner', 'executive', 'member'}
- *                 format: string
- *                 description: Membership type
  *             required:
  *               - userId
  *               - clubId
- *               - membershipType
  *     responses:
  *       '201':
  *         description: User joined club
+ * /users/leave-club:
+ *   post:
+ *     summary: Make user leave a club
+ *     description: Delete a membership for a user given a club
+ *     tags: [Users]
+ *     requestBody:
+ *       description: User ID, club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: User's ID
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - userId
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: User left club
+ * /users/membership?userId={userId}&clubId={clubId}:
+ *   get:
+ *     summary: Get a user's membership data given user ID and club ID
+ *     description: Retrieve a user's joined clubs
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *       - in: path
+ *         name: clubId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Club ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
  */
 
 import { Router } from "express";
