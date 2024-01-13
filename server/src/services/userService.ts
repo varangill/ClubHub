@@ -63,6 +63,11 @@ async function getMembership(userId, clubId) {
   const res = await db.query(query, [userId, clubId]);
 
   const membership = res.rows[0];
+  if (!membership) {
+    return {
+      membershipType: "none",
+    };
+  }
   return membership;
 }
 
