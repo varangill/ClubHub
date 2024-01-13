@@ -13,8 +13,8 @@ async function fetchUserClubs(userId) {
   const query = `SELECT * FROM memberships WHERE "userId" = $1`;
   const res = await db.query(query, [userId]);
 
-  const clubs = res.rows;
-  const clubIds = clubs.map((club) => club["clubId"]);
+  const memberships = res.rows;
+  const clubIds = memberships.map((membership) => membership["clubId"]);
 
   const clubQuery = `SELECT * FROM clubs WHERE id IN (${clubIds
     .map((_, index) => `$${index + 1}`)

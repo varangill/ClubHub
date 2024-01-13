@@ -24,11 +24,18 @@ async function createNewClub(clubName, desc, joinStatus) {
 }
 
 async function fetchClubMemberships(clubId) {
-  const query = `SELECT * FROM memberships WHERE "clubId" = $1`;
-  const res = await db.query(query, [clubId]);
+  const membershipsQuery = `SELECT * FROM memberships WHERE "clubId" = $1`;
+  const membershipsRes = await db.query(membershipsQuery, [clubId]);
 
-  const clubs = res.rows;
-  return clubs;
+  const memberships = membershipsRes.rows;
+  const userIds = memberships.map((membership) => membership["userId"]);
+
+  const userQuery = `SELECT id, email, name FROM users WHERE id IN (${userIds
+    .map((_, index) => `$${index + 1}`)
+    .join(", ")})`;
+  const userRes = await db.query(userQuery, userIds);
+
+  return userRes.rows;
 }
 
 export { fetchClubInfo, fetchClubs, createNewClub, fetchClubMemberships };
