@@ -4,6 +4,7 @@ import {
   createNewUser,
   authenticateLogin,
   joinClub,
+  leaveClub,
   getMembership,
 } from "../services/userService";
 
@@ -19,7 +20,11 @@ async function getUserInfo(req, res, next) {
 
 async function createUser(req, res, next) {
   try {
-    const fetchedData = await createNewUser(req.body.name, req.body.email, req.body.password);
+    const fetchedData = await createNewUser(
+      req.body.name,
+      req.body.email,
+      req.body.password
+    );
     res.send(fetchedData);
   } catch (err) {
     console.error(`Error creating user`, err.message);
@@ -56,7 +61,7 @@ async function getUserClubs(req, res, next) {
 
 async function getClubMembership(req, res, next) {
   try {
-    const membership = await getMembership(req.body.userId, req.body.clubId);
+    const membership = await getMembership(req.query.userId, req.query.clubId);
     res.json(membership);
   } catch (err) {
     console.error(`Error creating user`, err.message);
@@ -66,10 +71,20 @@ async function getClubMembership(req, res, next) {
 
 async function userJoinClub(req, res, next) {
   try {
-    await joinClub(req.body.userId, req.body.clubId, req.body.membershipType);
-    res.send("Successfully joined club");
+    await joinClub(req.body.userId, req.body.clubId);
+    res.send({ membershipType: "member" });
   } catch (err) {
     console.error(`Error joining club`, err.message);
+    next(err);
+  }
+}
+
+async function userLeaveClub(req, res, next) {
+  try {
+    await leaveClub(req.body.userId, req.body.clubId);
+    res.send({ membershipType: "none" });
+  } catch (err) {
+    console.error(`Error leaving club`, err.message);
     next(err);
   }
 }
@@ -81,6 +96,7 @@ const userController = {
   loginUser,
   getClubMembership,
   userJoinClub,
+  userLeaveClub,
 };
 
 export default userController;

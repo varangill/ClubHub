@@ -10,18 +10,16 @@ async function fetchUserInfo(userId) {
 }
 
 async function fetchUserClubs(userId) {
-  const query = `SELECT * FROM memberships WHERE "userId" = $1`;
+  //Query for every club a user is in, including the membership type
+  const query = `
+    SELECT c.*, m."membershipType"
+    FROM memberships m
+    JOIN clubs c ON m."clubId" = c.id
+    WHERE m."userId" = $1
+  `;
+
   const res = await db.query(query, [userId]);
-
-  const clubs = res.rows;
-  const clubIds = clubs.map((club) => club["clubId"]);
-
-  const clubQuery = `SELECT * FROM clubs WHERE id IN (${clubIds
-    .map((_, index) => `$${index + 1}`)
-    .join(", ")})`;
-  const clubRes = await db.query(clubQuery, clubIds);
-
-  return clubRes.rows;
+  return res.rows;
 }
 
 async function createNewUser(name, email, password) {
@@ -51,9 +49,17 @@ async function authenticateLogin(email, passwordInput) {
   }
 }
 
-async function joinClub(userId, clubId, membershipType) {
+async function joinClub(userId, clubId) {
+  const membershipType = "member";
   const query = `INSERT INTO memberships ("userId", "clubId", "membershipType") VALUES ($1, $2, $3)`;
   const res = await db.query(query, [userId, clubId, membershipType]);
+
+  return res;
+}
+
+async function leaveClub(userId, clubId) {
+  const query = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
 
   return res;
 }
@@ -63,6 +69,11 @@ async function getMembership(userId, clubId) {
   const res = await db.query(query, [userId, clubId]);
 
   const membership = res.rows[0];
+  if (!membership) {
+    return {
+      membershipType: "none",
+    };
+  }
   return membership;
 }
 
@@ -72,5 +83,6 @@ export {
   createNewUser,
   authenticateLogin,
   joinClub,
+  leaveClub,
   getMembership,
 };
