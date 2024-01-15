@@ -59,12 +59,16 @@
  *                 description: Club's name
  *               desc:
  *                 type: string
- *                 format: email
+ *                 format: string
  *                 description: Club's description
  *               joinStatus:
  *                 type: string {"open", "application", "closed"}
  *                 format: string
  *                 description: Club's join status
+ *               userId:
+ *                 type: string
+ *                 format: id
+ *                 description: ID of user creating club
  *             required:
  *               - clubName
  *               - desc

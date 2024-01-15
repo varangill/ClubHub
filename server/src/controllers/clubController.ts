@@ -27,8 +27,13 @@ async function getClubMemberships(req, res, next) {
 
 async function createClub(req, res, next) {
   try {
-    await createNewClub(req.body.clubName, req.body.desc, req.body.joinStatus);
-    res.send("Club successfully created");
+    const newClubId = await createNewClub(
+      req.body.clubName,
+      req.body.desc,
+      req.body.joinStatus,
+      req.body.userId
+    );
+    res.send(newClubId);
   } catch (err) {
     console.error(`Error creating club`, err.message);
     next(err);

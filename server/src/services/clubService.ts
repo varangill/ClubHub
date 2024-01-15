@@ -16,11 +16,16 @@ async function fetchClubs() {
   return clubs;
 }
 
-async function createNewClub(clubName, desc, joinStatus) {
-  const query = `INSERT INTO clubs ("clubName", "clubDesc", "joinStatus") VALUES ($1, $2, $3)`;
+async function createNewClub(clubName, desc, joinStatus, userId) {
+  const query = `INSERT INTO clubs ("clubName", "clubDesc", "joinStatus") VALUES ($1, $2, $3) RETURNING id`;
   const res = await db.query(query, [clubName, desc, joinStatus]);
 
-  return res;
+  //Create new membership for the owner
+  const clubId = res.rows[0]["id"];
+  const membershipQuery = `INSERT INTO memberships ("clubId", "userId", "membershipType") VALUES ($1, $2, $3)`;
+  await db.query(membershipQuery, [clubId, userId, "owner"]);
+
+  return res.rows[0]; //return ID of new club
 }
 
 async function fetchClubMemberships(clubId) {
