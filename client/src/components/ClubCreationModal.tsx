@@ -23,8 +23,8 @@ export default function ClubCreationModal(props) {
       }).then((res) => {
         navigate(`/club/${res.id}`); //On successful club creation, navigate user to new club page
       });
-    } catch {
-      console.error("Error creating club");
+    } catch (error) {
+      console.log(error);
     }
   };
 
