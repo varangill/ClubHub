@@ -41,4 +41,27 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
-export { fetchClubInfo, fetchClubs, createNewClub, fetchClubMemberships };
+async function kickClubMember(userId, clubId) {}
+
+async function banClubMember(userId, clubId) {}
+
+async function unbanClubMember(userId, clubId) {}
+
+async function promoteClubMember(userId, clubId) {}
+
+async function demoteClubMember(userId, clubId) {}
+
+async function transferClubOwnership(userId, clubId) {}
+
+export {
+  fetchClubInfo,
+  fetchClubs,
+  createNewClub,
+  fetchClubMemberships,
+  kickClubMember,
+  banClubMember,
+  unbanClubMember,
+  promoteClubMember,
+  demoteClubMember,
+  transferClubOwnership,
+};

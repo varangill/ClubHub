@@ -3,6 +3,12 @@ import {
   fetchClubs,
   createNewClub,
   fetchClubMemberships,
+  kickClubMember,
+  banClubMember,
+  promoteClubMember,
+  demoteClubMember,
+  transferClubOwnership,
+  changeClubStatus,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -50,11 +56,90 @@ async function getClubs(req, res, next) {
   }
 }
 
+async function kickMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function kickMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function banMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function unbanMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function promoteMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function demoteMember(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function transferOwner(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function changeStatus(req, res, next) {
+  try {
+    //Do something
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
 const clubController = {
   getClubInfo,
   getClubs,
   createClub,
   getClubMemberships,
+  kickMember,
+  banMember,
+  unbanMember,
+  promoteMember,
+  demoteMember,
+  transferOwner,
+  changeStatus,
 };
 
 export default clubController;
