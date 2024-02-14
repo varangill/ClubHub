@@ -58,16 +58,8 @@ async function getClubs(req, res, next) {
 
 async function kickMember(req, res, next) {
   try {
-    //Do something
-  } catch (err) {
-    console.error(`Error`, err.message);
-    next(err);
-  }
-}
-
-async function kickMember(req, res, next) {
-  try {
-    //Do something
+    await kickClubMember(req.body.userId, req.body.clubId);
+    res.send({ status: "kicked" });
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);

@@ -41,7 +41,12 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
-async function kickClubMember(userId, clubId) {}
+async function kickClubMember(userId, clubId) {
+  const query = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
 
 async function banClubMember(userId, clubId) {}
 
@@ -52,6 +57,8 @@ async function promoteClubMember(userId, clubId) {}
 async function demoteClubMember(userId, clubId) {}
 
 async function transferClubOwnership(userId, clubId) {}
+
+async function changeClubStatus(clubId, newStatus) {}
 
 export {
   fetchClubInfo,
@@ -64,4 +71,5 @@ export {
   promoteClubMember,
   demoteClubMember,
   transferClubOwnership,
+  changeClubStatus,
 };
