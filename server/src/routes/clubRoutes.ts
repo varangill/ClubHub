@@ -129,6 +129,33 @@
  *     responses:
  *       '201':
  *         description: User updated to executive
+ * /clubs/demote-member:
+ *   post:
+ *     summary: Demote a member to normal member
+ *     description: Update the membershipType of a user in a club to member
+ *     tags: [Users]
+ *     requestBody:
+ *       description: User ID, club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: User's ID
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - userId
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: User updated to member
  */
 
 import { Router } from "express";
@@ -141,5 +168,6 @@ router.get("/memberships/:id", clubController.getClubMemberships);
 router.post("/create-club", clubController.createClub);
 router.delete("/kick-user", clubController.kickMember);
 router.post("/promote-member", clubController.promoteMember);
+router.post("/demote-member", clubController.demoteMember);
 
 export default router;

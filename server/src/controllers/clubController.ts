@@ -99,7 +99,11 @@ async function promoteMember(req, res, next) {
 
 async function demoteMember(req, res, next) {
   try {
-    //Do something
+    const newMembership = await demoteClubMember(
+      req.body.userId,
+      req.body.clubId
+    );
+    res.send(newMembership);
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);
