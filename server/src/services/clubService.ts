@@ -66,7 +66,15 @@ async function demoteClubMember(userId, clubId) {
   return res;
 }
 
-async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {}
+async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {
+  const query1 = `UPDATE memberships SET "membershipType" = 'owner' WHERE "userId" = $1 AND "clubId" = $2`;
+  const query2 = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
+
+  await db.query(query1, [newOwnerId, clubId]);
+  const res = await db.query(query2, [oldOwnerId, clubId]);
+
+  return res;
+}
 
 async function changeClubStatus(clubId, newStatus) {}
 

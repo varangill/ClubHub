@@ -156,6 +156,37 @@
  *     responses:
  *       '201':
  *         description: User updated to member
+ * /clubs/transfer-ownership:
+ *   post:
+ *     summary: Gives ownership to a different user
+ *     description: Update the membershipType of new owner to 'owner', old owner to 'executive'
+ *     tags: [Users]
+ *     requestBody:
+ *       description: Old Owner ID, New Owner ID, Club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newOwnerId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: New Owner's ID
+ *               oldOwnerId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Old Owner's ID
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - userId
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: Ownership transferred
  */
 
 import { Router } from "express";
@@ -169,5 +200,6 @@ router.post("/create-club", clubController.createClub);
 router.delete("/kick-user", clubController.kickMember);
 router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
+router.post("/transfer-ownership", clubController.transferOwner);
 
 export default router;

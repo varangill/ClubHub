@@ -112,7 +112,14 @@ async function demoteMember(req, res, next) {
 
 async function transferOwner(req, res, next) {
   try {
-    //Do something
+    //returned membership is the membership of the previous owner
+    const newMembership = await transferClubOwnership(
+      req.body.newOwnerId,
+      req.body.oldOwnerId,
+      req.body.clubId
+    );
+
+    res.send(newMembership);
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);
