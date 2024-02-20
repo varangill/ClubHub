@@ -79,7 +79,7 @@
  *   delete:
  *     summary: Kick user from a club
  *     description: Delete a membership for a user given a club
- *     tags: [Users]
+ *     tags: [Clubs]
  *     requestBody:
  *       description: User ID, club ID
  *       required: true
@@ -106,7 +106,7 @@
  *   post:
  *     summary: Promote a member to executive
  *     description: Update the membershipType of a user in a club to executive
- *     tags: [Users]
+ *     tags: [Clubs]
  *     requestBody:
  *       description: User ID, club ID
  *       required: true
@@ -133,7 +133,7 @@
  *   post:
  *     summary: Demote a member to normal member
  *     description: Update the membershipType of a user in a club to member
- *     tags: [Users]
+ *     tags: [Clubs]
  *     requestBody:
  *       description: User ID, club ID
  *       required: true
@@ -160,7 +160,7 @@
  *   post:
  *     summary: Gives ownership to a different user
  *     description: Update the membershipType of new owner to 'owner', old owner to 'executive'
- *     tags: [Users]
+ *     tags: [Clubs]
  *     requestBody:
  *       description: Old Owner ID, New Owner ID, Club ID
  *       required: true
@@ -187,6 +187,33 @@
  *     responses:
  *       '201':
  *         description: Ownership transferred
+ * /clubs/change-status:
+ *   post:
+ *     summary: Change join status of a club
+ *     description: Update the joinStatus of a club
+ *     tags: [Clubs]
+ *     requestBody:
+ *       description: New (join) status, club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newStatus:
+ *                 type: string {"open", "application", "closed"}
+ *                 format: string
+ *                 description: New join status
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - newStatus
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: Club status updated
  */
 
 import { Router } from "express";
@@ -201,5 +228,6 @@ router.delete("/kick-user", clubController.kickMember);
 router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
 router.post("/transfer-ownership", clubController.transferOwner);
+router.post("/change-status", clubController.changeStatus);
 
 export default router;

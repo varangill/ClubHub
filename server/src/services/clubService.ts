@@ -76,7 +76,12 @@ async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {
   return res;
 }
 
-async function changeClubStatus(clubId, newStatus) {}
+async function changeClubStatus(clubId, newStatus) {
+  const query = `UPDATE clubs SET "joinStatus" = $1 WHERE "id" = $2`;
+  const res = await db.query(query, [newStatus, clubId]);
+
+  return res.rows[0];
+}
 
 export {
   fetchClubInfo,

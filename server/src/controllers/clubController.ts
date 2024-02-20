@@ -128,7 +128,12 @@ async function transferOwner(req, res, next) {
 
 async function changeStatus(req, res, next) {
   try {
-    //Do something
+    const changedClub = await changeClubStatus(
+      req.body.clubId,
+      req.body.newStatus
+    );
+
+    res.send(changedClub);
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);
