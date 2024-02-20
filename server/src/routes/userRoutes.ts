@@ -119,7 +119,7 @@
  *       '201':
  *         description: User joined club
  * /users/leave-club:
- *   post:
+ *   delete:
  *     summary: Make user leave a club
  *     description: Delete a membership for a user given a club
  *     tags: [Users]

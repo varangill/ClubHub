@@ -75,6 +75,33 @@
  *               - joinStatus
  *       '201':
  *         description: Club created successfully
+ * /clubs/kick-user:
+ *   delete:
+ *     summary: Kick user from a club
+ *     description: Delete a membership for a user given a club
+ *     tags: [Users]
+ *     requestBody:
+ *       description: User ID, club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: User's ID
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - userId
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: User kicked from club
  */
 
 import { Router } from "express";
@@ -85,5 +112,6 @@ router.get("/", clubController.getClubs);
 router.get("/:id", clubController.getClubInfo);
 router.get("/memberships/:id", clubController.getClubMemberships);
 router.post("/create-club", clubController.createClub);
+router.delete("/kick-user", clubController.kickMember);
 
 export default router;
