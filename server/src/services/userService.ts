@@ -50,6 +50,14 @@ async function authenticateLogin(email, passwordInput) {
 }
 
 async function joinClub(userId, clubId) {
+  const checkBanExistsQuery = `SELECT 1 FROM bans WHERE "userId" = $1 AND "clubId" = $2 LIMIT 1`;
+  const banRes = await db.query(checkBanExistsQuery, [userId, clubId]);
+
+  //If a ban exists, prevent membership from being created
+  if (banRes.rows.length > 0) {
+    return null;
+  }
+
   const membershipType = "member";
   const query = `INSERT INTO memberships ("userId", "clubId", "membershipType") VALUES ($1, $2, $3)`;
   const res = await db.query(query, [userId, clubId, membershipType]);

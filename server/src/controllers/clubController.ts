@@ -9,6 +9,7 @@ import {
   demoteClubMember,
   transferClubOwnership,
   changeClubStatus,
+  unbanClubMember,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -68,7 +69,12 @@ async function kickMember(req, res, next) {
 
 async function banMember(req, res, next) {
   try {
-    //Do something
+    const ban = await banClubMember(
+      req.body.userId,
+      req.body.clubId,
+      req.body.bannerId
+    );
+    res.json(ban);
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);
@@ -77,7 +83,9 @@ async function banMember(req, res, next) {
 
 async function unbanMember(req, res, next) {
   try {
-    //Do something
+    await unbanClubMember(req.body.userId, req.body.clubId);
+
+    res.send("Unbanned");
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);

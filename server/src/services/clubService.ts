@@ -48,9 +48,22 @@ async function kickClubMember(userId, clubId) {
   return res;
 }
 
-async function banClubMember(userId, clubId) {}
+async function banClubMember(userId, clubId, bannerId) {
+  const banQuery = `INSERT INTO bans ("userId", "clubId", "bannerId") VALUES ($1, $2, $3)`;
+  const deleteMembershipQuery = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`; //delete existing membership
 
-async function unbanClubMember(userId, clubId) {}
+  const res = await db.query(banQuery, [userId, clubId, bannerId]);
+  await db.query(deleteMembershipQuery, [clubId, userId]);
+
+  return res;
+}
+
+async function unbanClubMember(userId, clubId) {
+  const query = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
 
 async function promoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;

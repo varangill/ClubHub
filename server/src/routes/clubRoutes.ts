@@ -229,5 +229,7 @@ router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
 router.post("/transfer-ownership", clubController.transferOwner);
 router.post("/change-status", clubController.changeStatus);
+router.post("/ban-user", clubController.banMember);
+router.delete("/unban-user", clubController.unbanMember);
 
 export default router;
