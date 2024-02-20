@@ -214,6 +214,65 @@
  *     responses:
  *       '201':
  *         description: Club status updated
+ * /clubs/ban-user:
+ *   post:
+ *     summary: Bans a user
+ *     description: Creates ban for a user and deletes existing membership
+ *     tags: [Clubs]
+ *     requestBody:
+ *       description: User ID, club ID, banner's user ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: ID of person banned
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *               bannerId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: ID of person banning userId
+ *             required:
+ *               - userId
+ *               - clubId
+ *               - bannerId
+ *     responses:
+ *       '201':
+ *         description: User banned
+ * /clubs/unban-user:
+ *   delete:
+ *     summary: Unbans a user
+ *     description: Deletes existing ban for a user
+ *     tags: [Clubs]
+ *     requestBody:
+ *       description: User ID, club ID
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: ID of person being unbanned
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *             required:
+ *               - userId
+ *               - clubId
+ *     responses:
+ *       '201':
+ *         description: User unbanned
  */
 
 import { Router } from "express";
