@@ -41,4 +41,71 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
-export { fetchClubInfo, fetchClubs, createNewClub, fetchClubMemberships };
+async function kickClubMember(userId, clubId) {
+  const query = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
+
+async function banClubMember(userId, clubId, bannerId) {
+  const banQuery = `INSERT INTO bans ("userId", "clubId", "bannerId") VALUES ($1, $2, $3)`;
+  const deleteMembershipQuery = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`; //delete existing membership
+
+  const res = await db.query(banQuery, [userId, clubId, bannerId]);
+  await db.query(deleteMembershipQuery, [clubId, userId]);
+
+  return res;
+}
+
+async function unbanClubMember(userId, clubId) {
+  const query = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
+
+async function promoteClubMember(userId, clubId) {
+  const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
+
+async function demoteClubMember(userId, clubId) {
+  const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
+  const res = await db.query(query, [clubId, userId]);
+
+  return res;
+}
+
+async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {
+  const query1 = `UPDATE memberships SET "membershipType" = 'owner' WHERE "userId" = $1 AND "clubId" = $2`;
+  const query2 = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
+
+  await db.query(query1, [newOwnerId, clubId]);
+  const res = await db.query(query2, [oldOwnerId, clubId]);
+
+  return res;
+}
+
+async function changeClubStatus(clubId, newStatus) {
+  const query = `UPDATE clubs SET "joinStatus" = $1 WHERE "id" = $2`;
+  const res = await db.query(query, [newStatus, clubId]);
+
+  return res.rows[0];
+}
+
+export {
+  fetchClubInfo,
+  fetchClubs,
+  createNewClub,
+  fetchClubMemberships,
+  kickClubMember,
+  banClubMember,
+  unbanClubMember,
+  promoteClubMember,
+  demoteClubMember,
+  transferClubOwnership,
+  changeClubStatus,
+};

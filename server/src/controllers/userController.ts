@@ -71,8 +71,12 @@ async function getClubMembership(req, res, next) {
 
 async function userJoinClub(req, res, next) {
   try {
-    await joinClub(req.body.userId, req.body.clubId);
-    res.send({ membershipType: "member" });
+    const didUserJoin = await joinClub(req.body.userId, req.body.clubId);
+    if (didUserJoin) {
+      res.send({ membershipType: "member" });
+    } else {
+      res.send({ membershipType: "banned" });
+    }
   } catch (err) {
     console.error(`Error joining club`, err.message);
     next(err);

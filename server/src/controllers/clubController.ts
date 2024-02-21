@@ -3,6 +3,13 @@ import {
   fetchClubs,
   createNewClub,
   fetchClubMemberships,
+  kickClubMember,
+  banClubMember,
+  promoteClubMember,
+  demoteClubMember,
+  transferClubOwnership,
+  changeClubStatus,
+  unbanClubMember,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -50,11 +57,109 @@ async function getClubs(req, res, next) {
   }
 }
 
+async function kickMember(req, res, next) {
+  try {
+    await kickClubMember(req.body.userId, req.body.clubId);
+    res.send({ status: "kicked" });
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function banMember(req, res, next) {
+  try {
+    const ban = await banClubMember(
+      req.body.userId,
+      req.body.clubId,
+      req.body.bannerId
+    );
+    res.json(ban);
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function unbanMember(req, res, next) {
+  try {
+    await unbanClubMember(req.body.userId, req.body.clubId);
+
+    res.send("Unbanned");
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function promoteMember(req, res, next) {
+  try {
+    const newMembership = await promoteClubMember(
+      req.body.userId,
+      req.body.clubId
+    );
+    res.send(newMembership);
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function demoteMember(req, res, next) {
+  try {
+    const newMembership = await demoteClubMember(
+      req.body.userId,
+      req.body.clubId
+    );
+    res.send(newMembership);
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function transferOwner(req, res, next) {
+  try {
+    //returned membership is the membership of the previous owner
+    const newMembership = await transferClubOwnership(
+      req.body.newOwnerId,
+      req.body.oldOwnerId,
+      req.body.clubId
+    );
+
+    res.send(newMembership);
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
+async function changeStatus(req, res, next) {
+  try {
+    const changedClub = await changeClubStatus(
+      req.body.clubId,
+      req.body.newStatus
+    );
+
+    res.send(changedClub);
+  } catch (err) {
+    console.error(`Error`, err.message);
+    next(err);
+  }
+}
+
 const clubController = {
   getClubInfo,
   getClubs,
   createClub,
   getClubMemberships,
+  kickMember,
+  banMember,
+  unbanMember,
+  promoteMember,
+  demoteMember,
+  transferOwner,
+  changeStatus,
 };
 
 export default clubController;

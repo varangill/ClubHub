@@ -33,7 +33,9 @@ export default function ClubPage() {
       userId: user?.id,
       clubId: id,
     }).then((res) => {
-      setMemberType(res.membershipType);
+      if (res.membershipType === "member") {
+        setMemberType(res.membershipType);
+      }
     });
     setShowPopup(true);
     setTimeout(() => {
