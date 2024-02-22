@@ -273,6 +273,44 @@
  *     responses:
  *       '201':
  *         description: User unbanned
+ * /clubs/update-club:
+ *   post:
+ *     summary: Updates a club
+ *     description: Updates a club for a given
+ *     tags: [Clubs]
+ *     requestBody:
+ *       description: Club ID, Club Data Type, New Content
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *               type:
+ *                 type: String
+ *                 format: One of {'status', 'name', 'desc'}
+ *               newName:
+ *                 type: String
+ *                 format: String
+ *                 description: Club's new name
+ *               newDesc:
+ *                 type: String
+ *                 format: String
+ *                 description: Club's new description
+ *               newDesc:
+ *                 type: String
+ *                 format: One of {'open', 'closed', 'application'}
+ *                 description: Club's new status
+ *             required:
+ *               - clubId
+ *               - type
+ *     responses:
+ *       '201':
+ *         description: User unbanned
  */
 
 import { Router } from "express";
