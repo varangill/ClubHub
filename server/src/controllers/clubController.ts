@@ -10,6 +10,9 @@ import {
   transferClubOwnership,
   changeClubStatus,
   unbanClubMember,
+  updateClubDesc,
+  updateClubName,
+  deleteClub,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -43,6 +46,51 @@ async function createClub(req, res, next) {
     res.send(newClubId);
   } catch (err) {
     console.error(`Error creating club`, err.message);
+    next(err);
+  }
+}
+
+async function updateClub(req, res, next) {
+  try {
+    const type = req.body.type;
+    if (type === "name") {
+      const newClubObject = await updateClubName(
+        req.body.clubId,
+        req.body.newName
+      );
+
+      res.send(newClubObject);
+    } else if (type === "desc") {
+      const newClubObject = await updateClubDesc(
+        req.body.clubId,
+        req.body.newDesc
+      );
+
+      res.send(newClubObject);
+    } else if (type === "status") {
+      const newClubObject = await changeClubStatus(
+        req.body.clubId,
+        req.body.newStatus
+      );
+
+      res.send(newClubObject);
+    } else {
+      res.status(400).send({
+        message: "Error: Type not valid",
+      });
+    }
+  } catch (err) {
+    console.error(`Error updating club`, err.message);
+    next(err);
+  }
+}
+
+async function deleteExistingClub(req, res, next) {
+  try {
+    await deleteClub(req.body.clubId);
+    res.send("Club deleted");
+  } catch (err) {
+    console.error(`Error deleting club`, err.message);
     next(err);
   }
 }
@@ -134,20 +182,6 @@ async function transferOwner(req, res, next) {
   }
 }
 
-async function changeStatus(req, res, next) {
-  try {
-    const changedClub = await changeClubStatus(
-      req.body.clubId,
-      req.body.newStatus
-    );
-
-    res.send(changedClub);
-  } catch (err) {
-    console.error(`Error`, err.message);
-    next(err);
-  }
-}
-
 const clubController = {
   getClubInfo,
   getClubs,
@@ -159,7 +193,8 @@ const clubController = {
   promoteMember,
   demoteMember,
   transferOwner,
-  changeStatus,
+  updateClub,
+  deleteExistingClub,
 };
 
 export default clubController;

@@ -283,12 +283,13 @@ router.get("/", clubController.getClubs);
 router.get("/:id", clubController.getClubInfo);
 router.get("/memberships/:id", clubController.getClubMemberships);
 router.post("/create-club", clubController.createClub);
+router.post("/update-club", clubController.updateClub);
 router.delete("/kick-user", clubController.kickMember);
 router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
 router.post("/transfer-ownership", clubController.transferOwner);
-router.post("/change-status", clubController.changeStatus);
 router.post("/ban-user", clubController.banMember);
 router.delete("/unban-user", clubController.unbanMember);
+router.delete("/delete-club", clubController.deleteExistingClub);
 
 export default router;

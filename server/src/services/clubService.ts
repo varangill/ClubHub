@@ -28,6 +28,30 @@ async function createNewClub(clubName, desc, joinStatus, userId) {
   return res.rows[0]; //return ID of new club
 }
 
+async function updateClubName(clubId, newClubName) {
+  const query = `UPDATE clubs SET "clubName" = $1 WHERE "id" = $2`;
+  const res = await db.query(query, [newClubName, clubId]);
+
+  return res.rows[0];
+}
+
+async function updateClubDesc(clubId, newClubDesc) {
+  const query = `UPDATE clubs SET "clubDesc" = $1 WHERE "id" = $2`;
+  const res = await db.query(query, [newClubDesc, clubId]);
+
+  return res.rows[0];
+}
+
+async function deleteClub(clubId) {
+  const deleteQuery = `DELETE FROM memberships WHERE "clubId" = $1`;
+  await db.query(deleteQuery, [clubId]);
+
+  const query = `DELETE FROM clubs WHERE "id" = $1`;
+  const res = await db.query(query, [clubId]);
+
+  return res;
+}
+
 async function fetchClubMemberships(clubId) {
   //Query for every user in a club and return their data including their membership type
   const membershipsQuery = `
@@ -108,4 +132,7 @@ export {
   demoteClubMember,
   transferClubOwnership,
   changeClubStatus,
+  updateClubName,
+  updateClubDesc,
+  deleteClub,
 };
