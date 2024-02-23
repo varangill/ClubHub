@@ -301,7 +301,7 @@
  *                 type: String
  *                 format: String
  *                 description: Club's new description
- *               newDesc:
+ *               newStatus:
  *                 type: String
  *                 format: One of {'open', 'closed', 'application'}
  *                 description: Club's new status

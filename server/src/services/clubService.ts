@@ -97,7 +97,7 @@ async function promoteClubMember(userId, clubId) {
 }
 
 async function demoteClubMember(userId, clubId) {
-  const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
+  const query = `UPDATE memberships SET "membershipType" = 'member' WHERE "userId" = $1 AND "clubId" = $2`;
   const res = await db.query(query, [clubId, userId]);
 
   return res;
