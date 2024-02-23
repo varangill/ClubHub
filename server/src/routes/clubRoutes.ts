@@ -273,6 +273,43 @@
  *     responses:
  *       '201':
  *         description: User unbanned
+ * /clubs/update-club:
+ *   post:
+ *     summary: Updates a club
+ *     description: Updates a club for a given ID
+ *     tags: [Clubs]
+ *     requestBody:
+ *       description: Club ID, Club name, club description, club join status
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               clubId:
+ *                 type: ID
+ *                 format: ID
+ *                 description: Club's ID
+ *               name:
+ *                 type: String
+ *                 format: String
+ *                 description: Club's new name
+ *               desc:
+ *                 type: String
+ *                 format: String
+ *                 description: Club's description
+ *               status:
+ *                 type: String
+ *                 format: One of {'open', 'closed', 'application'}
+ *                 description: Club's new status
+ *             required:
+ *               - clubId
+ *               - name
+ *               - desc
+ *               - status
+ *     responses:
+ *       '201':
+ *         description: User unbanned
  */
 
 import { Router } from "express";
@@ -283,12 +320,13 @@ router.get("/", clubController.getClubs);
 router.get("/:id", clubController.getClubInfo);
 router.get("/memberships/:id", clubController.getClubMemberships);
 router.post("/create-club", clubController.createClub);
+router.post("/update-club", clubController.updateClub);
 router.delete("/kick-user", clubController.kickMember);
 router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
 router.post("/transfer-ownership", clubController.transferOwner);
-router.post("/change-status", clubController.changeStatus);
 router.post("/ban-user", clubController.banMember);
 router.delete("/unban-user", clubController.unbanMember);
+router.delete("/delete-club", clubController.deleteExistingClub);
 
 export default router;
