@@ -8,10 +8,8 @@ import {
   promoteClubMember,
   demoteClubMember,
   transferClubOwnership,
-  changeClubStatus,
+  updateClubDetails,
   unbanClubMember,
-  updateClubDesc,
-  updateClubName,
   deleteClub,
 } from "../services/clubService";
 
@@ -52,33 +50,14 @@ async function createClub(req, res, next) {
 
 async function updateClub(req, res, next) {
   try {
-    const type = req.body.type;
-    if (type === "name") {
-      const newClubObject = await updateClubName(
-        req.body.clubId,
-        req.body.newName
-      );
+    const newClubDetails = await updateClubDetails(
+      req.body.clubId,
+      req.body.name,
+      req.body.desc,
+      req.body.status
+    );
 
-      res.send(newClubObject);
-    } else if (type === "desc") {
-      const newClubObject = await updateClubDesc(
-        req.body.clubId,
-        req.body.newDesc
-      );
-
-      res.send(newClubObject);
-    } else if (type === "status") {
-      const newClubObject = await changeClubStatus(
-        req.body.clubId,
-        req.body.newStatus
-      );
-
-      res.send(newClubObject);
-    } else {
-      res.status(400).send({
-        message: "Error: Type not valid",
-      });
-    }
+    res.send(newClubDetails);
   } catch (err) {
     console.error(`Error updating club`, err.message);
     next(err);

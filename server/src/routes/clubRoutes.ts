@@ -276,10 +276,10 @@
  * /clubs/update-club:
  *   post:
  *     summary: Updates a club
- *     description: Updates a club for a given
+ *     description: Updates a club for a given ID
  *     tags: [Clubs]
  *     requestBody:
- *       description: Club ID, Club Data Type, New Content
+ *       description: Club ID, Club name, club description, club join status
  *       required: true
  *       content:
  *         application/json:
@@ -290,24 +290,23 @@
  *                 type: ID
  *                 format: ID
  *                 description: Club's ID
- *               type:
- *                 type: String
- *                 format: One of {'status', 'name', 'desc'}
- *               newName:
+ *               name:
  *                 type: String
  *                 format: String
  *                 description: Club's new name
- *               newDesc:
+ *               desc:
  *                 type: String
  *                 format: String
- *                 description: Club's new description
- *               newStatus:
+ *                 description: Club's description
+ *               status:
  *                 type: String
  *                 format: One of {'open', 'closed', 'application'}
  *                 description: Club's new status
  *             required:
  *               - clubId
- *               - type
+ *               - name
+ *               - desc
+ *               - status
  *     responses:
  *       '201':
  *         description: User unbanned
