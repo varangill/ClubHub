@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
+import MemberEditModal from "./MemberEditModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
+import { MoreVertical } from "lucide-react";
 
 export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const [showMemberModal, setShowMemberModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState({});
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
   const [memberType, setMemberType] = useState("");
@@ -22,11 +26,19 @@ export default function ClubPage() {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
     });
-    getData(`clubs/memberships/${id}`).then((res) => {
-      setMembers(res);
-    });
+    updateMemberList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const updateMemberList = async () => {
+    try {
+      await getData(`clubs/memberships/${id}`).then((res) => {
+        setMembers(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const joinClub = () => {
     postData(`users/join-club`, {
@@ -35,12 +47,14 @@ export default function ClubPage() {
     }).then((res) => {
       if (res.membershipType === "member") {
         setMemberType(res.membershipType);
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false); // Hide the popup after a few seconds
+        }, 3000);
+      } else if (res.membershipType === "banned") {
+        alert("You are banned from this club.");
       }
     });
-    setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false); // Hide the popup after a few seconds
-    }, 3000);
   };
 
   const JoinButton = () => {
@@ -75,6 +89,18 @@ export default function ClubPage() {
   return (
     <div className="club-detail-container">
       <NavBar />
+      {showMemberModal && (
+        <MemberEditModal
+          hideModal={() => {
+            setShowMemberModal(false);
+          }}
+          member={selectedMember}
+          memberType={memberType}
+          userId={user?.id}
+          clubId={id}
+          requestUpdate={updateMemberList}
+        />
+      )}
       <h2 className="club-heading">{clubName}</h2>
       <h5>{clubDesc}</h5>
 
@@ -87,7 +113,19 @@ export default function ClubPage() {
       <div>
         Members
         {members.map((member) => {
-          return <div key={member["id"]}>{member["name"]}</div>;
+          return (
+            <div key={member["userId"]}>
+              {member["name"]}
+              {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
+                <MoreVertical
+                  onClick={() => {
+                    setSelectedMember(member);
+                    setShowMemberModal(true);
+                  }}
+                />
+              ) : null}
+            </div>
+          );
         })}
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
