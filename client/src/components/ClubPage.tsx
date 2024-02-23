@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import MemberEditModal from "./MemberEditModal";
+import ClubSettingsModal from "./ClubSettingsModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
@@ -9,9 +10,11 @@ import { MoreVertical } from "lucide-react";
 export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
+  const [clubStatus, setClubStatus] = useState("open");
   const [memberType, setMemberType] = useState("");
   const [members, setMembers] = useState([]); //Stores the current members of the club
   const { id } = useParams();
@@ -19,14 +22,11 @@ export default function ClubPage() {
 
   //Fetch relevant data on render
   useEffect(() => {
-    getData(`clubs/${id}`).then((res) => {
-      setClubDesc(res.clubDesc);
-      setClubName(res.clubName);
-    });
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
     });
     updateMemberList();
+    updateClubInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,6 +34,18 @@ export default function ClubPage() {
     try {
       await getData(`clubs/memberships/${id}`).then((res) => {
         setMembers(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateClubInfo = async () => {
+    try {
+      await getData(`clubs/${id}`).then((res) => {
+        setClubDesc(res.clubDesc);
+        setClubName(res.clubName);
+        setClubStatus(res.joinStatus);
       });
     } catch (error) {
       console.log(error);
@@ -86,6 +98,21 @@ export default function ClubPage() {
     );
   };
 
+  const SettingsButton = () => {
+    return (
+      <div className="join-button-container">
+        <button
+          onClick={() => {
+            setShowSettingsModal(true);
+          }}
+          className="join-button"
+        >
+          Settings
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="club-detail-container">
       <NavBar />
@@ -101,10 +128,23 @@ export default function ClubPage() {
           requestUpdate={updateMemberList}
         />
       )}
+      {showSettingsModal && (
+        <ClubSettingsModal
+          hideModal={() => {
+            setShowSettingsModal(false);
+          }}
+          requestUpdate={updateClubInfo}
+          clubId={id}
+          originalName={clubName}
+          originalDesc={clubDesc}
+          originalStatus={clubStatus}
+        />
+      )}
       <h2 className="club-heading">{clubName}</h2>
       <h5>{clubDesc}</h5>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
+      {memberType != "member" && <SettingsButton />}
       {memberType === "none" ? (
         <JoinButton />
       ) : memberType === "owner" ? null : (
