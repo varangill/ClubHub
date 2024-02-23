@@ -138,6 +138,7 @@ export default function ClubPage() {
           originalName={clubName}
           originalDesc={clubDesc}
           originalStatus={clubStatus}
+          isOwner={memberType === "owner"}
         />
       )}
       <h2 className="club-heading">{clubName}</h2>

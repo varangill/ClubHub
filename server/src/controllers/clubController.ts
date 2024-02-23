@@ -67,7 +67,7 @@ async function updateClub(req, res, next) {
 async function deleteExistingClub(req, res, next) {
   try {
     await deleteClub(req.body.clubId);
-    res.send("Club deleted");
+    res.send({ message: "Club deleted" });
   } catch (err) {
     console.error(`Error deleting club`, err.message);
     next(err);

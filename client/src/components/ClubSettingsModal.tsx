@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { postData } from "../api";
+import { postData, deleteData } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function ClubSettingsModal(props) {
   const [clubName, setClubName] = useState(props.originalName);
   const [desc, setDesc] = useState(props.originalDesc);
   const [joinStatus, setJoinStatus] = useState(props.originalStatus);
+  const navigate = useNavigate();
 
   const onSubmit = async () => {
     try {
@@ -18,6 +20,19 @@ export default function ClubSettingsModal(props) {
       }).then(() => {
         props.requestUpdate();
         props.hideModal();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDelete = async () => {
+    //TO-DO: Add in confirmation asking if owner wants to delete club
+    try {
+      await deleteData(`clubs/delete-club`, {
+        clubId: props.clubId,
+      }).then(() => {
+        navigate(`/all_clubs`); //Navigate user to all clubs page after deleting club
       });
     } catch (error) {
       console.log(error);
@@ -74,6 +89,11 @@ export default function ClubSettingsModal(props) {
         >
           Close
         </Button>
+        {props.isOwner && (
+          <Button variant="danger" onClick={onDelete}>
+            Delete Club
+          </Button>
+        )}
         <Button variant="primary" onClick={onSubmit}>
           Update
         </Button>
