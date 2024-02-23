@@ -50,14 +50,14 @@ async function createClub(req, res, next) {
 
 async function updateClub(req, res, next) {
   try {
-    const newClubDetails = await updateClubDetails(
+    await updateClubDetails(
       req.body.clubId,
       req.body.name,
       req.body.desc,
       req.body.status
     );
 
-    res.send(newClubDetails);
+    res.send({ message: "Updated club" });
   } catch (err) {
     console.error(`Error updating club`, err.message);
     next(err);
