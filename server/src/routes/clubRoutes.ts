@@ -41,6 +41,21 @@
  *     responses:
  *       '200':
  *         description: Successful response
+ * /clubs/owner/{id}:
+ *   get:
+ *     summary: Get club owner by ID
+ *     description: Retrieve the club's owner user col
+ *     tags: [Clubs]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Club ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
  * /clubs/create-club:
  *   post:
  *     summary: Create a new club
@@ -319,6 +334,7 @@ const router = Router();
 router.get("/", clubController.getClubs);
 router.get("/:id", clubController.getClubInfo);
 router.get("/memberships/:id", clubController.getClubMemberships);
+router.get("/owner/:id", clubController.getClubOwner);
 router.post("/create-club", clubController.createClub);
 router.post("/update-club", clubController.updateClub);
 router.delete("/kick-user", clubController.kickMember);

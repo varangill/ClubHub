@@ -58,6 +58,20 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
+async function fetchClubOwner(clubId) {
+  // return the owner of the given club
+  const membershipsQuery = `
+    SELECT u.name
+    FROM memberships m
+    JOIN users u ON m."userId" = u.id
+    WHERE m."clubId" = $1 AND m."membershipType" = 'owner'
+    LIMIT 1
+  `;
+
+  const membershipsRes = await db.query(membershipsQuery, [clubId]);
+  return membershipsRes.rows;
+}
+
 async function kickClubMember(userId, clubId) {
   const query = `DELETE FROM memberships WHERE "clubId" = $1 AND "userId" = $2`;
   const res = await db.query(query, [clubId, userId]);
@@ -111,6 +125,7 @@ export {
   fetchClubs,
   createNewClub,
   fetchClubMemberships,
+  fetchClubOwner,
   kickClubMember,
   banClubMember,
   unbanClubMember,

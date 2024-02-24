@@ -3,6 +3,7 @@ import {
   fetchClubs,
   createNewClub,
   fetchClubMemberships,
+  fetchClubOwner,
   kickClubMember,
   banClubMember,
   promoteClubMember,
@@ -29,6 +30,16 @@ async function getClubMemberships(req, res, next) {
     res.json(fetchedData);
   } catch (err) {
     console.error(`Error fetching club memberships, err.message`);
+    next(err);
+  }
+}
+
+async function getClubOwner(req, res, next) {
+  try {
+    const fetchedData = await fetchClubOwner(req.params.id);
+    res.json(fetchedData);
+  } catch (err) {
+    console.error(`Error fetching club owner, err.message`);
     next(err);
   }
 }
@@ -166,6 +177,7 @@ const clubController = {
   getClubs,
   createClub,
   getClubMemberships,
+  getClubOwner,
   kickMember,
   banMember,
   unbanMember,
