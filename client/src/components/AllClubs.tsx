@@ -33,6 +33,7 @@ export default function AllClubs() {
         onClick={() => {
           setShowModal(true);
         }}
+        className="create-club-btn"
       >
         Create Club
       </Button>
