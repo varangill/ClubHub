@@ -19,6 +19,8 @@ export default function ClubPage() {
   const [members, setMembers] = useState([]); //Stores the current members of the club
   const { id } = useParams();
   const { user } = useAuth();
+  const [bannedMembers, setBannedMembers] = useState([]);
+
 
   //Fetch relevant data on render
   useEffect(() => {
@@ -27,8 +29,33 @@ export default function ClubPage() {
     });
     updateMemberList();
     updateClubInfo();
+    fetchBannedMembers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
+  
+  const unbanMember = async (userId) => {
+    try {
+      const response = await postData(`/api/club/${id}/unban`, { userId });
+      if (response.ok) {
+        // Update the bannedMembers list to reflect the change
+        setBannedMembers(bannedMembers.filter(member => member.userId !== userId));
+      } else {
+        throw new Error('Failed to unban the member');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchBannedMembers = async () => {
+    try {
+      await getData(`clubs/banned-members/${id}`).then((res) => {
+        setBannedMembers(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const updateMemberList = async () => {
     try {
@@ -113,9 +140,28 @@ export default function ClubPage() {
     );
   };
 
+  const BannedMembersSection = () => {
+    return (
+      <div>
+        <h3>Banned Members</h3>
+        {bannedMembers.length > 0 ? (
+          bannedMembers.map((member) => (
+            <div key={userId.id}>  // Ensure you use a unique key, such as the member's ID.
+              {member.name}  // Replace 'name' with the actual property that contains the member's name.
+              <button onClick={() => unbanMember(name.id)}>Unban</button>  // Ensure you pass the member's ID to unbanMember.
+            </div>
+          ))
+        ) : (
+          <p>No banned members.</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="club-detail-container">
       <NavBar />
+   
       {showMemberModal && (
         <MemberEditModal
           hideModal={() => {
@@ -144,6 +190,7 @@ export default function ClubPage() {
       <h2 className="club-heading">{clubName}</h2>
       <h5>{clubDesc}</h5>
 
+
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
       {memberType != "member" && <SettingsButton />}
       {memberType === "none" ? (
@@ -166,8 +213,13 @@ export default function ClubPage() {
                 />
               ) : null}
             </div>
+
           );
         })}
+            {/*Banned Members*/}
+       {<BannedMembersSection />
+       }
+       
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>

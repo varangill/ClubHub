@@ -58,6 +58,14 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
+
+async function fetchBannedMembers(clubId) {
+  const query = `SELECT d1.name FROM users d1 INNER JOIN bans d2 ON d1.id = d2."userId" WHERE d2."clubId" = $1`;
+  const res = await db.query(query, [clubId]);
+
+  return res.rows; // Return the rows directly for easier processing
+}
+
 async function fetchClubOwner(clubId) {
   // return the owner of the given club
   const membershipsQuery = `
@@ -90,8 +98,10 @@ async function banClubMember(userId, clubId, bannerId) {
 }
 
 async function unbanClubMember(userId, clubId) {
+  const addMembershipQuery = `INSERT INTO memberships WHERE "clubId" = $1 AND "userId" = $2`; 
   const query = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const res = await db.query(addMembershipQuery, [clubId, userId]);
+  await db.query(query, [clubId, userId]);
 
   return res;
 }
@@ -122,6 +132,7 @@ async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {
 
 export {
   fetchClubInfo,
+  fetchBannedMembers,
   fetchClubs,
   createNewClub,
   fetchClubMemberships,
