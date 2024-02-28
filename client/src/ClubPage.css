@@ -16,12 +16,11 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 75px;
-    transition: filter 0.3s ease;
+    margin-top: 75px
   }
   
   .join-button:hover {
-    filter: brightness(0.8);; /* Darker shade on hover */
+    background-color: #0056b3; /* Darker shade on hover */
   }
   
   .popup {
@@ -53,8 +52,8 @@
   
   .announcement-button {
     position: absolute;
-    top: 5px;
-    left: 30%;
+    top: 10px;
+    right: 10px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -62,11 +61,6 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
-    transition: filter 0.3s ease;
-  }
-
-  .announcement-button:hover {
-    filter: brightness(0.8);
   }
 
   .announcement-container {
@@ -90,21 +84,4 @@
 
   .club-heading {
     padding-left: 20px;
-  }
-
-  .announcement {
-    border: 1px solid black;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding-left: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-
-  .announcement:hover {
-    background-color: lightgray;
-  }
-
-  .announcement-header {
-    border-bottom: 1px solid gray
   }

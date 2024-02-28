@@ -24,24 +24,19 @@ async function createNewAnnouncement(clubId, userId, announcementTitle, announce
 }
 
 async function fetchClubAnnouncements(clubId) {
-    const query = `SELECT * FROM announcements WHERE "clubId" = $1`;
+    const query = `
+        SELECT * FROM announcements
+        WHERE "clubId" = $1
+        `;
     const res = await db.query(query, [clubId])
 
     const announcements = res.rows;
     return announcements;
   }
 
-async function deleteAnnouncement(id) {
-    const query = `DELETE FROM announcements WHERE "id" = $1`;
-    const res = await db.query(query, [id])
-
-    return res;
-}
-
 export {
     fetchAnnouncementInfo,
     fetchAnnouncements,
     createNewAnnouncement,
     fetchClubAnnouncements,
-    deleteAnnouncement,
 };

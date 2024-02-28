@@ -32,21 +32,12 @@ export default function ClubPage() {
       console.log(res)
     });
 
-    updateAnnouncementList();
+    //getData(`announcements/`)
+
     updateMemberList();
     updateClubInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const updateAnnouncementList = async () => {
-    try {
-      getData(`announcements/club/${id}`).then((res) => {
-        setAnnouncements(res)
-      });
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   const updateMemberList = async () => {
     try {
@@ -149,7 +140,7 @@ export default function ClubPage() {
           }}
           className="announcement-button"
         >
-          Create Announcement
+          Create Announcment
         </button>
     );
   };
@@ -224,18 +215,8 @@ export default function ClubPage() {
           })}
         </div>
         <div class="announcement-container">
-          <div class="announcement-header">
-            <h1>Announcements</h1>
-          </div>
-          <div>
-            {announcements.map((announcement) => {
-              return (
-                <ul key={announcement["id"]} class="announcement" onClick={() => alert("desc")}>
-                  {announcement["announcementTitle"]}
-                </ul>
-              )
-            })}
-          </div>
+          <h1>Announcements</h1>
+          <p></p>
           {memberType != "member" && <AnnouncementCreationButton />}
         </div>
       </div>
