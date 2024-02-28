@@ -5,7 +5,7 @@
   .join-button-container {
     position: absolute;
     top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    right: 30px; /* Adjust as needed */
   }
   
   .join-button {
@@ -50,3 +50,38 @@
     margin-left: 15px;
   }
   
+  .announcement-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .announcement-container {
+    flex: 1;
+    position: relative;
+    padding-left: 10px;
+  }
+
+  .first-row {
+    display: flex;
+    padding: 10px 20px;
+  }
+
+  .members {
+    width: 50%;
+  }
+
+  .club-desc {
+    padding-left: 20px;
+  }
+
+  .club-heading {
+    padding-left: 20px;
+  }

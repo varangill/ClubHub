@@ -2,9 +2,10 @@ import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
+  await knex("announcements").del();
+  await knex("memberships").del();
   await knex("clubs").del();
   await knex("users").del();
-  await knex("memberships").del();
 
   // Inserts seed entries
   await knex("clubs").insert([
@@ -28,4 +29,12 @@ export async function seed(knex: Knex): Promise<void> {
     { clubId: "2", userId: "3", membershipType: "owner" },
     { clubId: "3", userId: "3", membershipType: "executive" },
   ]);
+
+  // await knex("announcements").insert([
+  //   { id: "1", clubId: "1", userId: "1", announcementTitle: "TITLE", announcementText: "TEXT", announcementTime: "2023-07-23T06:42:32.520Z"}
+  // ])
+
+  await knex("applications").insert([
+    { id: "1", clubId: "1", userId: "1", appText: "What is your name", applicationTime: "2023-07-23T06:42:32.520Z"}
+  ])
 }

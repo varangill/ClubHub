@@ -1,4 +1,4 @@
-import { Knex } from "knex";
+import { Knex, TableBuilder } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema

@@ -1,0 +1,61 @@
+import {
+    fetchAnnouncementInfo,
+    fetchAnnouncements,
+    createNewAnnouncement,
+    fetchClubAnnouncements,
+} from "../services/announcementService";
+
+async function getAnnouncementInfo(req, res, next) {
+    try  {
+        const fetchedData = await fetchAnnouncementInfo(req.params.id);
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error fetching announcement info`, err.message);
+        next(err);
+    }
+}
+
+async function getAnnouncements(req, res, next) {
+    try {
+        const fetchedData = await fetchAnnouncements();
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error fetching announcements`, err.message);
+        next(err);
+    }
+}
+
+async function createAnnouncement(req, res, next) {
+    try {
+        const newAnnouncementId = await createNewAnnouncement(
+            req.body.clubId,
+            req.body.userId,
+            req.body.announcementTitle,
+            req.body.announcementText,
+            req.body.announcementTime
+        );
+        res.send(newAnnouncementId);
+    } catch (err) {
+        console.error(`Error creating announcement`, err.message);
+        next(err);
+    }
+}
+
+async function getClubAnnouncements(req, res, next) {
+    try {
+        const fetchedData = await fetchClubAnnouncements(req.params.id)
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error fetching announcements`, err.message);
+        next(err);
+    }
+}
+
+const announcementController = {
+    getAnnouncementInfo,
+    getAnnouncements,
+    createAnnouncement,
+    getClubAnnouncements,
+};
+
+export default announcementController;
