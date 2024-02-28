@@ -26,6 +26,7 @@ export default function ClubCreationModal(props) {
             announcementTime
         })
         alert("Announcement Created")
+        props.requestUpdate();
         props.hideModal();
     } catch (err) {
         console.log(err)

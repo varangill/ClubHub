@@ -3,6 +3,7 @@ import {
     fetchAnnouncements,
     createNewAnnouncement,
     fetchClubAnnouncements,
+    deleteAnnouncement,
 } from "../services/announcementService";
 
 async function getAnnouncementInfo(req, res, next) {
@@ -51,11 +52,22 @@ async function getClubAnnouncements(req, res, next) {
     }
 }
 
+async function deleteExistingAnnouncement(req, res, next) {
+    try {
+        await deleteAnnouncement(req.params.id);
+        res.send({ message: "Announcement Deleted"});
+    } catch (err) {
+        console.error(`Error deleting announcement`, err.message);
+        next(err)
+    }
+}
+
 const announcementController = {
     getAnnouncementInfo,
     getAnnouncements,
     createAnnouncement,
     getClubAnnouncements,
+    deleteExistingAnnouncement,
 };
 
 export default announcementController;
