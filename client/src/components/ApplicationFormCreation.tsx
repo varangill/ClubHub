@@ -53,32 +53,32 @@ export default function ApplicationForm() {
 
     const handleAddInputField = () => {
         setInputFields([...inputFields, '']);
-      };
+    };
     
-      const handleInputChange = (index, value) => {
+    const handleInputChange = (index, value) => {
         const updatedInputFields = [...inputFields];
         updatedInputFields[index] = value;
         setInputFields(updatedInputFields);
         updateString();
-      };
+    };
     
-      const handleRemoveInputField = (index) => {
-        const updatedInputFields = [...inputFields];
-        updatedInputFields.splice(index, 1);
-        setInputFields(updatedInputFields);
-      };
+    const handleRemoveInputField = (index) => {
+    const updatedInputFields = [...inputFields];
+    updatedInputFields.splice(index, 1);
+    setInputFields(updatedInputFields);
+    };
     
-      const handleSubmit = (event) => {
-        const result = window.confirm("Are you sure you want to submit?")
-        if(result) {
-            event.preventDefault();
-            const newData = inputFields.filter(input => input.trim() !== '');
-            setListData([...listData, ...newData]);
-            createApplication();
-            alert("Submitted")
-            navigate(`/club/${id}`)
-        }
-      };
+    const handleSubmit = (event) => {
+    const result = window.confirm("Are you sure you want to submit?")
+    if(result) {
+        event.preventDefault();
+        const newData = inputFields.filter(input => input.trim() !== '');
+        setListData([...listData, ...newData]);
+        createApplication();
+        alert("Submitted")
+        navigate(`/club/${id}`)
+    }
+    };
 
     return (
         <div>
