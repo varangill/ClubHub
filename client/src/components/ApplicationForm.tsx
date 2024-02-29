@@ -7,15 +7,21 @@ import "../ApplicationForm.css"
 export default function ApplicationForm() {
     const { id } = useParams();
     const [clubName, setClubName] = useState("");
+    const [applications, setApplications] = useState([])
 
     useEffect(() => {
+        getData(`clubs/${id}`).then((res) => {
+            setClubName(res.clubName);
+            console.log(res)
+        });
+
         retrieveInfo();
     })
 
     const retrieveInfo = async () => {
         try {
-            await getData(`clubs/${id}`).then((res) => {
-                setClubName(res.clubName)
+            await getData(`applications/club/${id}`).then((res) => {
+                setApplications(res)
             })
         } catch (err) {
             console.log(err)
@@ -28,14 +34,21 @@ export default function ApplicationForm() {
             <div class="container">
                 <div class="content">
                     <h1 class="title">
-                        {clubName} Application Form
+                        {clubName} Application Forms
                     </h1>
                     <div class="section">
+                        {applications.map((application) => {
+                            return (
+                                <ul key={application["id"]} class="application">
+                                    {application["appText"]}
+                                </ul>
+                            )
+                        })}
+
                         <h2>
-                            Name
                         </h2>
                     </div>
-                    <div class="section">
+                    {/* <div class="section">
                     <input type="text" placeholder="First Name" class="input"/>
                     <input type="text" placeholder="Last Name" class="input"/>
                     </div>
@@ -52,7 +65,7 @@ export default function ApplicationForm() {
                         <h2 class="section">
                             Address
                         </h2>
-                    </div>
+                    </div> */}
                     <div >
                         <button>Submit</button>
                     </div>

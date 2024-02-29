@@ -24,6 +24,21 @@ async function fetchClubApplication(clubId) {
     return applications;
 }
 
+async function fetchLatestClubApplication(clubId) {
+    const query = `
+        SELECT *
+        FROM applications
+        WHERE "clubId" = $1
+        ORDER BY "applicationTime" DESC
+        LIMIT 1;
+    `;
+
+    const res = await db.query(query, [clubId])
+
+    const application = res.rows;
+    return application
+}
+
 async function createApplication(clubId, userId, appText, applicationTime) {
     const query = `INSERT INTO applications ("clubId", "userId", "appText", "applicationTime") VALUES ($1, $2, $3, $4) RETURNING id`;
     const res = await db.query(query, [clubId, userId, appText, applicationTime]);
@@ -42,6 +57,7 @@ export {
     fetchApplications,
     fetchApplicationInfo,
     fetchClubApplication,
+    fetchLatestClubApplication,
     createApplication,
     deleteApplication,
 }

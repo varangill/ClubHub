@@ -2,6 +2,7 @@ import {
     fetchApplications,
     fetchApplicationInfo,
     fetchClubApplication,
+    fetchLatestClubApplication,
     createApplication,
     deleteApplication,
 } from "../services/applicationService"
@@ -36,12 +37,22 @@ async function getClubApplications(req, res, next) {
     }
 }
 
+async function getLatestClubApplication(req, res, next) {
+    try {
+        const fetchedData = await fetchLatestClubApplication(req.params.id)
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error fetching club applications`, err.message);
+        next(err);
+    }
+}
+
 async function createNewApplication(req, res, next) {
     try {
         const newApplicationId = await createApplication(
             req.body.clubId,
             req.body.userId,
-            req.body.applicationText,
+            req.body.appText,
             req.body.applicationTime
         );
         res.send(newApplicationId)
@@ -65,6 +76,7 @@ const applicationController = {
     getApplications,
     getApplicationInfo,
     getClubApplications,
+    getLatestClubApplication,
     createNewApplication,
     deleteExistingApplication,
 };

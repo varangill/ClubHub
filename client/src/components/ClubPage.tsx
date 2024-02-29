@@ -100,7 +100,7 @@ export default function ClubPage() {
   const ApplyButton = () => {
     return (
       <div className="join-button-container">
-        <button onClick={() => {navigate(`/application_form/{id}`);}} className="join-button">
+        <button onClick={() => {navigate(`/application_form/${id}`);}} className="join-button">
           Apply to Join
         </button>
       </div>

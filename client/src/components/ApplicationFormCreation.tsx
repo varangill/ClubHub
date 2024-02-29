@@ -4,6 +4,7 @@ import NavBar from "./NavigationBar";
 import { useNavigate } from "react-router-dom";
 import { getData, postData, deleteData } from "../api";
 import "../ApplicationForm.css"
+import { useAuth } from "../AuthContext";
 
 export default function ApplicationForm() {
     const navigate = useNavigate();
@@ -11,19 +12,43 @@ export default function ApplicationForm() {
     const [clubName, setClubName] = useState("");
     const [inputFields, setInputFields] = useState([]);
     const [listData, setListData] = useState([]);
+    const [appText, setAppText] = useState("")
+    const { user } = useAuth();
 
     useEffect(() => {
-        retrieveInfo();
+        
     })
 
-    const retrieveInfo = async () => {
+    const createApplication = async () => {
+        const userId = user?.id;
+        const clubId = id;
+        let applicationTime = new Date();
+
         try {
-            await getData(`clubs/${id}`).then((res) => {
-                setClubName(res.clubName)
+            await postData(`applications/create-application`, {
+                clubId,
+                userId,
+                appText,
+                applicationTime,
             })
         } catch (err) {
             console.log(err)
         }
+    }
+
+    const updateString = () => {
+        let wholeString = ""
+
+        if(listData)
+            wholeString = listData[0];
+
+        if(listData.length > 1) {
+            for(let i = 1; i < listData.length; i++) {
+                wholeString += "," + listData[i];
+            }
+        }
+
+        setAppText(wholeString)
     }
 
     const handleAddInputField = () => {
@@ -34,6 +59,7 @@ export default function ApplicationForm() {
         const updatedInputFields = [...inputFields];
         updatedInputFields[index] = value;
         setInputFields(updatedInputFields);
+        updateString();
       };
     
       const handleRemoveInputField = (index) => {
@@ -48,6 +74,8 @@ export default function ApplicationForm() {
             event.preventDefault();
             const newData = inputFields.filter(input => input.trim() !== '');
             setListData([...listData, ...newData]);
+            createApplication();
+            alert("Submitted")
             navigate(`/club/${id}`)
         }
       };
@@ -76,11 +104,6 @@ export default function ApplicationForm() {
                         <button type="button" class="add" onClick={handleAddInputField}>+</button>
                         <button type="submit" class="submit">Submit</button>
                     </form>
-                    <ul>
-                        {listData.map((item, index) => (
-                        <li key={index}>{item}</li>
-                        ))}
-                    </ul>
                     </div>
                 </div>
             </div>
