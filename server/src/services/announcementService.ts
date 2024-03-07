@@ -16,7 +16,7 @@ async function createNewAnnouncement(clubId, userId, announcementTitle, announce
 }
 
 async function fetchClubAnnouncements(clubId) {
-    const query = `SELECT * FROM announcements WHERE "clubId" = $1`;
+    const query = `SELECT * FROM announcements WHERE "clubId" = $1 ORDER BY "announcementTime" DESC`;
     const res = await db.query(query, [clubId])
 
     const announcements = res.rows;
