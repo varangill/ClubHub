@@ -8,9 +8,9 @@ async function fetchAnnouncementInfo(announcementId) {
     return announcement;
 }
 
-async function createNewAnnouncement(clubId, userId, announcementTitle, announcementText, announcementTime) {
-    const query = `INSERT INTO announcements ("clubId", "userId", "announcementTitle", "announcementText", "announcementTime") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-    const res = await db.query(query, [clubId, userId, announcementTitle, announcementText, announcementTime]);
+async function createNewAnnouncement(clubId, userId, announcementTitle, announcementText) {
+    const query = `INSERT INTO announcements ("clubId", "userId", "announcementTitle", "announcementText") VALUES ($1, $2, $3, $4) RETURNING id`;
+    const res = await db.query(query, [clubId, userId, announcementTitle, announcementText]);
 
     return res.rows[0]
 }

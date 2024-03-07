@@ -14,16 +14,14 @@ export default function ClubCreationModal(props) {
 
   const onSubmit = async () => {
     const userId = user?.id;
-    const clubId = props.clubId
-    let announcementTime = new Date()
+    const clubId = props.clubId;
 
     try { 
         await postData(`announcements/create-announcement`, {
             clubId,
             userId,
             announcementTitle,
-            announcementText,
-            announcementTime
+            announcementText
         })
         props.requestUpdate();
         props.hideModal();

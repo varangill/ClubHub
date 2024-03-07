@@ -21,8 +21,7 @@ async function createAnnouncement(req, res, next) {
             req.body.clubId,
             req.body.userId,
             req.body.announcementTitle,
-            req.body.announcementText,
-            req.body.announcementTime
+            req.body.announcementText
         );
         res.send(newAnnouncementId);
     } catch (err) {
