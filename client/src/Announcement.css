@@ -1,0 +1,18 @@
+.text {
+    margin-bottom: 2px;
+}
+
+.title {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.desc {
+    margin-bottom: 10px;
+    min-width: 100%;
+    height: auto;
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+}

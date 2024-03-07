@@ -5,7 +5,7 @@
   .join-button-container {
     position: absolute;
     top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    right: 30px; /* Adjust as needed */
   }
   
   .join-button {
@@ -16,11 +16,12 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 75px
+    margin-top: 75px;
+    transition: filter 0.3s ease;
   }
   
   .join-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    filter: brightness(0.8);; /* Darker shade on hover */
   }
   
   .popup {
@@ -50,3 +51,73 @@
     margin-left: 15px;
   }
   
+  .announcement-button {
+    position: absolute;
+    top: 5px;
+    left: 30%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: filter 0.3s ease;
+  }
+
+  .announcement-button:hover {
+    filter: brightness(0.8);
+  }
+
+  .announcement-container {
+    flex: 1;
+    position: relative;
+    padding-left: 10px;
+    max-width: 50%;
+  }
+
+  .first-row {
+    display: flex;
+    padding: 10px 20px;
+  }
+
+  .members {
+    width: 50%;
+  }
+
+  .club-desc {
+    padding-left: 20px;
+  }
+
+  .club-heading {
+    padding-left: 20px;
+  }
+
+
+  .announcement {
+    border: 1px solid gray;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    max-width: 100%;
+  }
+
+  .announcement:hover {
+    background-color: lightgray;
+  }
+
+  .announcement-header {
+    border-bottom: 1px solid gray
+  }
+
+  .scroll {
+    max-height: 100px;
+    overflow-y: scroll;
+    border: 1px solid black
+  }

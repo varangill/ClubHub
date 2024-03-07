@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("userId").unsigned().notNullable();
     table.foreign("clubId").references("id").inTable("clubs");
     table.foreign("userId").references("id").inTable("users");
+    table.string("type");
     table.string("appText");
     table.datetime("applicationTime");
   });

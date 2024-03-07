@@ -1,0 +1,61 @@
+.title {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.section {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    min-width: 100%;
+    background-color: grey;
+}
+
+.content {
+    display: center;
+    border-radius: 10px;
+    background-color: white;
+    padding-top: 20px;
+    width: 65%;
+    height: 100%;
+}
+
+.input {
+    margin-right: 30px;
+    width: 20%;
+}
+
+.inputText {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 30%;
+    border: 1px solid black;
+}
+
+.add {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.question {
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.selector {
+    margin-left: 10px;
+}

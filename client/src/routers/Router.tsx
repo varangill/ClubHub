@@ -6,6 +6,8 @@ import MyClubs from "../components/MyClubs";
 import Profile from "../components/Profile";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
+import ApplicationForm from "../components/ApplicationForm"
+import ApplicationFormCreation from "../components/ApplicationFormCreation"
 
 export default function Router() {
   return (
@@ -18,6 +20,8 @@ export default function Router() {
         <Route path="/all_clubs" element={<AllClubs />} />
         <Route path="/my_clubs" element={<MyClubs />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/application_form/:id" element={<ApplicationForm />} />
+        <Route path="/application_form_creation/:id" element={<ApplicationFormCreation />} />
       </Routes>
     </BrowserRouter>
   );
