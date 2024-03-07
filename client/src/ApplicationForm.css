@@ -50,3 +50,12 @@
     padding: 0;
     margin: 0;
 }
+
+.dropdown {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.selector {
+    margin-left: 10px;
+}

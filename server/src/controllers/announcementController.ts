@@ -1,6 +1,5 @@
 import {
     fetchAnnouncementInfo,
-    fetchAnnouncements,
     createNewAnnouncement,
     fetchClubAnnouncements,
     deleteAnnouncement,
@@ -12,16 +11,6 @@ async function getAnnouncementInfo(req, res, next) {
         res.json(fetchedData);
     } catch (err) {
         console.error(`Error fetching announcement info`, err.message);
-        next(err);
-    }
-}
-
-async function getAnnouncements(req, res, next) {
-    try {
-        const fetchedData = await fetchAnnouncements();
-        res.json(fetchedData);
-    } catch (err) {
-        console.error(`Error fetching announcements`, err.message);
         next(err);
     }
 }
@@ -64,7 +53,6 @@ async function deleteExistingAnnouncement(req, res, next) {
 
 const announcementController = {
     getAnnouncementInfo,
-    getAnnouncements,
     createAnnouncement,
     getClubAnnouncements,
     deleteExistingAnnouncement,

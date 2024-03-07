@@ -25,7 +25,6 @@ export default function ClubCreationModal(props) {
             announcementText,
             announcementTime
         })
-        alert("Announcement Created")
         props.requestUpdate();
         props.hideModal();
     } catch (err) {
@@ -49,27 +48,31 @@ export default function ClubCreationModal(props) {
                 <input type="text"
                     placeholder="Title"
                     value={announcementTitle}
+                    maxLength="80"
                     onChange={(e) => setTitle(e.target.value)}
                 />
             </div>
             <div>
                 <p class="text">Description</p>
-                <input type="text" 
-                    placeholder="Description"
-                    class="desc"
-                    value={announcementText}
-                    onChange={(e) => setDesc(e.target.value)}
+                <textarea name="" 
+                id="" 
+                cols="30" 
+                rows="10"
+                placeholder="Description"
+                class="desc"
+                value={announcementText}
+                onChange={(e) => setDesc(e.target.value)}
                 />
             </div>
         </Modal.Body>
         <Modal.Footer>
-            {/* <Button variant="secondary"
+            <Button variant="secondary"
             onClick={() => {
                 props.hideModal();
             }}
             >
                 Close
-            </Button> */}
+            </Button>
             <Button variant="primary"
                 onClick={onSubmit}
             >

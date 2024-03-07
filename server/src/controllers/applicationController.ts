@@ -52,6 +52,7 @@ async function createNewApplication(req, res, next) {
         const newApplicationId = await createApplication(
             req.body.clubId,
             req.body.userId,
+            req.body.type,
             req.body.appText,
             req.body.applicationTime
         );

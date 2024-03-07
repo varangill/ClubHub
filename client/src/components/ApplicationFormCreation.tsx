@@ -12,8 +12,9 @@ export default function ApplicationForm() {
     const [clubName, setClubName] = useState("");
     const [inputFields, setInputFields] = useState([]);
     const [listData, setListData] = useState([]);
-    const [appText, setAppText] = useState("")
+    const [appText, setAppText] = useState("11");
     const { user } = useAuth();
+    const [type, setType] = useState("executive");
 
     useEffect(() => {
         
@@ -28,6 +29,7 @@ export default function ApplicationForm() {
             await postData(`applications/create-application`, {
                 clubId,
                 userId,
+                type,
                 appText,
                 applicationTime,
             })
@@ -39,16 +41,19 @@ export default function ApplicationForm() {
     const updateString = () => {
         let wholeString = ""
 
-        if(listData)
-            wholeString = listData[0];
+        if(inputFields)
+            wholeString = inputFields[0];
 
-        if(listData.length > 1) {
-            for(let i = 1; i < listData.length; i++) {
-                wholeString += "," + listData[i];
+        if(inputFields.length > 1) {
+            for(let i = 1; i < inputFields.length; i++) {
+                wholeString += "," + inputFields[i];
             }
         }
 
+        console.log(inputFields)
+        console.log(wholeString)
         setAppText(wholeString)
+        console.log(appText)
     }
 
     const handleAddInputField = () => {
@@ -63,22 +68,31 @@ export default function ApplicationForm() {
     };
     
     const handleRemoveInputField = (index) => {
-    const updatedInputFields = [...inputFields];
-    updatedInputFields.splice(index, 1);
-    setInputFields(updatedInputFields);
+        const updatedInputFields = [...inputFields];
+        updatedInputFields.splice(index, 1);
+        setInputFields(updatedInputFields);
     };
     
     const handleSubmit = (event) => {
-    const result = window.confirm("Are you sure you want to submit?")
-    if(result) {
-        event.preventDefault();
-        const newData = inputFields.filter(input => input.trim() !== '');
-        setListData([...listData, ...newData]);
-        createApplication();
-        alert("Submitted")
-        navigate(`/club/${id}`)
-    }
+        const result = window.confirm("Are you sure you want to submit?")
+        if(result) {
+            event.preventDefault();
+            const newData = inputFields.filter(input => input.trim() !== '');
+            setListData([...listData, ...newData]);
+            console.log(listData)
+            createApplication();
+            navigate(`/club/${id}`)
+        }
     };
+
+    const handleSelection = (event) => {
+        setType(event.target.value);
+    }
+
+    const options = [
+        {label: "Executive", value: "executive"},
+        {label: "Member", value: "member"},
+    ];
 
     return (
         <div>
@@ -88,6 +102,16 @@ export default function ApplicationForm() {
                     <h1 class="title">
                         {clubName} Application Form
                     </h1>
+                    <div class="dropdown">
+                        Application Type: 
+                        <select value={type} id="dropdown" onChange={(e) => handleSelection(e)} class="selector">
+                            {options.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div class="section">
                     <form onSubmit={handleSubmit}>
                         {inputFields.map((input, index) => (

@@ -8,14 +8,6 @@ async function fetchAnnouncementInfo(announcementId) {
     return announcement;
 }
 
-async function fetchAnnouncements() {
-    const query = "SELECT * FROM announcements";
-    const res = await db.query(query, []);
-
-    const announcements = res.rows;
-    return announcements;
-}
-
 async function createNewAnnouncement(clubId, userId, announcementTitle, announcementText, announcementTime) {
     const query = `INSERT INTO announcements ("clubId", "userId", "announcementTitle", "announcementText", "announcementTime") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
     const res = await db.query(query, [clubId, userId, announcementTitle, announcementText, announcementTime]);
@@ -40,7 +32,6 @@ async function deleteAnnouncement(id) {
 
 export {
     fetchAnnouncementInfo,
-    fetchAnnouncements,
     createNewAnnouncement,
     fetchClubAnnouncements,
     deleteAnnouncement,

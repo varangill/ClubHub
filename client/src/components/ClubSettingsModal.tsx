@@ -97,9 +97,9 @@ export default function ClubSettingsModal(props) {
         <Button variant="primary" onClick={onSubmit}>
           Update
         </Button>
-        <Button variant="primary" onClick={() => navigate(`/application_form_creation/${props.clubId}`)}>
-          Create Application
-        </Button>
+          <Button variant="primary" onClick={() => navigate(`/application_form_creation/${props.clubId}`)}>
+            Create Application
+          </Button>
       </Modal.Footer>
     </Modal>
   );

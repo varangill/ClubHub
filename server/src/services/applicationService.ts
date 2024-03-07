@@ -39,9 +39,9 @@ async function fetchLatestClubApplication(clubId) {
     return application
 }
 
-async function createApplication(clubId, userId, appText, applicationTime) {
-    const query = `INSERT INTO applications ("clubId", "userId", "appText", "applicationTime") VALUES ($1, $2, $3, $4) RETURNING id`;
-    const res = await db.query(query, [clubId, userId, appText, applicationTime]);
+async function createApplication(clubId, userId, type, appText, applicationTime) {
+    const query = `INSERT INTO applications ("clubId", "userId", "type", "appText", "applicationTime") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+    const res = await db.query(query, [clubId, userId, type, appText, applicationTime]);
 
     return res.rows[0]
 }

@@ -102,7 +102,7 @@ export default function MemberEditModal(props) {
       }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Member: {props.member.name}b</Modal.Title>
+        <Modal.Title>Member: {props.member.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>

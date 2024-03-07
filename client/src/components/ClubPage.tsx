@@ -3,7 +3,8 @@ import { useNavigate, Navigate, useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
-import AnnouncementCreationModal from "./AnnouncementCreationModal"
+import AnnouncementCreationModal from "./AnnouncementCreationModal";
+import AnnouncementsModal from "./AnnouncementModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
@@ -12,8 +13,10 @@ export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [showCreateAnnModal, setShowCreateAnnModal] = useState(false);
+  const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = useState(false);
+  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
   const [clubStatus, setClubStatus] = useState("open");
@@ -29,7 +32,6 @@ export default function ClubPage() {
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
-      console.log(res)
     });
 
     updateAnnouncementList();
@@ -145,7 +147,7 @@ export default function ClubPage() {
     return (
         <button
           onClick={() => {
-            setShowCreateAnnModal(true);
+            setShowCreateAnnouncementModal(true);
           }}
           className="announcement-button"
         >
@@ -153,7 +155,6 @@ export default function ClubPage() {
         </button>
     );
   };
-  console.log(user)
   return (
     <div className="club-detail-container">
       <NavBar />
@@ -182,16 +183,24 @@ export default function ClubPage() {
           isOwner={memberType === "owner"}
         />
       )}
-      {showCreateAnnModal && (
+      {showCreateAnnouncementModal && (
         <AnnouncementCreationModal
           hideModal={() => {
-            setShowCreateAnnModal(false);
+            setShowCreateAnnouncementModal(false);
           }}
-          //requestupdate for updating announcements
           clubId={id}
           userId={user?.id}
           requestUpdate={updateAnnouncementList}
           />
+      )}
+      {showAnnouncementModal && (
+        <AnnouncementsModal
+          hideModal={() => {
+            setShowAnnouncementModal(false);
+          }}
+          clubId={id}
+          announcement={selectedAnnouncement}
+        />
       )}
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
@@ -225,20 +234,20 @@ export default function ClubPage() {
           })}
         </div>
         <div class="announcement-container">
-        <div class="announcement-header">
-            <h1>Announcements</h1>
+          <div class="announcement-header">
+              <h1>Announcements</h1>
           </div>
           <div class="scroll">
-            {announcements.map((announcement) => {
+            {announcements.map((announcement, index) => {
               return (
-                <ul key={announcement["id"]} class="announcement" onClick={() => alert(announcement["announcementText"])}>
-                  {announcement["announcementTitle"]}
+                <ul key={announcement["id"]} class="announcement" onClick={() => {setSelectedAnnouncement(announcement); setShowAnnouncementModal(true);}}>
+                  {announcement["announcementTitle"]} - {announcement["announcementText"]}
                 </ul>
               )
             })}
           </div>
-          {memberType != "member" && <AnnouncementCreationButton />}
-        </div>
+            {memberType != "member" && <AnnouncementCreationButton />}
+          </div>
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
