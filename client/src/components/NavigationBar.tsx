@@ -66,7 +66,7 @@ export default function NavigationBar() {
   />
 )}
 
-                // Your button logic for Sign Out, Login, and Sign Up...
+                
             </div> 
             
               <Navbar.Collapse className="justify-content-end">

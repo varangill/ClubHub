@@ -1,7 +1,7 @@
 import db from "../database/database";
 
 async function fetchClubInfo(clubId) {
-  const query = "SELECT * FROM clubs WHERE id = $1";
+  const query = " SELECT * FROM clubs WHERE id = $1";
   const res = await db.query(query, [clubId]);
 
   const club = res.rows[0];
@@ -60,18 +60,15 @@ async function fetchClubMemberships(clubId) {
 
 
 async function fetchBannedMembers(clubId) {
-  const query = /*`
-    SELECT u.name, b.clubId
-    FROM users u
-    JOIN bans b ON u.id = b."userId"
-    WHERE u."name" = $1;
-  `;*/
-  `
-    SELECT m.*, u.id AS "userId", u.email, u.name, m."membershipType"
-    FROM memberships m
-    JOIN users u ON m."userId" = u.id
-    WHERE m."clubId" = $1
+  const query = `
+  SELECT u.name, b."clubId"
+  FROM users u
+  JOIN bans b ON u.id = b."userId"
+  WHERE b."clubId" = $1
   `;
+  /*`
+   WHERE u."name" = $1;
+  `;*/
 
   const res = await db.query(query, [clubId]);
   return res.rows;

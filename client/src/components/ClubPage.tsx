@@ -218,7 +218,7 @@ export default function ClubPage() {
           );
         })}
             {/*Banned Members*/}
-       {<BannedMembersSection />
+       {memberType === "owner" && <BannedMembersSection />
        }
        
       </div>
