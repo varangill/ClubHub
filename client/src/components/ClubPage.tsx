@@ -145,10 +145,10 @@ export default function ClubPage() {
       <div>
         <h3>Banned Members</h3>
         {bannedMembers.length > 0 ? (
-          bannedMembers.map((member) => (
-            <div key={userId.id}>  // Ensure you use a unique key, such as the member's ID.
-              {member.name}  // Replace 'name' with the actual property that contains the member's name.
-              <button onClick={() => unbanMember(name.id)}>Unban</button>  // Ensure you pass the member's ID to unbanMember.
+          bannedMembers.map((member, index) => (
+            <div key={index}>
+              {member.name}
+              <button onClick={() => unbanMember(member.userId)}>Unban</button>
             </div>
           ))
         ) : (
@@ -157,6 +157,7 @@ export default function ClubPage() {
       </div>
     );
   };
+  
 
   return (
     <div className="club-detail-container">
