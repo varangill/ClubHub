@@ -29,7 +29,7 @@ export default function ClubPage() {
     });
     updateMemberList();
     updateClubInfo();
-    fetchBannedMembers();
+    listBannedMembers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
@@ -47,7 +47,7 @@ export default function ClubPage() {
     }
   };
 
-  const fetchBannedMembers = async () => {
+  const listBannedMembers = async () => {
     try {
       await getData(`clubs/banned-members/${id}`).then((res) => {
         setBannedMembers(res);

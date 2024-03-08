@@ -60,10 +60,15 @@ async function fetchClubMemberships(clubId) {
 
 
 async function fetchBannedMembers(clubId) {
-  const query = `SELECT d1.name FROM users d1 INNER JOIN bans d2 ON d1.id = d2."userId" WHERE d2."clubId" = $1`;
-  const res = await db.query(query, [clubId]);
+  const query = `
+    SELECT u.name
+    FROM users u
+    JOIN bans b ON u.id = b."userId"
+    WHERE u."clubId" = $1
+  `;
 
-  return res.rows; // Return the rows directly for easier processing
+  const res = await db.query(query, [clubId]);
+  return res.rows;
 }
 
 async function fetchClubOwner(clubId) {
