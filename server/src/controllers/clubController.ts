@@ -12,7 +12,7 @@ import {
   updateClubDetails,
   unbanClubMember,
   deleteClub,
-  fetchBannedMembers
+  fetchBannedMembers,
 } from "../services/clubService";
 
 async function getClubInfo(req, res, next) {
@@ -37,7 +37,7 @@ async function getClubMemberships(req, res, next) {
 
 async function getBannedMembers(req, res, next) {
   try {
-    const fetchedData = await fetchBannedMembers(req.body.userId, req.body.clubId);
+    const fetchedData = await fetchBannedMembers(req.params.id);
     res.json(fetchedData);
   } catch (err) {
     console.error(`Error fetching banned members, err.message`);
@@ -197,7 +197,7 @@ const clubController = {
   transferOwner,
   updateClub,
   deleteExistingClub,
-  getBannedMembers
+  getBannedMembers,
 };
 
 export default clubController;
