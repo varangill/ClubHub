@@ -59,16 +59,16 @@ async function fetchClubMemberships(clubId) {
 }
 
 
-async function fetchBannedMembers(clubId) {
+async function fetchBannedMembers(clubId,u.id) {
   const query = `
-  SELECT u.name, b."clubId", CAST(b."banDate" AS DATE), b."bannerId", a.name AS "BannerName"
+  SELECT u.name, b."clubId", CAST(b."banDate" AS DATE), b."bannerId", a.name AS "BannerName", u.id
   FROM  users u
   JOIN bans b ON u.id = b."userId"
   JOIN users a ON b."bannerId" = a.id
-  WHERE b."clubId" = $1;
+  WHERE b."clubId" = $1 
   `;
-
-  const res = await db.query(query, [clubId]);
+//and u."id" = $2
+  const res = await db.query(query, [clubId,u.id]);
   return res.rows;
 }
 

@@ -342,10 +342,8 @@ router.post("/promote-member", clubController.promoteMember);
 router.post("/demote-member", clubController.demoteMember);
 router.post("/transfer-ownership", clubController.transferOwner);
 router.post("/ban-user", clubController.banMember);
-router.delete("/clubs/unban-user", clubController.unbanMember);
-
+router.delete("/unban-user", clubController.unbanMember);
 router.delete("/delete-club", clubController.deleteExistingClub);
 router.get("/banned-members/:id", clubController.getBannedMembers);
-
 export default router;
   

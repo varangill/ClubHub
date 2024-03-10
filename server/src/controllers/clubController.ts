@@ -37,10 +37,10 @@ async function getClubMemberships(req, res, next) {
 
 async function getBannedMembers(req, res, next) {
   try {
-    const fetchedData = await fetchBannedMembers(req.params.id);
+    const fetchedData = await fetchBannedMembers(req.body.userId, req.body.clubId);
     res.json(fetchedData);
   } catch (err) {
-    console.error(`Error fetching club memberships, err.message`);
+    console.error(`Error fetching banned members, err.message`);
     next(err);
   }
 }
@@ -134,7 +134,7 @@ async function unbanMember(req, res, next) {
   try {
     await unbanClubMember(req.body.userId, req.body.clubId);
 
-    res.send("Unbanned");
+    res.send({ status: "unbanned" });
   } catch (err) {
     console.error(`Error`, err.message);
     next(err);

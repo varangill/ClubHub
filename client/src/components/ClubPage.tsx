@@ -28,33 +28,10 @@ export default function ClubPage() {
     });
     updateMemberList();
     updateClubInfo();
-    listBannedMembers();
+ 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 //unbanMember
-  const unbanMember = async (userId) => {
-    try {
-      const response = await deleteData(`/clubs/unban-user`, { userId });
-      if (response.ok) {
-        // Update the bannedMembers list to reflect the change
-        setBannedMembers(bannedMembers.filter(member => member.userId !== userId));
-      } else {
-        throw new Error('Failed to unban the member');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const listBannedMembers = async () => {
-    try {
-      await getData(`clubs/banned-members/${id}`).then((res) => {
-        setBannedMembers(res);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const updateMemberList = async () => {
     try {
