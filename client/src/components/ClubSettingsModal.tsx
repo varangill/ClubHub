@@ -1,14 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { postData, deleteData } from "../api";
+import { postData, deleteData,getData } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+import { useParams } from "react-router-dom";
 
 export default function ClubSettingsModal(props) {
   const [clubName, setClubName] = useState(props.originalName);
   const [desc, setDesc] = useState(props.originalDesc);
   const [joinStatus, setJoinStatus] = useState(props.originalStatus);
   const navigate = useNavigate();
+  const [bannedMembers, setBannedMembers] = useState([]);
+  const [memberType, setMemberType] = useState("");
+    const { id } = useParams();
+    const { user } = useAuth();
+
+  useEffect(() => {
+    getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
+      setMemberType(res.membershipType);
+    });
+    listBannedMembers();
+  }, [id]);
+
+  const listBannedMembers = async () => {
+    try {
+      await getData(`clubs/banned-members/${id}`).then((res) => {
+        setBannedMembers(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unbanMember = async () => {
+    try {
+      await deleteData('clubs/unban-user', {
+        userId: props.userId,
+        clubId: props.clubId,
+      }).then(() => {
+        props.requestUpdate(); //Make parent page refresh member list
+        props.hideModal();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const BannedMembersSection = () => {
+    console.log('First banned member:', bannedMembers[0]);
+    return (
+      <div>
+        <h3>Banned Members</h3>
+        {bannedMembers.length > 0 ? (
+           bannedMembers.map((member, index) => (
+            <div key={index}>
+              Member: {member.name},Banned By: {member.BannerName}, Banned on: {new Date(member.banDate).toLocaleDateString() }
+              <button onClick={() => unbanMember(member.name)}>Unban</button>
+            </div>
+          ))
+          
+        ) : (
+          <p>No banned members.</p>
+        )}
+      </div>
+    );
+};
+
 
   const onSubmit = async () => {
     try {
@@ -78,6 +136,9 @@ export default function ClubSettingsModal(props) {
             <option value="application">Application</option>
             <option value="closed">Closed</option>
           </select>
+          {/*Banned Members*/}
+       {(memberType === "owner" || memberType === "executive") && <BannedMembersSection />
+       }
         </div>
       </Modal.Body>
       <Modal.Footer>

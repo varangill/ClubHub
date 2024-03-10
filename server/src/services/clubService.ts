@@ -61,18 +61,17 @@ async function fetchClubMemberships(clubId) {
 
 async function fetchBannedMembers(clubId) {
   const query = `
-  SELECT u.name, b."clubId"
-  FROM users u
+  SELECT u.name, b."clubId", CAST(b."banDate" AS DATE), b."bannerId", a.name AS "BannerName"
+  FROM  users u
   JOIN bans b ON u.id = b."userId"
-  WHERE b."clubId" = $1
+  JOIN users a ON b."bannerId" = a.id
+  WHERE b."clubId" = $1;
   `;
-  /*`
-   WHERE u."name" = $1;
-  `;*/
 
   const res = await db.query(query, [clubId]);
   return res.rows;
 }
+
 
 async function fetchClubOwner(clubId) {
   // return the owner of the given club
@@ -106,13 +105,12 @@ async function banClubMember(userId, clubId, bannerId) {
 }
 
 async function unbanClubMember(userId, clubId) {
-  const addMembershipQuery = `INSERT INTO memberships WHERE "clubId" = $1 AND "userId" = $2`; 
-  const query = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
-  const res = await db.query(addMembershipQuery, [clubId, userId]);
-  await db.query(query, [clubId, userId]);
+  const deleteBanQuery = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(deleteBanQuery, [clubId, userId]);
 
   return res;
 }
+
 
 async function promoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;

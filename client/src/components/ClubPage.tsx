@@ -21,7 +21,6 @@ export default function ClubPage() {
   const { user } = useAuth();
   const [bannedMembers, setBannedMembers] = useState([]);
 
-
   //Fetch relevant data on render
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
@@ -32,10 +31,10 @@ export default function ClubPage() {
     listBannedMembers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  
+//unbanMember
   const unbanMember = async (userId) => {
     try {
-      const response = await postData(`/api/club/${id}/unban`, { userId });
+      const response = await deleteData(`/clubs/unban-user`, { userId });
       if (response.ok) {
         // Update the bannedMembers list to reflect the change
         setBannedMembers(bannedMembers.filter(member => member.userId !== userId));
@@ -140,25 +139,6 @@ export default function ClubPage() {
     );
   };
 
-  const BannedMembersSection = () => {
-    return (
-      <div>
-        <h3>Banned Members</h3>
-        {bannedMembers.length > 0 ? (
-          bannedMembers.map((member, index) => (
-            <div key={index}>
-              {member.name}
-              <button onClick={() => unbanMember(member.userId)}>Unban</button>
-            </div>
-          ))
-        ) : (
-          <p>No banned members.</p>
-        )}
-      </div>
-    );
-  };
-  
-
   return (
     <div className="club-detail-container">
       <NavBar />
@@ -217,10 +197,7 @@ export default function ClubPage() {
 
           );
         })}
-            {/*Banned Members*/}
-       {memberType === "owner" && <BannedMembersSection />
-       }
-       
+    
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
