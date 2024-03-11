@@ -44,10 +44,10 @@ export default function ClubSettingsModal(props) {
         props.requestUpdate(); 
         props.hideModal(); 
       } else {
-        console.error('Failed to unban the member. Status:', response.status);
+        //console.error('Failed to unban the member. Status:', response.status);
         props.hideModal();
-        const errorData = await response.json();
-        console.error('Server responded with:', errorData);
+        //const errorData = await response.json();
+        //console.error('Server responded with:', errorData);
       }
     } catch (error) {
       console.error('Error in unbanMember:', error);

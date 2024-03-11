@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, Navigate, useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
@@ -19,8 +19,7 @@ export default function ClubPage() {
   const [members, setMembers] = useState([]); //Stores the current members of the club
   const { id } = useParams();
   const { user } = useAuth();
-  const [bannedMembers, setBannedMembers] = useState([]);
-
+  const navigate = useNavigate();
   //Fetch relevant data on render
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
