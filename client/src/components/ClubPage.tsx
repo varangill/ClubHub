@@ -156,7 +156,7 @@ export default function ClubPage() {
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
-       <div class="first-row">
+      <div class="first-row">
         <div class="members">
           <h1>Members</h1>
           {members.map((member) => {
