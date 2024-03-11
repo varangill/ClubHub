@@ -20,6 +20,10 @@ export default function ClubPage() {
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+
+
+
   //Fetch relevant data on render
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
@@ -155,24 +159,40 @@ export default function ClubPage() {
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
-      <div>
-        Members
-        {members.map((member) => {
-          return (
-            <div key={member["userId"]}>
-              {member["name"]}
-              {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
-                <MoreVertical
-                  onClick={() => {
-                    setSelectedMember(member);
-                    setShowMemberModal(true);
-                  }}
-                />
-              ) : null}
-            </div>
-
-          );
-        })}
+       <div class="first-row">
+        <div class="members">
+          <h1>Members</h1>
+          {members.map((member) => {
+            return (
+              <div key={member["userId"]}>
+                {member["name"]}
+                {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
+                  <MoreVertical
+                    onClick={() => {
+                      setSelectedMember(member);
+                      setShowMemberModal(true);
+                    }}
+                  />
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+        <div class="announcement-container">
+          <div class="announcement-header">
+              <h1>Announcements</h1>
+          </div>
+          <div class="scroll">
+            {announcements.map((announcement, index) => {
+              return (
+                <ul key={announcement["id"]} class="announcement" onClick={() => {setSelectedAnnouncement(announcement); setShowAnnouncementModal(true);}}>
+                  {announcement["announcementTitle"]} - {announcement["announcementText"]}
+                </ul>
+              )
+            })}
+          </div>
+            {memberType != "member" && <AnnouncementCreationButton />}
+          </div>
     
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
