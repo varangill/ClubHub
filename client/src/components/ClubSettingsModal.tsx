@@ -24,11 +24,13 @@ export default function ClubSettingsModal(props) {
   }, [id]);
 
   const listBannedMembers = async () => {
-    {
+    try {
       await getData(`clubs/banned-members/${id}`).then((res) => {
         setBannedMembers(res);
       });
-    } 
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const unbanMember = async (userId) => {
@@ -42,7 +44,10 @@ export default function ClubSettingsModal(props) {
         props.requestUpdate(); 
         props.hideModal(); 
       } else {
+        //console.error('Failed to unban the member. Status:', response.status);
         props.hideModal();
+        //const errorData = await response.json();
+        //console.error('Server responded with:', errorData);
       }
     } catch (error) {
       console.error('Error in unbanMember:', error);
@@ -52,6 +57,7 @@ export default function ClubSettingsModal(props) {
   
 
   const BannedMembersSection = () => {
+    console.log('First banned member:', bannedMembers[0]);
     return (
       <div>
         <h3>Banned Members</h3>
@@ -72,6 +78,7 @@ export default function ClubSettingsModal(props) {
 
 
   const onSubmit = async () => {
+    try {
       await postData(`clubs/update-club`, {
         clubId: props.clubId,
         name: clubName,
@@ -81,18 +88,22 @@ export default function ClubSettingsModal(props) {
         props.requestUpdate();
         props.hideModal();
       });
-   
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onDelete = async () => {
-
- {
+    //TO-DO: Add in confirmation asking if owner wants to delete club
+    try {
       await deleteData(`clubs/delete-club`, {
         clubId: props.clubId,
       }).then(() => {
-        navigate(`/all_clubs`); 
+        navigate(`/all_clubs`); //Navigate user to all clubs page after deleting club
       });
-    } 
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -134,7 +145,7 @@ export default function ClubSettingsModal(props) {
             <option value="application">Application</option>
             <option value="closed">Closed</option>
           </select>
-          {}
+          {/*Banned Members*/}
        {(memberType === "owner" || memberType === "executive") && <BannedMembersSection />
        }
         </div>

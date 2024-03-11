@@ -16,32 +16,43 @@ export default function ClubPage() {
   const [clubDesc, setClubDesc] = useState("");
   const [clubStatus, setClubStatus] = useState("open");
   const [memberType, setMemberType] = useState("");
-  const [members, setMembers] = useState([]); 
+  const [members, setMembers] = useState([]); //Stores the current members of the club
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  
+  //Fetch relevant data on render
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
     });
     updateMemberList();
     updateClubInfo();
+ 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+//unbanMember
 
   const updateMemberList = async () => {
+    try {
       await getData(`clubs/memberships/${id}`).then((res) => {
         setMembers(res);
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateClubInfo = async () => {
+    try {
       await getData(`clubs/${id}`).then((res) => {
         setClubDesc(res.clubDesc);
         setClubName(res.clubName);
         setClubStatus(res.joinStatus);
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const joinClub = () => {
@@ -53,7 +64,7 @@ export default function ClubPage() {
         setMemberType(res.membershipType);
         setShowPopup(true);
         setTimeout(() => {
-          setShowPopup(false); 
+          setShowPopup(false); // Hide the popup after a few seconds
         }, 3000);
       } else if (res.membershipType === "banned") {
         alert("You are banned from this club.");
@@ -138,7 +149,7 @@ export default function ClubPage() {
       <h5>{clubDesc}</h5>
 
 
-      {}
+      {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
       {memberType != "member" && <SettingsButton />}
       {memberType === "none" ? (
         <JoinButton />
@@ -152,7 +163,7 @@ export default function ClubPage() {
             return (
               <div key={member["userId"]}>
                 {member["name"]}
-                {user?.id != member["userId"] ? ( 
+                {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
                   <MoreVertical
                     onClick={() => {
                       setSelectedMember(member);
