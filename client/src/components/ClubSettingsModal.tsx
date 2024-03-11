@@ -33,19 +33,28 @@ export default function ClubSettingsModal(props) {
     }
   };
 
-  const unbanMember = async () => {
+  const unbanMember = async (userId) => {
     try {
-      await deleteData('clubs/unban-user', {
-        userId: props.userId,
-        clubId: props.clubId,
-      }).then(() => {
-        props.requestUpdate(); //Make parent page refresh member list
-        props.hideModal();
+      const response = await deleteData('clubs/unban-user', {
+        userId: userId,
+        clubId: props.clubId
       });
+  
+      if (response.ok) {
+        props.requestUpdate(); 
+        props.hideModal(); 
+      } else {
+        console.error('Failed to unban the member. Status:', response.status);
+        props.hideModal();
+        const errorData = await response.json();
+        console.error('Server responded with:', errorData);
+      }
     } catch (error) {
-      console.log(error);
+      console.error('Error in unbanMember:', error);
     }
   };
+  
+  
 
   const BannedMembersSection = () => {
     console.log('First banned member:', bannedMembers[0]);
@@ -55,8 +64,8 @@ export default function ClubSettingsModal(props) {
         {bannedMembers.length > 0 ? (
            bannedMembers.map((member, index) => (
             <div key={index}>
-              Member: {member.name},Banned By: {member.BannerName}, Banned on: {new Date(member.banDate).toLocaleDateString() }
-              <button onClick={() => unbanMember(member.name)}>Unban</button>
+              Member: {member.BannedUserName},{member.id},Banned By: {member.BannerName}, Banned on: {new Date(member.BanDate).toLocaleDateString() }
+              <button onClick={() => unbanMember(member.id)}>Unban</button>
             </div>
           ))
           

@@ -58,16 +58,20 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
+
 async function fetchBannedMembers(clubId) {
   const query = `
-    SELECT u.* 
-    FROM users u
-    INNER JOIN bans b ON u."id" = b."userId"
-    WHERE b."clubId" = $1
+  SELECT bannedUsers.name AS "BannedUserName",banners.name AS "BannerName", bans."banDate" AS "BanDate", bans."userId", bannedUsers.*
+  FROM bans
+  JOIN users AS bannedUsers ON bans."userId" = bannedUsers."id"
+  JOIN users AS banners ON bans."bannerId" = banners."id"
+  WHERE bans."clubId" = $1
   `;
+//and u."id" = $2
   const res = await db.query(query, [clubId]);
   return res.rows;
 }
+
 
 async function fetchClubOwner(clubId) {
   // return the owner of the given club
@@ -106,6 +110,7 @@ async function unbanClubMember(userId, clubId) {
 
   return res;
 }
+
 
 async function promoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
