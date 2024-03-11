@@ -21,9 +21,6 @@ export default function ClubPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-
-
-
   //Fetch relevant data on render
   useEffect(() => {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
@@ -160,6 +157,7 @@ export default function ClubPage() {
         <LeaveButton />
       )}
        <div class="first-row">
+
         <div class="members">
           <h1>Members</h1>
           {members.map((member) => {
