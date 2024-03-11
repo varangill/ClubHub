@@ -159,6 +159,7 @@ export default function ClubPage() {
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
+      
        <div class="first-row">
         <div class="members">
           <h1>Members</h1>
@@ -194,6 +195,7 @@ export default function ClubPage() {
             {memberType != "member" && <AnnouncementCreationButton />}
           </div>
     
+
       </div>
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
