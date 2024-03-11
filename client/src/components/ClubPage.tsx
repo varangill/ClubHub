@@ -157,7 +157,6 @@ export default function ClubPage() {
         <LeaveButton />
       )}
        <div class="first-row">
-
         <div class="members">
           <h1>Members</h1>
           {members.map((member) => {
