@@ -14,15 +14,12 @@ export default function SignUp() {
         e.preventDefault();
         if (validateRecord()) {
             try {
-                // TODO: sms to register user
                 postData(`users/create-user`, {
                     name: name,
                     email: email,
                     password: password,
                 }).then(()=>{
-                    // Temporary until sms
-                    alert("User successfully created!");
-                    navigate("/login");
+                    navigate(`/account-confirm/${email}`);
                 });
             }
             catch (error) {
