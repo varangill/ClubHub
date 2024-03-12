@@ -59,7 +59,7 @@ async function fetchClubMemberships(clubId) {
 }
 
 
-async function fetchBannedMembers(clubId) {
+async function fetchBannedMembers(clubId) { //query to get a list of all the banned members
   const query = `
   SELECT bannedUsers.name AS "BannedUserName",banners.name AS "BannerName", bans."banDate" AS "BanDate", bans."userId", bannedUsers.*
   FROM bans
