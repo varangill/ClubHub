@@ -23,12 +23,14 @@ export default function ClubSettingsModal(props) {
     listBannedMembers();
   }, [id]);
 
+  //listing all the banned members
   const listBannedMembers = async () => {
       await getData(`clubs/banned-members/${id}`).then((res) => {
         setBannedMembers(res);
       });
   };
 
+  //function for button to unban the banned member
   const unbanMember = async (userId) => {
       const response = await deleteData('clubs/unban-user', {
         userId: userId,
@@ -43,7 +45,7 @@ export default function ClubSettingsModal(props) {
   };
   
   
-
+//function that gives the banned section area: member name, banner name, date of banning
   const BannedMembersSection = () => {
     return (
       <div>
@@ -57,7 +59,7 @@ export default function ClubSettingsModal(props) {
           ))
           
         ) : (
-          <p>No banned members.</p>
+          <p>No banned members.</p> //if there are no banned members it will show this
         )}
       </div>
     );
@@ -124,7 +126,7 @@ export default function ClubSettingsModal(props) {
             <option value="closed">Closed</option>
           </select>
           {}
-       {(memberType === "owner" || memberType === "executive") && <BannedMembersSection />
+       {(memberType === "owner" || memberType === "executive") && <BannedMembersSection /> //only executive and owners can see the banned section
        }
         </div>
       </Modal.Body>
