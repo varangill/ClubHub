@@ -8,6 +8,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
 import routes from "./routes";
+import * as socketManager from "./socketManager";
 
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
@@ -37,6 +38,8 @@ app.use(express.static(clientBuild));
 
 const server = http.createServer(app);
 const serverPort = 3000;
+
+const io = socketManager.init(server);
 
 server.listen(serverPort, () => {
   console.log(`Express is listening at http://localhost:${serverPort}`);
