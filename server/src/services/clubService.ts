@@ -67,7 +67,6 @@ async function fetchBannedMembers(clubId) {
   JOIN users AS banners ON bans."bannerId" = banners."id"
   WHERE bans."clubId" = $1
   `;
-//and u."id" = $2
   const res = await db.query(query, [clubId]);
   return res.rows;
 }

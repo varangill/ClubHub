@@ -9,12 +9,11 @@ import { useAuth } from "../AuthContext";
 export default function NavigationBar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const userProfileImage = localStorage.getItem('userProfileImage');
+
 
   function logoutUser () {
     logout();
     navigate('/');
-    localStorage.removeItem('userProfileImage');
   }
 
   return (
@@ -58,13 +57,6 @@ export default function NavigationBar() {
               </Nav.Link>
             </Nav>
             <div className="justify-content-end">
-{user && userProfileImage && (
-  <img
-    src={userProfileImage} // Make sure userProfileImage is correctly set to the URL of the user's profile image
-    alt="Profile"
-    style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '90px', marginTop: '90px' }}
-  />
-)}
 
                 
             </div> 
