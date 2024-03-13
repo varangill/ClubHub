@@ -7,7 +7,9 @@ export default function SignUp() {
     const [name, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [image, setImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    
     const navigate = useNavigate();
 
     const handleSubmit = async (e:any) => {
@@ -27,6 +29,17 @@ export default function SignUp() {
             }
             catch (error) {
                 console.log(error);
+            }
+        }
+    };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type === "image/png") {
+            setImage(file);
+        } else {
+            setImage(null);
+            if (file) {
+                setErrorMessage("Only PNG images are accepted.");
             }
         }
     };
@@ -98,6 +111,14 @@ export default function SignUp() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
+                    <div className="image-upload-section">
+                <p className="image-upload-label">Profile Picture (PNG only):</p>
+                <input
+                    type="file"
+                    onChange={handleImageChange}
+                    accept="image/png"
+                />
+            </div>
                 </div>
                 <button className="login-submit-btn" type="submit">Confirm</button>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
