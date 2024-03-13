@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
@@ -214,7 +214,7 @@ export default function ClubPage() {
           />
         )}
         <h2 className="club-heading">{clubName}</h2>
-        <h5 class="club-desc">{clubDesc}</h5>
+        <h5 className="club-desc">{clubDesc}</h5>
 
         {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
         {memberType != "member" && <SettingsButton />}
@@ -225,8 +225,8 @@ export default function ClubPage() {
         ) : memberType === "owner" ? null : (
           <LeaveButton />
         )}
-        <div class="first-row">
-          <div class="members">
+        <div className="first-row">
+          <div className="members">
             <h1>Members</h1>
             {members.map((member) => {
               return (
@@ -244,16 +244,16 @@ export default function ClubPage() {
               );
             })}
           </div>
-          <div class="announcement-container">
-            <div class="announcement-header">
+          <div className="announcement-container">
+            <div className="announcement-header">
               <h1>Announcements</h1>
             </div>
-            <div class="scroll">
-              {announcements.map((announcement, index) => {
+            <div className="scroll">
+              {announcements.map((announcement) => {
                 return (
                   <ul
                     key={announcement["id"]}
-                    class="announcement"
+                    className="announcement"
                     onClick={() => {
                       setSelectedAnnouncement(announcement);
                       setShowAnnouncementModal(true);

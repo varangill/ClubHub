@@ -6,8 +6,9 @@ import Button from "react-bootstrap/Button";
 const socket = io("http://localhost:3000");
 
 export default function ClubChat(props) {
-  const [message, setMessage] = useState("");
+  const [messageInput, setMessageInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [mostRecentMessage, setMostRecentMessage] = useState({});
   const messagesBottomRef = useRef(null); //keeps track of bottom of chatbox
 
   useEffect(() => {
@@ -19,6 +20,11 @@ export default function ClubChat(props) {
     socket.emit("loadClub", props.clubId);
     const newMessageHandler = (newMsg) => {
       setMessages((currentMessages) => [...currentMessages, newMsg]);
+      setMostRecentMessage(newMsg);
+      if (newMsg.userId == props.userId) {
+        //if user sent msg, scroll to bottom
+        scrollToBottom();
+      }
     };
 
     socket.on("newMessage", newMessageHandler);
@@ -29,6 +35,14 @@ export default function ClubChat(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    //This function is used to scroll to the bottom after the user sends a message
+    //Due to how React handles state updates, need to keep track of the most recent msg
+    if (mostRecentMessage["userId"] == props.userId) {
+      scrollToBottom();
+    }
+  }, [mostRecentMessage, props.userId]);
+
   const scrollToBottom = () => {
     messagesBottomRef.current?.scrollIntoView();
   };
@@ -37,11 +51,10 @@ export default function ClubChat(props) {
     postData(`messages/send`, {
       userId: props.userId,
       clubId: props.clubId,
-      text: message,
+      text: messageInput,
       username: props.userName,
     });
-    setMessage("");
-    scrollToBottom();
+    setMessageInput("");
   };
 
   return (
@@ -61,8 +74,8 @@ export default function ClubChat(props) {
         </div>
         <input
           type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          value={messageInput}
+          onChange={(e) => setMessageInput(e.target.value)}
           className="chat-text-input"
           placeholder="Enter message..."
         />
