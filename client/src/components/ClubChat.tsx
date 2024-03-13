@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
-import { postData } from "../api";
+import { postData, getData } from "../api";
 
 const socket = io("http://localhost:3000");
 
@@ -9,6 +9,10 @@ export default function ClubChat(props) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    getData(`messages/club/${props.clubId}`).then((res) => {
+      setMessages(res);
+    });
+
     socket.emit("loadClub", props.clubId);
     const newMessageHandler = (newMsg) => {
       setMessages((currentMessages) => [...currentMessages, newMsg]);
