@@ -8,12 +8,14 @@ import AnnouncementsModal from "./AnnouncementModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
+import ClubChat from "./ClubChat";
 
 export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = useState(false);
+  const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] =
+    useState(false);
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
@@ -37,20 +39,20 @@ export default function ClubPage() {
     updateAnnouncementList();
     updateMemberList();
     updateClubInfo();
- 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-//unbanMember
+  //unbanMember
 
   const updateAnnouncementList = async () => {
     try {
       getData(`announcements/club/${id}`).then((res) => {
-        setAnnouncements(res)
+        setAnnouncements(res);
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const updateMemberList = async () => {
     try {
@@ -104,12 +106,17 @@ export default function ClubPage() {
   const ApplyButton = () => {
     return (
       <div className="join-button-container">
-        <button onClick={() => {navigate(`/application_form/${id}`);}} className="join-button">
+        <button
+          onClick={() => {
+            navigate(`/application_form/${id}`);
+          }}
+          className="join-button"
+        >
           Apply to Join
         </button>
       </div>
-    )
-  }
+    );
+  };
 
   const leaveClub = () => {
     deleteData(`users/leave-club`, {
@@ -147,20 +154,20 @@ export default function ClubPage() {
 
   const AnnouncementCreationButton = () => {
     return (
-        <button
-          onClick={() => {
-            setShowCreateAnnouncementModal(true);
-          }}
-          className="announcement-button"
-        >
-          Create Announcement
-        </button>
+      <button
+        onClick={() => {
+          setShowCreateAnnouncementModal(true);
+        }}
+        className="announcement-button"
+      >
+        Create Announcement
+      </button>
     );
   };
   return (
     <div className="club-detail-container">
       <NavBar />
-   
+
       {showMemberModal && (
         <MemberEditModal
           hideModal={() => {
@@ -194,7 +201,7 @@ export default function ClubPage() {
           clubId={id}
           userId={user?.id}
           requestUpdate={updateAnnouncementList}
-          />
+        />
       )}
       {showAnnouncementModal && (
         <AnnouncementsModal
@@ -208,13 +215,12 @@ export default function ClubPage() {
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
 
-
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-      {memberType != "member" && <SettingsButton/>}
+      {memberType != "member" && <SettingsButton />}
       {memberType === "none" && clubStatus === "open" ? (
         <JoinButton />
       ) : memberType === "none" && clubStatus === "application" ? (
-        <ApplyButton/>
+        <ApplyButton />
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
@@ -239,20 +245,29 @@ export default function ClubPage() {
         </div>
         <div class="announcement-container">
           <div class="announcement-header">
-              <h1>Announcements</h1>
+            <h1>Announcements</h1>
           </div>
           <div class="scroll">
             {announcements.map((announcement, index) => {
               return (
-                <ul key={announcement["id"]} class="announcement" onClick={() => {setSelectedAnnouncement(announcement); setShowAnnouncementModal(true);}}>
-                  {announcement["announcementTitle"]} - {announcement["announcementText"]}
+                <ul
+                  key={announcement["id"]}
+                  class="announcement"
+                  onClick={() => {
+                    setSelectedAnnouncement(announcement);
+                    setShowAnnouncementModal(true);
+                  }}
+                >
+                  {announcement["announcementTitle"]} -{" "}
+                  {announcement["announcementText"]}
                 </ul>
-              )
+              );
             })}
           </div>
-            {memberType != "member" && <AnnouncementCreationButton />}
-          </div>
+          {memberType != "member" && <AnnouncementCreationButton />}
+        </div>
       </div>
+      <ClubChat clubId={id} />
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
   );

@@ -41,6 +41,23 @@ const serverPort = 3000;
 
 const io = socketManager.init(server);
 
+io.on("connection", (socket) => {
+  console.log("New client connected");
+
+  socket.on("joinClub", (clubId) => {
+    socket.join(clubId);
+    console.log(`A user joined club: ${clubId}`);
+  });
+
+  socket.on("sendMessage", ({ clubId, messageData }) => {
+    io.to(clubId).emit("message", messageData);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
+
 server.listen(serverPort, () => {
   console.log(`Express is listening at http://localhost:${serverPort}`);
 });
