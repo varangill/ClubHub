@@ -135,3 +135,11 @@
   margin-left: 5%;
   margin-right: 5%;
 }
+
+.chat-send-button {
+  margin-left: 10px;
+}
+
+.chat-text-input {
+  width: 90%;
+}

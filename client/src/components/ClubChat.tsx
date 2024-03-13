@@ -64,6 +64,7 @@ export default function ClubChat(props) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="chat-text-input"
+          placeholder="Enter message..."
         />
         <Button onClick={sendMessage} className="chat-send-button">
           Send
