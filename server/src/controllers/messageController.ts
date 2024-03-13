@@ -4,15 +4,21 @@ import {
   deleteMessage,
   getMessages,
 } from "../services/messageService";
+import * as socketManager from "../socketManager";
 
 async function sendMessage(req, res, next) {
   try {
-    const newMessageId = await createMessage(
+    const newMessageObject = await createMessage(
       req.body.clubId,
       req.body.userId,
       req.body.text
     );
-    res.json(newMessageId);
+
+    //Emit message to other clients in real-time
+    const io = socketManager.getIO();
+    io.to(req.body.clubId).emit("newMessage", newMessageObject);
+
+    res.json(newMessageObject);
   } catch (err) {
     console.error("Error creating message", err.message);
     next(err);

@@ -1,7 +1,7 @@
 import db from "../database/database";
 
 async function createMessage(clubId, userId, text) {
-  const query = `INSERT INTO chat_messages ("clubId", "userId", "text") VALUES ($1, $2, $3) RETURNING id`;
+  const query = `INSERT INTO chat_messages ("clubId", "userId", "text") VALUES ($1, $2, $3) RETURNING *`;
   const res = await db.query(query, [clubId, userId, text]);
 
   return res.rows[0]; //return ID of new message

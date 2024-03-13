@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import io from "socket.io-client";
+import { postData } from "../api";
 
-const socket = io("http://localhost:3000"); // Connect to your server
+const socket = io("http://localhost:3000");
 
 export default function ClubChat(props) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    socket.emit("joinClub", props.clubId);
+    socket.emit("loadClub", props.clubId);
+    const newMessageHandler = (newMsg) => {
+      setMessages((currentMessages) => [...currentMessages, newMsg]);
+    };
 
-    socket.on("message", (message) => {
-      console.log("new msg", message);
-      setMessages((msgs) => [...msgs, message]);
-    });
+    socket.on("newMessage", newMessageHandler);
 
     return () => {
-      socket.off("message");
+      socket.off("newMessage", newMessageHandler);
     };
-  }, [props.clubId]); // Re-run effect if clubId changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sendMessage = () => {
-    socket.emit("sendMessage", { clubId: props.clubId, messageData: message });
+    postData(`messages/send`, {
+      userId: props.userId,
+      clubId: props.clubId,
+      text: message,
+    });
     setMessage("");
   };
 
@@ -34,7 +40,7 @@ export default function ClubChat(props) {
       />
       <button onClick={sendMessage}>Send</button>
       {messages.map((msg, index) => (
-        <p key={index}>{msg}</p>
+        <p key={index}>{msg["text"]}</p>
       ))}
     </div>
   );

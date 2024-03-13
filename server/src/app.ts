@@ -44,13 +44,9 @@ const io = socketManager.init(server);
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on("joinClub", (clubId) => {
+  socket.on("loadClub", (clubId) => {
     socket.join(clubId);
-    console.log(`A user joined club: ${clubId}`);
-  });
-
-  socket.on("sendMessage", ({ clubId, messageData }) => {
-    io.to(clubId).emit("message", messageData);
+    console.log(`A user loaded club ${clubId}`);
   });
 
   socket.on("disconnect", () => {
