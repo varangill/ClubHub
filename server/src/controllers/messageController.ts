@@ -16,7 +16,10 @@ async function sendMessage(req, res, next) {
 
     //Emit message to other clients in real-time
     const io = socketManager.getIO();
-    io.to(req.body.clubId).emit("newMessage", newMessageObject);
+    io.to(req.body.clubId).emit("newMessage", {
+      ...newMessageObject,
+      username: req.body.username,
+    });
 
     res.json(newMessageObject);
   } catch (err) {

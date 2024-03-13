@@ -21,7 +21,7 @@
  * /messages/send:
  *   post:
  *     summary: Sends a message to a club
- *     description: Returns all clubs
+ *     description: Creates a message for a club's chatroom
  *     tags: [Messages]
  *     properties:
  *       clubId:
@@ -36,6 +36,10 @@
  *         type: String
  *         format: String
  *         description: Message's text content
+ *       username:
+ *         type: String
+ *         format: String
+ *         description: Name of user sending the message
  *     responses:
  *       '200':
  *         description: Message created

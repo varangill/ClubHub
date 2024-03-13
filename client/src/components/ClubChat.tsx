@@ -31,6 +31,7 @@ export default function ClubChat(props) {
       userId: props.userId,
       clubId: props.clubId,
       text: message,
+      username: props.userName,
     });
     setMessage("");
   };

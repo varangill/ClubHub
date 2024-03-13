@@ -22,7 +22,13 @@ async function deleteMessage(messageId) {
 }
 
 async function getMessages(clubId) {
-  const query = `SELECT * FROM chat_messages WHERE "clubId" = $1`;
+  //This query also fetches the sender's name from the users table
+  const query = `SELECT chat_messages.*, users.name AS username
+    FROM chat_messages
+    JOIN users ON chat_messages."userId" = users.id
+    WHERE chat_messages."clubId" = $1;
+  `;
+
   const res = await db.query(query, [clubId]);
 
   return res.rows;

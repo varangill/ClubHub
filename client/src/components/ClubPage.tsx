@@ -267,7 +267,7 @@ export default function ClubPage() {
           {memberType != "member" && <AnnouncementCreationButton />}
         </div>
       </div>
-      <ClubChat clubId={id} userId={user?.id} />
+      <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
       {showPopup && <div className="popup">Club has been joined!</div>}
     </div>
   );
