@@ -37,8 +37,10 @@ export default function ClubPage() {
     updateAnnouncementList();
     updateMemberList();
     updateClubInfo();
+ 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
+//unbanMember
 
   const updateAnnouncementList = async () => {
     try {
@@ -158,6 +160,7 @@ export default function ClubPage() {
   return (
     <div className="club-detail-container">
       <NavBar />
+   
       {showMemberModal && (
         <MemberEditModal
           hideModal={() => {
@@ -204,6 +207,7 @@ export default function ClubPage() {
       )}
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
+
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
       {memberType != "member" && <SettingsButton/>}

@@ -344,5 +344,6 @@ router.post("/transfer-ownership", clubController.transferOwner);
 router.post("/ban-user", clubController.banMember);
 router.delete("/unban-user", clubController.unbanMember);
 router.delete("/delete-club", clubController.deleteExistingClub);
-
+router.get("/banned-members/:id", clubController.getBannedMembers);
 export default router;
+  

@@ -5,9 +5,11 @@ import Button from "react-bootstrap/Button";
 import { Home, ClipboardCheck, ClipboardList, User2 } from 'lucide-react';
 import { useAuth } from "../AuthContext";
 
+
 export default function NavigationBar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
 
   function logoutUser () {
     logout();
@@ -54,7 +56,11 @@ export default function NavigationBar() {
               <User2 />View Profile
               </Nav.Link>
             </Nav>
+            <div className="justify-content-end">
 
+                
+            </div> 
+            
               <Navbar.Collapse className="justify-content-end">
                 <Button
                 variant="light"
