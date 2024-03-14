@@ -78,6 +78,13 @@ export default function ClubChat(props) {
           onChange={(e) => setMessageInput(e.target.value)}
           className="chat-text-input"
           placeholder="Enter message..."
+          onKeyDown={(e) => {
+            // Send the message when the user presses ENTER key
+            if (e.key === "Enter") {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
         />
         <Button onClick={sendMessage} className="chat-send-button">
           Send
