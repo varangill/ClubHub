@@ -1,123 +1,145 @@
+.club-page-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .club-detail-container {
-    position: relative; /* Needed for absolute positioning of children */
-  }
-  
-  .join-button-container {
-    position: absolute;
-    top: 10px; /* Adjust as needed */
-    right: 30px; /* Adjust as needed */
-  }
-  
-  .join-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 75px;
-    transition: filter 0.3s ease;
-  }
-  
-  .join-button:hover {
-    filter: brightness(0.8);; /* Darker shade on hover */
-  }
-  
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Make sure it's above other elements */
-  }
-    
-  .leave-button {
-    width: 200px;
-    padding: 15px 20px;
-    margin: 15px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    background: #dc3545;
-    color: white;
-    font-size: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
-    margin-left: 15px;
-  }
-  
-  .announcement-button {
-    position: absolute;
-    top: 5px;
-    left: 30%;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: filter 0.3s ease;
-  }
+  position: relative; /* Needed for absolute positioning of children */
+}
 
-  .announcement-button:hover {
-    filter: brightness(0.8);
-  }
+.join-button-container {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 30px; /* Adjust as needed */
+}
 
-  .announcement-container {
-    flex: 1;
-    position: relative;
-    padding-left: 10px;
-    max-width: 50%;
-  }
+.join-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 75px;
+  transition: filter 0.3s ease;
+}
 
-  .first-row {
-    display: flex;
-    padding: 10px 20px;
-  }
+.join-button:hover {
+  filter: brightness(0.8); /* Darker shade on hover */
+}
 
-  .members {
-    width: 50%;
-  }
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Make sure it's above other elements */
+}
 
-  .club-desc {
-    padding-left: 20px;
-  }
+.leave-button {
+  width: 200px;
+  padding: 15px 20px;
+  margin: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background: #dc3545;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  margin-left: 15px;
+}
 
-  .club-heading {
-    padding-left: 20px;
-  }
+.announcement-button {
+  position: absolute;
+  top: 5px;
+  left: 30%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: filter 0.3s ease;
+}
 
+.announcement-button:hover {
+  filter: brightness(0.8);
+}
 
-  .announcement {
-    border: 1px solid gray;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding-left: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 18px;
-    max-width: 100%;
-  }
+.announcement-container {
+  flex: 1;
+  position: relative;
+  padding-left: 10px;
+  max-width: 50%;
+}
 
-  .announcement:hover {
-    background-color: lightgray;
-  }
+.first-row {
+  display: flex;
+  padding: 10px 20px;
+}
 
-  .announcement-header {
-    border-bottom: 1px solid gray
-  }
+.members {
+  width: 50%;
+}
 
-  .scroll {
-    max-height: 100px;
-    overflow-y: scroll;
-    border: 1px solid black
-  }
+.club-desc {
+  padding-left: 20px;
+}
+
+.club-heading {
+  padding-left: 20px;
+}
+
+.announcement {
+  border: 1px solid gray;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  max-width: 100%;
+}
+
+.announcement:hover {
+  background-color: lightgray;
+}
+
+.announcement-header {
+  border-bottom: 1px solid gray;
+}
+
+.scroll {
+  max-height: 100px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.chat-messages {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.chat-messages-container {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.chat-send-button {
+  margin-left: 10px;
+}
+
+.chat-text-input {
+  width: 90%;
+}
