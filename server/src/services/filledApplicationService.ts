@@ -25,7 +25,7 @@ async function fetchFilledClubApplications(clubId) {
 }
 
 async function fetchFilledExecutiveApplications(clubId) {
-    const query = `SELECT * FROM filled_applications WHERE "clubId" = $1 AND "type" = "executive"`;
+    const query = `SELECT * FROM filled_applications WHERE "clubId" = $1 AND "type" = 'executive'`;
     const res = await db.query(query, [clubId]);
 
     const applications = res.rows;
@@ -33,7 +33,7 @@ async function fetchFilledExecutiveApplications(clubId) {
 }
 
 async function fetchFilledMemberApplications(clubId) {
-    const query = `SELECT * FROM filled_applications WHERE "clubId" = $1 AND "type" = "member"`;
+    const query = `SELECT * FROM filled_applications WHERE "clubId" = $1 AND "type" = 'member'`;
     const res = await db.query(query, [clubId]);
 
     const applications = res.rows;
