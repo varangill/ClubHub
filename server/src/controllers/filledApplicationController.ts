@@ -66,6 +66,7 @@ async function createFilledApplication(req, res, next) {
             req.body.applicationId,
             req.body.type,
             req.body.appText,
+            req.body.name,
         );
         res.send(newFilledApplicationId);
     } catch (err) {

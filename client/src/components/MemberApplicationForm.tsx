@@ -9,6 +9,7 @@ import { useAuth } from "../AuthContext";
 export default function ApplicationForm() {
     const { id } = useParams();
     const [clubName, setClubName] = useState("");
+    const [name, setName] = useState("");
     const [application, setApplication] = useState<any>([])
     const [applicationQuestions, setApplicationQuestions] = useState<string[]>([])
     const [answers, setAnswers] = useState("");
@@ -21,6 +22,10 @@ export default function ApplicationForm() {
         getData(`clubs/${id}`).then((res) => {
             setClubName(res.clubName);
         });
+
+        getData(`users/getUser/${user?.id}`).then((res) => {
+            setName(res.name)
+        })
 
         retrieveInfo();
     })
@@ -56,6 +61,7 @@ export default function ApplicationForm() {
                 applicationId,
                 type,
                 appText,
+                name,
             })
         } catch (err) {
             console.log(err)

@@ -40,9 +40,9 @@ async function fetchFilledMemberApplications(clubId) {
     return applications;
 }
 
-async function createNewFilledApplication(clubId, userId, applicationId, type, appText) {
-    const query = `INSERT INTO filled_applications ("clubId", "userId", "applicationId", "type", "appText") VALUES ($1, $2, $3, $4, $5) returning id`;
-    const res = await db.query(query, [clubId, userId, applicationId, type, appText]);
+async function createNewFilledApplication(clubId, userId, applicationId, type, appText, name) {
+    const query = `INSERT INTO filled_applications ("clubId", "userId", "applicationId", "type", "appText", "name") VALUES ($1, $2, $3, $4, $5, $6) returning id`;
+    const res = await db.query(query, [clubId, userId, applicationId, type, appText, name]);
 
     return res.rows[0];
 }
