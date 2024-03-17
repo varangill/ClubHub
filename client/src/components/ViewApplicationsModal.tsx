@@ -40,6 +40,15 @@ export default function ViewApplicationsModal(props) {
 
             <Modal.Body>
                 <div>
+                    {showFilledApplicationModal && (
+                        <FilledApplicationsModal
+                            hideModal={() => {
+                                setShowFilledApplicationModal(false);
+                            }}
+                            clubId={props.id}
+                            application={selectedApplication}
+                        />
+                    )}
                     <h1>
                         Executive Applications
                     </h1>
@@ -54,6 +63,7 @@ export default function ViewApplicationsModal(props) {
                                   className="announcement"
                                   onClick={() => {
                                     setSelectedApplication(application);
+                                    setShowFilledApplicationModal(true);
                                   }}
                                 >
                                   {application["name"]} - {time}
@@ -76,6 +86,7 @@ export default function ViewApplicationsModal(props) {
                                   className="announcement"
                                   onClick={() => {
                                     setSelectedApplication(application);
+                                    setShowFilledApplicationModal(true);
                                   }}
                                 >
                                   {application["name"]} - {time}

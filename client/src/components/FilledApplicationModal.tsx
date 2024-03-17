@@ -2,16 +2,29 @@ import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { postData, deleteData, getData } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function FilledApplicationsModal(props) {
     const [showPopup, setShowPopup] = useState(false);
     const [memberType, setMemberType] = useState("");
-    const [userId, setUserId] = useState(props.userId);
+    const [userId, setUserId] = useState(props.application["userId"]);
     const [clubId, setClubId] = useState(props.clubId);
-    const [type, setType] = useState("")
+    const [type, setType] = useState(props.application["type"]);
+    const [questionsString, setQuestionsString] = useState("");
+    const [applicationQuestions, setApplicationQuestions] = useState<string[]>([]);
+    const [responses, setResponses] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
-        
+        getData(`applications/${props.application["applicationId"]}`).then((res) => {
+            setQuestionsString(res.appText);
+        })
+
+        const splitQuestions = questionsString.split(",");
+        setApplicationQuestions(splitQuestions);
+
+        const splitAnswers = props.application["appText"].split(",");
+        setResponses(splitAnswers);
     })
 
     const approve = async () => {
@@ -38,40 +51,63 @@ export default function FilledApplicationsModal(props) {
     }
 
     const reject = async () => {
-
-    }
-
-    <Modal show={true}
-    onHide={() => {
-        props.hideModal();
-    }}
-    >
-        <Modal.Header closeButton>
-            <Modal.Title>Club Application Forms</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-
-        </Modal.Body>
-
-        <Modal.Footer>
-            <Button variant="secondary"
-            onClick={() => {
+        try {
+            await deleteData(`filled-applications/${props.application["id"]}`, {
+            }).then(() => {
                 props.hideModal();
-            }}
-            >
-                Close
-            </Button>
-            <Button variant="primary"
-                onClick={approve}
-            >
-                Approve
-            </Button>
-            <Button variant="danger"
-                onClick={reject}
-            >
-                Reject
-            </Button>
-        </Modal.Footer>
-    </Modal>
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    return (
+        <Modal show={true}
+        onHide={() => {
+            props.hideModal();
+        }}
+        size="lg"
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>{props.application["name"]}'s club {props.application["type"]} application form</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <div>
+                    {applicationQuestions.map((question, index) => {
+                        return (
+                            <div>
+                                <ul style={{ fontWeight: 'bold', padding: 0 }}>
+                                    {question}
+                                </ul>
+                                <ul style={{padding: 0 }}>
+                                    {responses[index]}
+                                </ul>
+                            </div>
+                        )
+                    })}
+                </div>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="secondary"
+                onClick={() => {
+                    props.hideModal();
+                }}
+                >
+                    Close
+                </Button>
+                <Button variant="primary"
+                    onClick={approve}
+                >
+                    Approve
+                </Button>
+                <Button variant="danger"
+                    onClick={reject}
+                >
+                    Reject
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
