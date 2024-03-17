@@ -260,7 +260,7 @@ export default function ClubPage() {
         <h5 className="club-desc">{clubDesc}</h5>
 
         {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-        {memberType != "member" && <><SettingsButton/><ViewApplicationsButton/></>}
+        {memberType !== "member" && memberType !== "none" && <><SettingsButton/><ViewApplicationsButton/></>}
         {memberType === "member" && <ExecutiveApplicationButton />}
         {memberType === "none" && clubStatus === "open" ? (
           <JoinButton />

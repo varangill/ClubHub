@@ -29,13 +29,13 @@ export default function FilledApplicationsModal(props) {
 
     const approve = async () => {
         if(type === "executive") {
-
+            
         }
 
         if(type === "member") {
             postData(`users/join-club`, {
                 userId: userId,
-                clubId: clubId,
+                clubId: props.clubId,
             }).then((res) => {
                 if (res.membershipType === "member") {
                     setMemberType(res.membershipType);
@@ -47,6 +47,11 @@ export default function FilledApplicationsModal(props) {
                     alert("You are banned from this club.");
                   }
             })
+
+            await deleteData(`filled-applications/${props.application["id"]}`, {
+            }).then(() => {
+                props.hideModal();
+            });
         }
     }
 

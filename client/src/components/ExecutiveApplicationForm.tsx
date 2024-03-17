@@ -111,9 +111,6 @@ export default function ApplicationForm() {
                                 </div>
                             )
                         })}
-                        <h2>
-                            {answers}
-                        </h2>
                     </div>
                     <div >
                         <button onClick={handleSubmit}>Submit</button>

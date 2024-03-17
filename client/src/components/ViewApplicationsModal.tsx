@@ -18,14 +18,6 @@ export default function ViewApplicationsModal(props) {
         getData(`filled-applications/member/${props.clubId}`).then((res)=> {
             setMemberApplications(res)
         });
-
-        // getData(`filled-applications/executive/${props.id}`).then((res)=> {
-        //     setExecutiveApplications(res[0]["appText"].split(","))
-        // });
-
-        // getData(`filled-applications/member/${props.id}`).then((res) => {
-        //     setMemberApplications(res[0]["appText"].split(","))
-        // });
     });    
 
     return (
@@ -45,7 +37,7 @@ export default function ViewApplicationsModal(props) {
                             hideModal={() => {
                                 setShowFilledApplicationModal(false);
                             }}
-                            clubId={props.id}
+                            clubId={props.clubId}
                             application={selectedApplication}
                         />
                     )}
