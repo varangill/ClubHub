@@ -18,10 +18,40 @@ async function fetchApplicationInfo(id) {
 
 async function fetchClubApplication(clubId) {
     const query = `SELECT * FROM applications WHERE "clubId" = $1`;
-    const res = await db.query(query, [clubId])
+    const res = await db.query(query, [clubId]);
 
     const applications = res.rows;
     return applications;
+}
+
+async function fetchExecutiveClubApplication(clubId) {
+    const query = `
+        SELECT * 
+        FROM applications 
+        WHERE "clubId" = $1 
+        AND "type" = 'executive'
+        ORDER BY "applicationTime" DESC
+        LIMIT 1;
+    `;
+    const res = await db.query(query, [clubId]);
+
+    const application = res.rows;
+    return application;
+}
+
+async function fetchMemberClubApplication(clubId) {
+    const query = `
+        SELECT * 
+        FROM applications 
+        WHERE "clubId" = $1 
+        AND "type" = 'member'
+        ORDER BY "applicationTime" DESC
+        LIMIT 1;
+    `;
+    const res = await db.query(query, [clubId]);
+
+    const application = res.rows;
+    return application;
 }
 
 async function fetchLatestClubApplication(clubId) {
@@ -39,9 +69,9 @@ async function fetchLatestClubApplication(clubId) {
     return application
 }
 
-async function createApplication(clubId, userId, type, appText, applicationTime) {
-    const query = `INSERT INTO applications ("clubId", "userId", "type", "appText", "applicationTime") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-    const res = await db.query(query, [clubId, userId, type, appText, applicationTime]);
+async function createApplication(clubId, userId, type, appText) {
+    const query = `INSERT INTO applications ("clubId", "userId", "type", "appText") VALUES ($1, $2, $3, $4) RETURNING id`;
+    const res = await db.query(query, [clubId, userId, type, appText]);
 
     return res.rows[0]
 }
@@ -57,6 +87,8 @@ export {
     fetchApplications,
     fetchApplicationInfo,
     fetchClubApplication,
+    fetchExecutiveClubApplication,
+    fetchMemberClubApplication,
     fetchLatestClubApplication,
     createApplication,
     deleteApplication,

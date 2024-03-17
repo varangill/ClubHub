@@ -1,0 +1,117 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import NavBar from "./NavigationBar";
+import { getData, postData, deleteData } from "../api";
+import "../ApplicationForm.css";
+import { useAuth } from "../AuthContext";
+
+export default function ApplicationForm() {
+    const { id } = useParams();
+    const [clubName, setClubName] = useState("");
+    const [application, setApplication] = useState<any>([])
+    const [applicationQuestions, setApplicationQuestions] = useState<string[]>([])
+    const [answers, setAnswers] = useState("");
+    const [inputValues, setInputValues] = useState(Array(applicationQuestions.length).fill(''))
+    const [type, setType] = useState("member");
+    const { user } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getData(`clubs/${id}`).then((res) => {
+            setClubName(res.clubName);
+        });
+
+        retrieveInfo();
+    })
+
+    const handleInputChange = (index, value) => {
+        const newInputValues = [...inputValues];
+        newInputValues[index] = value;
+        setInputValues(newInputValues);
+        updateValues();
+    };
+
+    const updateValues = () => {
+        let wholeString = inputValues[0];
+
+        for(let i = 1; i < inputValues.length; i++) {
+            wholeString += "," + inputValues[i];
+        }
+
+        setAnswers(wholeString);
+    }
+
+    const fillApplication = async () => {
+        updateValues();
+        const clubId = id;
+        const userId = user?.id;
+        const applicationId = application[0]["id"];
+        const appText = answers;
+
+        try {
+            await postData(`filled-applications/create-filled-application`, {
+                userId,
+                clubId,
+                applicationId,
+                type,
+                appText,
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleSubmit = async () => {
+        const result = window.confirm("Are you sure you want to submit?");
+        if(result) {
+            fillApplication();
+            navigate(`/club/${id}`);
+        }
+    };
+
+    const retrieveInfo = async () => {
+        try {
+            await getData(`applications/member/${id}`).then((res) => {
+                setApplication(res)
+            });
+            setApplicationQuestions(application[0]["appText"].split(","));
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    return (
+        <div>
+            <NavBar />
+            <div class="container">
+                <div class="content">
+                    <h1 class="title">
+                        {clubName} Application Forms
+                    </h1>
+                    <div class="section">
+                        {applicationQuestions.map((question, index) => {
+                            return (
+                                <div key={index}>
+                                    <ul class="question">
+                                        {question}
+                                    </ul>
+                                    <input 
+                                    type="text" 
+                                    class="input"
+                                    value={inputValues[index]}
+                                    onChange={(e) => handleInputChange(index, e.target.value)}
+                                    />
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div >
+                        <button onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

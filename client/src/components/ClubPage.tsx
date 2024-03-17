@@ -5,6 +5,7 @@ import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
 import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
+import ViewApplicationsModal from "./ViewApplicationsModal"
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
@@ -17,6 +18,7 @@ export default function ClubPage() {
   const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] =
     useState(false);
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+  const [showViewApplicationsModal, setShowViewApplicationsModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
   const [clubName, setClubName] = useState("");
@@ -108,7 +110,7 @@ export default function ClubPage() {
       <div className="join-button-container">
         <button
           onClick={() => {
-            navigate(`/application_form/${id}`);
+            navigate(`/member_application_form/${id}`);
           }}
           className="join-button"
         >
@@ -164,6 +166,37 @@ export default function ClubPage() {
       </button>
     );
   };
+
+  const ExecutiveApplicationButton = () => {
+    return (
+      <div className="join-button-container">
+      <button
+        onClick={() => {
+          navigate(`/executive_application_form/${id}`);
+        }}
+        className="apply-executive-button"
+      >
+        Apply to be an Executive
+      </button>
+      </div>
+    )
+  }
+
+  const ViewApplicationsButton = () => {
+    return (
+      <div className="join-button-container">
+        <button
+          onClick={() => {
+            setShowViewApplicationsModal(true);
+          }}
+          className="view-applications-button"
+        >
+          View Applications
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="club-page-container">
       <div className="club-detail-container">
@@ -213,11 +246,22 @@ export default function ClubPage() {
             announcement={selectedAnnouncement}
           />
         )}
+        {showViewApplicationsModal && (
+          <ViewApplicationsModal
+            hideModal={() => {
+              setShowViewApplicationsModal(false);
+            }}
+            clubId={id}
+            userId={user?.id}
+            memberType={memberType}
+          />
+        )}
         <h2 className="club-heading">{clubName}</h2>
         <h5 className="club-desc">{clubDesc}</h5>
 
         {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-        {memberType != "member" && <SettingsButton />}
+        {memberType != "member" && <><SettingsButton/><ViewApplicationsButton/></>}
+        {memberType === "member" && <ExecutiveApplicationButton />}
         {memberType === "none" && clubStatus === "open" ? (
           <JoinButton />
         ) : memberType === "none" && clubStatus === "application" ? (
