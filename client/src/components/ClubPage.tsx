@@ -26,7 +26,7 @@ export default function ClubPage() {
   const [clubStatus, setClubStatus] = useState("open");
   const [memberType, setMemberType] = useState("");
   const [members, setMembers] = useState([]); //Stores the current members of the club
-  const [announcements, setAnnouncements] = useState([]);
+  const [announcements, setAnnouncements] = useState<any>([]);
 
   const { id } = useParams();
   const { user } = useAuth();
@@ -294,6 +294,8 @@ export default function ClubPage() {
             </div>
             <div className="scroll">
               {announcements.map((announcement) => {
+                const time = announcement["announcementTime"].slice(0, -14)
+
                 return (
                   <ul
                     key={announcement["id"]}
@@ -303,8 +305,9 @@ export default function ClubPage() {
                       setShowAnnouncementModal(true);
                     }}
                   >
-                    {announcement["announcementTitle"]} -{" "}
-                    {announcement["announcementText"]}
+                    {announcement["announcementTitle"]} - 
+                    {" "}{time} - 
+                    {" "}{announcement["announcementText"]}
                   </ul>
                 );
               })}
