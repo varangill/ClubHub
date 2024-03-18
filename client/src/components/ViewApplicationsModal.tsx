@@ -24,6 +24,7 @@ export default function ViewApplicationsModal(props) {
         <Modal show={true}
         onHide={() => {
             props.hideModal();
+            props.requestUpdate();
         }}
         >
             <Modal.Header closeButton>
@@ -48,7 +49,6 @@ export default function ViewApplicationsModal(props) {
                         {executiveApplications.map((application) => {
 
                             const time = application["applicationTime"].slice(0, -8).replace('T', ' ');
-
 
                             return (
                                 <ul
@@ -96,6 +96,7 @@ export default function ViewApplicationsModal(props) {
                 <Button variant="secondary"
                 onClick={() => {
                     props.hideModal();
+                    props.requestUpdate();
                 }}
                 >
                     Close

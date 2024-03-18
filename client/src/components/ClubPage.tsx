@@ -256,6 +256,7 @@ export default function ClubPage() {
             clubId={id}
             userId={user?.id}
             memberType={memberType}
+            requestUpdate={updateMemberList}
           />
         )}
         <h2 className="club-heading">{clubName}</h2>
