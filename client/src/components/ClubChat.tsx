@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { postData, getData } from "../api";
 import Button from "react-bootstrap/Button";
 
-const socket = io(`http://${import.meta.env.VITE_BACKEND_URL}`);
+const socket = io(`${import.meta.env.VITE_BACKEND_URL}`);
 
 export default function ClubChat(props) {
   const [messageInput, setMessageInput] = useState("");
