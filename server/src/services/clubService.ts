@@ -58,8 +58,8 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
-
-async function fetchBannedMembers(clubId) { //query to get a list of all the banned members
+async function fetchBannedMembers(clubId) {
+  //query to get a list of all the banned members
   const query = `
   SELECT bannedUsers.name AS "BannedUserName",banners.name AS "BannerName", bans."banDate" AS "BanDate", bans."userId", bannedUsers.*
   FROM bans
@@ -70,7 +70,6 @@ async function fetchBannedMembers(clubId) { //query to get a list of all the ban
   const res = await db.query(query, [clubId]);
   return res.rows;
 }
-
 
 async function fetchClubOwner(clubId) {
   // return the owner of the given club
@@ -110,17 +109,16 @@ async function unbanClubMember(userId, clubId) {
   return res;
 }
 
-
 async function promoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const res = await db.query(query, [userId, clubId]);
 
   return res;
 }
 
 async function demoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'member' WHERE "userId" = $1 AND "clubId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const res = await db.query(query, [userId, clubId]);
 
   return res;
 }
