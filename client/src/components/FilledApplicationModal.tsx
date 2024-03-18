@@ -29,11 +29,19 @@ export default function FilledApplicationsModal(props) {
 
     const approve = async () => {
         if(type === "executive") {
-            
+            await postData(`clubs/promote-member`, {
+                userId: userId,
+                clubId: props.clubId,
+            })
+
+            await deleteData(`filled-applications/${props.application["id"]}`, {
+            }).then(() => {
+                props.hideModal();
+            });
         }
 
         if(type === "member") {
-            postData(`users/join-club`, {
+            await postData(`users/join-club`, {
                 userId: userId,
                 clubId: props.clubId,
             }).then((res) => {

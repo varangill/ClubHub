@@ -11,6 +11,7 @@
   position: absolute;
   top: 10px; /* Adjust as needed */
   right: 30px; /* Adjust as needed */
+  z-index: 1;
 }
 
 .join-button {
@@ -124,6 +125,13 @@
   max-height: 100px;
   overflow-y: scroll;
   border: 1px solid black;
+}
+
+.view-applications-container {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 30px; /* Adjust as needed */
+  z-index: 0;
 }
 
 .view-applications-button {

@@ -169,7 +169,7 @@ export default function ClubPage() {
 
   const ExecutiveApplicationButton = () => {
     return (
-      <div className="join-button-container">
+      <div className="view-applications-container">
       <button
         onClick={() => {
           navigate(`/executive_application_form/${id}`);
@@ -184,7 +184,7 @@ export default function ClubPage() {
 
   const ViewApplicationsButton = () => {
     return (
-      <div className="join-button-container">
+      <div className="view-applications-container">
         <button
           onClick={() => {
             setShowViewApplicationsModal(true);
