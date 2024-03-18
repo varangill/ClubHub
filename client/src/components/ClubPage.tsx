@@ -127,6 +127,8 @@ export default function ClubPage() {
     }).then((res) => {
       setMemberType(res.membershipType);
     });
+
+    deleteData(`filled-applications/executive/${user?.id}`, {})
   };
 
   const LeaveButton = () => {
@@ -312,7 +314,7 @@ export default function ClubPage() {
                 );
               })}
             </div>
-            {memberType != "member" && <AnnouncementCreationButton />}
+            {memberType === "executive" || memberType === "owner" && <AnnouncementCreationButton />}
           </div>
         </div>
         {showPopup && <div className="popup">Club has been joined!</div>}

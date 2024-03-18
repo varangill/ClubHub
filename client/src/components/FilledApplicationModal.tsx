@@ -33,7 +33,7 @@ export default function FilledApplicationsModal(props) {
                 clubId: props.clubId,
             })
 
-            await deleteData(`filled-applications/executive/${props.application["id"]}`, {
+            await deleteData(`filled-applications/executive/${userId}`, {
             }).then(() => {
                 props.hideModal();
             });
@@ -55,7 +55,7 @@ export default function FilledApplicationsModal(props) {
                   }
             })
 
-            await deleteData(`filled-applications/member/${props.application["id"]}`, {
+            await deleteData(`filled-applications/member/${userId}`, {
             }).then(() => {
                 props.hideModal();
             });
@@ -63,13 +63,18 @@ export default function FilledApplicationsModal(props) {
     }
 
     const reject = async () => {
-        try {
-            await deleteData(`filled-applications/${props.application["id"]}`, {
+        if(type === "executive") {
+            await deleteData(`filled-applications/executive/${userId}`, {
             }).then(() => {
                 props.hideModal();
             });
-        } catch (err) {
-            console.log(err);
+        }
+
+        if(type === "member") {
+            await deleteData(`filled-applications/member/${userId}`, {
+            }).then(() => {
+                props.hideModal();
+            });
         }
     };
 
