@@ -54,6 +54,20 @@ async function deleteFilledApplication(id) {
     return res;
 }
 
+async function deleteUsersExecutiveApplications(userId) {
+    const query = `DELETE FROM filled_applications WHERE "userId" = $1 AND "type" = 'executive'`
+    const res = await db.query(query, [userId])
+
+    return res;
+}
+
+async function deleteUsersMemberApplications(userId) {
+    const query = `DELETE FROM filled_applications WHERE "userId" = $1 AND "type" = 'member'`
+    const res = await db.query(query, [userId])
+
+    return res;
+}
+
 export { 
     fetchFilledApplicationInfo,
     fetchFilledApplications,
@@ -62,4 +76,6 @@ export {
     fetchFilledMemberApplications,
     createNewFilledApplication,
     deleteFilledApplication,
+    deleteUsersExecutiveApplications,
+    deleteUsersMemberApplications,
 }

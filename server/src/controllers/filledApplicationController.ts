@@ -6,6 +6,8 @@ import {
     fetchFilledMemberApplications,
     createNewFilledApplication,
     deleteFilledApplication,
+    deleteUsersExecutiveApplications,
+    deleteUsersMemberApplications,
 } from "../services/filledApplicationService";
 
 async function getFilledApplicationInfo(req, res, next) {
@@ -85,6 +87,26 @@ async function deleteExistingFilledApplication(req, res, next) {
     }
 }
 
+async function deleteUsersExistingExecutiveApplications(req, res, next) {
+    try {
+        await deleteUsersExecutiveApplications(req.params.id);
+        res.send({ message: "Applications Deleted"});
+    } catch (err) {
+        console.error(`Error deleting applications`);
+        next(err);
+    }
+}
+
+async function deleteUsersExistingMemberApplications(req, res, next) {
+    try {
+        await deleteUsersMemberApplications(req.params.id);
+        res.send({ message: "Applications Deleted"});
+    } catch (err) {
+        console.error(`Error deleting applciations`);
+        next(err);
+    }
+}
+
 const filledApplicationController = {
     getFilledApplicationInfo,
     getFilledApplications,
@@ -93,6 +115,8 @@ const filledApplicationController = {
     getFilledMemberApplications,
     createFilledApplication,
     deleteExistingFilledApplication,
+    deleteUsersExistingExecutiveApplications,
+    deleteUsersExistingMemberApplications,
 };
 
 export default filledApplicationController;

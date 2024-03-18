@@ -114,7 +114,7 @@ export default function ApplicationForm() {
                         })}
                     </div>
                     <div >
-                        <button onClick={handleSubmit} class="">Submit</button>
+                        <button onClick={handleSubmit} class="application-submit">Submit</button>
                     </div>
                 </div>
             </div>

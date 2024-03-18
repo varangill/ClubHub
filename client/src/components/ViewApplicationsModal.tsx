@@ -47,7 +47,8 @@ export default function ViewApplicationsModal(props) {
                     <div className="scroll">
                         {executiveApplications.map((application) => {
 
-                            const time = application["applicationTime"].slice(0, -14);
+                            const time = application["applicationTime"].slice(0, -8).replace('T', ' ');
+
 
                             return (
                                 <ul
@@ -70,7 +71,7 @@ export default function ViewApplicationsModal(props) {
                     <div className="scroll">
                         {memberApplications.map((application) => {
 
-                            const time = application["applicationTime"].slice(0, -14);
+                            const time = application["applicationTime"].slice(0, -8).replace('T', ' ');
 
                             return (
                                 <ul

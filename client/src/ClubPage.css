@@ -185,3 +185,9 @@
 .chat-text-input {
   width: 90%;
 }
+
+.application-submit {
+  margin-left: 50px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}

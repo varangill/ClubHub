@@ -9,5 +9,7 @@ router.get("/executive/:id", filledApplicationController.getFilledExecutiveAppli
 router.get("/member/:id", filledApplicationController.getFilledMemberApplications)
 router.post("/create-filled-application", filledApplicationController.createFilledApplication)
 router.delete("/:id", filledApplicationController.deleteExistingFilledApplication)
+router.delete("/executive/:id", filledApplicationController.deleteUsersExistingExecutiveApplications)
+router.delete("/member/:id", filledApplicationController.deleteUsersExistingMemberApplications)
 
 export default router;

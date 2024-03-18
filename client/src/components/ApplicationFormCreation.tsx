@@ -17,7 +17,9 @@ export default function ApplicationForm() {
     const [type, setType] = useState("executive");
 
     useEffect(() => {
-        
+        getData(`clubs/${id}`).then((res) => {
+            setClubName(res.clubName);
+        })
     })
 
     const createApplication = async () => {

@@ -8,7 +8,6 @@ export default function FilledApplicationsModal(props) {
     const [showPopup, setShowPopup] = useState(false);
     const [memberType, setMemberType] = useState("");
     const [userId, setUserId] = useState(props.application["userId"]);
-    const [clubId, setClubId] = useState(props.clubId);
     const [type, setType] = useState(props.application["type"]);
     const [questionsString, setQuestionsString] = useState("");
     const [applicationQuestions, setApplicationQuestions] = useState<string[]>([]);
@@ -34,7 +33,7 @@ export default function FilledApplicationsModal(props) {
                 clubId: props.clubId,
             })
 
-            await deleteData(`filled-applications/${props.application["id"]}`, {
+            await deleteData(`filled-applications/executive/${props.application["id"]}`, {
             }).then(() => {
                 props.hideModal();
             });
@@ -56,7 +55,7 @@ export default function FilledApplicationsModal(props) {
                   }
             })
 
-            await deleteData(`filled-applications/${props.application["id"]}`, {
+            await deleteData(`filled-applications/member/${props.application["id"]}`, {
             }).then(() => {
                 props.hideModal();
             });
