@@ -37,7 +37,7 @@ const clientBuild = path.join(__dirname, "../../client/dist");
 app.use(express.static(clientBuild));
 
 const server = http.createServer(app);
-const serverPort = 3000;
+const serverPort = process.env.PORT || 3000;
 
 const io = socketManager.init(server);
 

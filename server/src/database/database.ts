@@ -6,7 +6,7 @@ dotenv.config({ path: path.join(__dirname, "..", "..", ".env") });
 
 const dbPool = new Pool({
   host: process.env.HOST,
-  port: Number(process.env.PORT),
+  port: Number(process.env.DB_PORT),
   database: process.env.DATABASE,
   user: process.env.USER,
   password: process.env.PASSWORD,

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getData = (API_URL: any) => {
-  return fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -11,7 +11,7 @@ const getData = (API_URL: any) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postData = (API_URL: any, bodyData: any) => {
-  return fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -26,7 +26,7 @@ const postData = (API_URL: any, bodyData: any) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const deleteData = (API_URL: any, bodyData: any) => {
-  return fetch(`http://${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${API_URL}`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
