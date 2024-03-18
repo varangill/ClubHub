@@ -5,6 +5,8 @@ import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
 import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
+import EventCreationModal from "./EventCreationModal";
+import EventModal from "./EventModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
@@ -15,8 +17,16 @@ export default function ClubPage() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = useState(false);
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+
+  const [showCreateEventModal, setShowCreateEventModal] = useState(false);
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [events, setEvents] = useState([]);
+  
   const [selectedMember, setSelectedMember] = useState({});
   const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
+
+  const [selectedEvent, setSelectedEvent] = useState({});
+
   const [clubName, setClubName] = useState("");
   const [clubDesc, setClubDesc] = useState("");
   const [clubStatus, setClubStatus] = useState("open");
@@ -33,7 +43,7 @@ export default function ClubPage() {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
     });
-
+    updateEventList()
     updateAnnouncementList();
     updateMemberList();
     updateClubInfo();
@@ -44,6 +54,16 @@ export default function ClubPage() {
     try {
       getData(`announcements/club/${id}`).then((res) => {
         setAnnouncements(res)
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const updateEventList = async () => {
+    try {
+      getData(`announcements/club/event/${id}`).then((res) => {
+        setEvents(res)
       });
     } catch (err) {
       console.log(err)
@@ -155,6 +175,27 @@ export default function ClubPage() {
         </button>
     );
   };
+
+
+const EventCreationButton = () => {
+  return (
+    <button
+      onClick={() => {
+        try {
+          // Attempt to show the create event modal
+          setShowCreateEventModal(true);
+        } catch (error) {
+          // If there's an error, log it to the console
+          console.error("Error while trying to show the create event modal:", error);
+        }
+      }}
+      className="announcement-button"
+    >
+      Create Event
+    </button>
+  );
+};
+
   return (
     <div className="club-detail-container">
       <NavBar />
@@ -233,6 +274,23 @@ export default function ClubPage() {
             );
           })}
         </div>
+
+        <div class="announcement-container">
+          <div class="announcement-header">
+              <h1>Events</h1>
+          </div>
+          <div class="scroll">
+            {events.map((events, index) => {
+              return (
+                <ul key={events["id"]} class="announcement" onClick={() => {setSelectedEvent(events); setShowEventModal(true);}}>
+                  {events["announcementTitle"]} - {events["announcementText"]}
+                </ul>
+              )
+            })}
+          </div>
+            {memberType != "member" && <EventCreationButton />}
+          </div>
+
         <div class="announcement-container">
           <div class="announcement-header">
               <h1>Announcements</h1>
