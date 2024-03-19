@@ -2,8 +2,12 @@ import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
+  await knex("club_tags").del();
+  await knex("chat_messages").del();
   await knex("announcements").del();
   await knex("memberships").del();
+  await knex("bans").del();
+  await knex("tags").del();
   await knex("clubs").del();
   await knex("users").del();
 
@@ -30,11 +34,30 @@ export async function seed(knex: Knex): Promise<void> {
     { clubId: "3", userId: "3", membershipType: "executive" },
   ]);
 
+  await knex("tags").insert([
+    { id: "1", tagName: "Science" },
+    { id: "2", tagName: "Sports" },
+    { id: "3", tagName: "Mathematics" },
+    { id: "4", tagName: "Engineering" },
+    { id: "5", tagName: "Arts" },
+    { id: "6", tagName: "Music" },
+    { id: "7", tagName: "Games" },
+    { id: "8", tagName: "Physical" },
+    { id: "9", tagName: "Nature" },
+    { id: "10", tagName: "Travel" },
+  ]);
+
   // await knex("announcements").insert([
   //   { id: "1", clubId: "1", userId: "1", announcementTitle: "TITLE", announcementText: "TEXT", announcementTime: "2023-07-23T06:42:32.520Z"}
   // ])
 
   await knex("applications").insert([
-    { id: "1", clubId: "1", userId: "1", appText: "What is your name", applicationTime: "2023-07-23T06:42:32.520Z"}
-  ])
+    {
+      id: "1",
+      clubId: "1",
+      userId: "1",
+      appText: "What is your name",
+      applicationTime: "2023-07-23T06:42:32.520Z",
+    },
+  ]);
 }
