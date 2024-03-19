@@ -43,7 +43,7 @@ async function getTagsOfClub(clubId) {
   `;
   const res = await db.query(query, [clubId]);
 
-  return res.rows[0];
+  return res.rows;
 }
 
 export {
