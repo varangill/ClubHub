@@ -8,6 +8,7 @@ interface Club {
   id: number;
   clubName: string;
   clubDesc: string;
+  tagnames: string;
 }
 
 interface OwnerData {
@@ -101,6 +102,9 @@ export default function ClubList({
         <tr className="club-header-row">
           <th className="club-tb-header club-table-col-name">Name</th>
           <th className="club-tb-header club-table-col-desc">Description</th>
+          {isAllPage ? (
+            <th className="club-tb-header club-table-col-tags">Tags</th>
+          ) : null}
           <th className="club-tb-header club-table-col-owner">Owner</th>
         </tr>
         {filteredClubs.map((club) => (
@@ -109,6 +113,7 @@ export default function ClubList({
               <td>{club.clubName}</td>
             </Link>
             <td>{club.clubDesc}</td>
+            {isAllPage ? <td>{club.tagnames}</td> : null}
             <td>{owners[club.id]}</td>
           </tr>
         ))}
