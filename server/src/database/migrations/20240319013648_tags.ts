@@ -16,5 +16,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("tags").dropTable("club_tags");
+  return knex.schema.dropTable("club_tags").dropTable("tags");
 }
