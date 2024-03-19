@@ -191,7 +191,7 @@ const EventCreationButton = () => {
       }}
       className="announcement-button"
     >
-      Create Event
+      +
     </button>
   );
 };
@@ -203,6 +203,18 @@ const EventCreationButton = () => {
         <MemberEditModal
           hideModal={() => {
             setShowMemberModal(false);
+          }}
+          member={selectedMember}
+          memberType={memberType}
+          userId={user?.id}
+          clubId={id}
+          requestUpdate={updateMemberList}
+        />
+      )}
+      {showCreateEventModal && (
+        <EventCreationModal
+          hideModal={() => {
+            setShowCreateEventModal(false);
           }}
           member={selectedMember}
           memberType={memberType}

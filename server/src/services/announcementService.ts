@@ -24,9 +24,9 @@ async function createNewAnnouncement(clubId, userId, announcementTitle, announce
 }
 
 
-async function createNewEvent(club_id, title, event_date, location) {
-    const query = `INSERT INTO events ("club_id", "title", "event_date", "location") VALUES ($1, $2, $3, $4) RETURNING event_id`;
-    const res = await db.query(query, [club_id, title, event_date, location]);
+async function createNewEvent(club_id, title, event_date, location,userId,eventText ) {
+    const query = `INSERT INTO events ("club_id", "title", "event_date", "location", "userId", "eventText") VALUES ($1, $2, $3, $4, $5, $6) RETURNING event_id`;
+    const res = await db.query(query, [club_id, title, event_date, location, userId,eventText ]);
 
     return res.rows[0]
 }

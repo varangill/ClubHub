@@ -50,7 +50,9 @@ async function createEvent(req, res, next) {
             req.body.clubId,
             req.body.title,
             req.body.event_date,
-            req.body.location
+            req.body.location,
+            req.body.userId,
+            req.body.evenText
         );
         res.send(newEventId);
     } catch (err) {

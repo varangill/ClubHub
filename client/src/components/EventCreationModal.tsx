@@ -7,8 +7,10 @@ import { useAuth } from "../AuthContext";
 import "../Announcement.css"
 
 export default function ClubCreationModal(props) {
-  const [eventTitle, setTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [eventText, setDesc] = useState("");
+  const [event_date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const { user } = useAuth();
 
 
@@ -17,11 +19,13 @@ export default function ClubCreationModal(props) {
     const clubId = props.clubId;
 
     try { 
-        await postData(`announcements/create-event`, {
+        await postData(`announcements/create-event/:event-id`, {
             clubId,
             userId,
-            eventTitle,
-            eventText
+            title,
+            eventText: eventText,
+            event_date,
+            location
         })
         props.requestUpdate();
         props.hideModal();
@@ -45,7 +49,7 @@ export default function ClubCreationModal(props) {
                 <p class="text">Title</p>
                 <input type="text"
                     placeholder="Title"
-                    value={eventTitle}
+                    value={title}
                     maxLength="80"
                     onChange={(e) => setTitle(e.target.value)}
                 />
@@ -54,12 +58,29 @@ export default function ClubCreationModal(props) {
                 <p class="text">Description</p>
                 <textarea name="" 
                 id="" 
-                cols="30" 
-                rows="10"
+                cols="30"
                 placeholder="Description"
                 class="desc"
                 value={eventText}
                 onChange={(e) => setDesc(e.target.value)}
+                />
+            </div>
+            <div>
+                <p class="text">Event Date</p>
+                <input type="date"
+                    placeholder="Date"
+                    value={event_date}
+                    maxLength="80"
+                    onChange={(e) => setDate(e.target.value)}
+                />
+            </div>
+            <div>
+                <p class="text">Location</p>
+                <input type="text"
+                    placeholder="Location"
+                    value={location}
+                    maxLength="80"
+                    onChange={(e) => setLocation(e.target.value)}
                 />
             </div>
         </Modal.Body>
