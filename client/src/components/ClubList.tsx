@@ -16,9 +16,16 @@ interface OwnerData {
 
 interface ClubListProps {
   clubs: Club[];
+  isAllPage: boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  tagSelectorUpdate: Function;
 }
 
-export default function ClubList({ clubs }: ClubListProps) {
+export default function ClubList({
+  clubs,
+  isAllPage,
+  tagSelectorUpdate,
+}: ClubListProps) {
   const [query, setQuery] = useState("");
   const [owners, setOwners] = useState<OwnerData>({});
   const [tags, setTags] = useState([]);
@@ -57,6 +64,7 @@ export default function ClubList({ clubs }: ClubListProps) {
 
   const onSelectTag = (tag) => {
     setSelectedTag(tag);
+    tagSelectorUpdate(tag);
   };
 
   return (
@@ -70,21 +78,22 @@ export default function ClubList({ clubs }: ClubListProps) {
             onChange={(e) => setQuery(e.target.value)}
             className="search-input"
           />
-
-          <DropdownButton
-            title={selectedTag ? selectedTag["tagName"] : "Select Tag"}
-            className="club-list-tags-dropdown"
-          >
-            {tags.map((tag) => (
-              <Dropdown.Item
-                key={tag["id"]}
-                onClick={() => onSelectTag(tag)}
-                className={tag === selectedTag ? "selected-tag" : ""}
-              >
-                {tag["tagName"]}
-              </Dropdown.Item>
-            ))}
-          </DropdownButton>
+          {isAllPage ? (
+            <DropdownButton
+              title={selectedTag ? selectedTag["tagName"] : "Select Tag"}
+              className="club-list-tags-dropdown"
+            >
+              {tags.map((tag) => (
+                <Dropdown.Item
+                  key={tag["id"]}
+                  onClick={() => onSelectTag(tag)}
+                  className={tag === selectedTag ? "selected-tag" : ""}
+                >
+                  {tag["tagName"]}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+          ) : null}
         </div>
       </div>
 
