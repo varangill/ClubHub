@@ -50,7 +50,7 @@ export default function ClubTagsDropdown(props) {
         {tags.map((tag) => (
           <Dropdown.Item
             key={tag["id"]}
-            className={tag["isSelected"] ? "settings-selected-tag" : ""}
+            className={tag["isSelected"] ? "selected-tag" : ""}
             onClick={() => onClickItem(tag)}
           >
             {tag["tagName"]}
