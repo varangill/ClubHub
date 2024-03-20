@@ -5,26 +5,25 @@ import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
 import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
-import EventCreationModal from "./EventCreationModal";
-import EventModal from "./EventModal";
+
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
+import EventCreationModal from "./EventCreationModal";
+import EventModal from "./EventModal";
 
 export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = useState(false);
-  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);  
+  const [selectedMember, setSelectedMember] = useState({});
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
 
   const [showCreateEventModal, setShowCreateEventModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
   const [events, setEvents] = useState([]);
-  
-  const [selectedMember, setSelectedMember] = useState({});
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
-
   const [selectedEvent, setSelectedEvent] = useState({});
 
   const [clubName, setClubName] = useState("");
