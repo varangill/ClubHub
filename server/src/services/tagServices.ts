@@ -24,13 +24,23 @@ async function removeTagFromClub(clubId, tagId) {
 
 async function getClubsByTag(tagId) {
   const query = `
-    SELECT c.*
-    FROM clubs c
-    JOIN club_tags ct ON c.id = ct."clubId"
-    WHERE ct."tagId" = $1;
+    SELECT
+      c.*,
+      (SELECT STRING_AGG(t."tagName", ', ') 
+       FROM club_tags ct2
+       JOIN tags t ON ct2."tagId" = t.id
+       WHERE ct2."clubId" = c.id) AS tagNames
+    FROM
+      clubs c
+    JOIN
+      club_tags ct ON c.id = ct."clubId"
+    WHERE
+      ct."tagId" = $1
+    GROUP BY
+      c.id;
   `;
   const res = await db.query(query, [tagId]);
-
+  console.log(res.rows);
   return res.rows;
 }
 
