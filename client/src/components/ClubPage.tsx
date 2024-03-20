@@ -7,21 +7,23 @@ import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
 
 import EventCreationModal from "./EventCreationModal";
-import ViewApplicationsModal from "./ViewApplicationsModal"
+import ViewApplicationsModal from "./ViewApplicationsModal";
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
 import { MoreVertical } from "lucide-react";
 import ClubChat from "./ClubChat";
+import EventModal from "./EventModal";
 
 export default function ClubPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = 
+  const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] =
     useState(false);
-  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);  
+  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
 
-  const [showViewApplicationsModal, setShowViewApplicationsModal] = useState(false);
+  const [showViewApplicationsModal, setShowViewApplicationsModal] =
+    useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
 
@@ -46,7 +48,7 @@ export default function ClubPage() {
     getData(`users/membership?userId=${user?.id}&clubId=${id}`).then((res) => {
       setMemberType(res.membershipType);
     });
-    updateEventList()
+    updateEventList();
     updateAnnouncementList();
     updateMemberList();
     updateClubInfo();
@@ -68,12 +70,12 @@ export default function ClubPage() {
   const updateEventList = async () => {
     try {
       getData(`event/club/events/${id}`).then((res) => {
-        setEvents(res)
+        setEvents(res);
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const updateMemberList = async () => {
     try {
@@ -147,7 +149,7 @@ export default function ClubPage() {
       setMemberType(res.membershipType);
     });
 
-    deleteData(`filled-applications/executive/${user?.id}`, {})
+    deleteData(`filled-applications/executive/${user?.id}`, {});
   };
 
   const LeaveButton = () => {
@@ -191,17 +193,17 @@ export default function ClubPage() {
   const ExecutiveApplicationButton = () => {
     return (
       <div className="view-applications-container">
-      <button
-        onClick={() => {
-          navigate(`/executive_application_form/${id}`);
-        }}
-        className="apply-executive-button"
-      >
-        Apply to be an Executive
-      </button>
+        <button
+          onClick={() => {
+            navigate(`/executive_application_form/${id}`);
+          }}
+          className="apply-executive-button"
+        >
+          Apply to be an Executive
+        </button>
       </div>
-    )
-  }
+    );
+  };
 
   const ViewApplicationsButton = () => {
     return (
@@ -216,28 +218,29 @@ export default function ClubPage() {
         </button>
       </div>
     );
-
   };
 
-
-const EventCreationButton = () => {
-  return (
-    <button
-      onClick={() => {
-        try {
-          // Attempt to show the create event modal
-          setShowCreateEventModal(true);
-        } catch (error) {
-          // If there's an error, log it to the console
-          console.error("Error while trying to show the create event modal:", error);
-        }
-      }}
-      className="announcement-button"
-    >
-      +
-    </button>
-  );
-};
+  const EventCreationButton = () => {
+    return (
+      <button
+        onClick={() => {
+          try {
+            // Attempt to show the create event modal
+            setShowCreateEventModal(true);
+          } catch (error) {
+            // If there's an error, log it to the console
+            console.error(
+              "Error while trying to show the create event modal:",
+              error
+            );
+          }
+        }}
+        className="announcement-button"
+      >
+        +
+      </button>
+    );
+  };
 
   return (
     <div className="club-detail-container">
@@ -265,7 +268,7 @@ const EventCreationButton = () => {
           memberType={memberType}
           userId={user?.id}
           clubId={id}
-          requestUpdate={showEventModal}
+          requestUpdate={updateEventList}
         />
       )}
       {showSettingsModal && (
@@ -289,7 +292,7 @@ const EventCreationButton = () => {
           clubId={id}
           userId={user?.id}
           requestUpdate={updateAnnouncementList}
-          />
+        />
       )}
       {showAnnouncementModal && (
         <AnnouncementsModal
@@ -300,29 +303,45 @@ const EventCreationButton = () => {
           announcement={selectedAnnouncement}
         />
       )}
-              {showViewApplicationsModal && (
-
-          <ViewApplicationsModal
-            hideModal={() => {
-              setShowViewApplicationsModal(false);
-            }}
-            clubId={id}
-            userId={user?.id}
-            memberType={memberType}
-            requestUpdate={updateMemberList}
-          />
-        )}
+      {showEventModal && (
+        <EventModal
+          hideModal={() => {
+            setShowEventModal(false);
+          }}
+          clubId={id}
+          event={selectedEvent}
+          currMemberType={memberType}
+          requestUpdate={updateEventList}
+        />
+      )}
+      {showViewApplicationsModal && (
+        <ViewApplicationsModal
+          hideModal={() => {
+            setShowViewApplicationsModal(false);
+          }}
+          clubId={id}
+          userId={user?.id}
+          memberType={memberType}
+          requestUpdate={updateMemberList}
+        />
+      )}
 
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-      {memberType === "executive" || memberType === "owner" && <><SettingsButton/><ViewApplicationsButton/></>}
-        {memberType === "member" && <ExecutiveApplicationButton />}
+      {memberType === "executive" ||
+        (memberType === "owner" && (
+          <>
+            <SettingsButton />
+            <ViewApplicationsButton />
+          </>
+        ))}
+      {memberType === "member" && <ExecutiveApplicationButton />}
       {memberType === "none" && clubStatus === "open" ? (
         <JoinButton />
       ) : memberType === "none" && clubStatus === "application" ? (
-        <ApplyButton/>
+        <ApplyButton />
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
@@ -346,70 +365,58 @@ const EventCreationButton = () => {
           })}
         </div>
 
-        <div class="announcement-container">
-          <div class="announcement-header">
-              <h1>Events</h1>
+        <div className="announcement-container">
+          <div className="announcement-header">
+            <h1>Events</h1>
           </div>
-          <div class="scroll">
-            {events.map((events, index) => {
+          <div className="scroll">
+            {events.map((events) => {
               return (
-                <ul key={events["id"]} class="announcement" onClick={() => {setSelectedEvent(events); setShowEventModal(true);}}>
-          <li>{events["title"]} - {new Date(events["event_date"]).toLocaleDateString()} - {events["location"]} - {events["eventText"]}</li>
+                <ul
+                  key={events["id"]}
+                  className="announcement"
+                  onClick={() => {
+                    setSelectedEvent(events);
+                    setShowEventModal(true);
+                  }}
+                >
+                  <li>
+                    {events["title"]} -{" "}
+                    {new Date(events["event_date"]).toLocaleDateString()} -{" "}
+                    {events["location"]} - {events["eventText"]}
+                  </li>
                 </ul>
-              )
-            })}
-          </div>
-            {memberType != "member" && <EventCreationButton />}
-          </div>
-
-        <div class="announcement-container">
-          <div class="announcement-header">
-              <h1>Announcements</h1>
-          </div>
-          <div class="scroll">
-            {announcements.map((announcement, index) => {
-
-              return (
-                <div key={member["userId"]}>
-                  {member["name"]}
-                  {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
-                    <MoreVertical
-                      onClick={() => {
-                        setSelectedMember(member);
-                        setShowMemberModal(true);
-                      }}
-                    />
-                  ) : null}
-                </div>
               );
             })}
           </div>
-          <div className="announcement-container">
-            <div className="announcement-header">
-              <h1>Announcements</h1>
-            </div>
-            <div className="scroll">
-              {announcements.map((announcement) => {
-                const time = announcement["announcementTime"].slice(0, -14)
+          {memberType != "member" && <EventCreationButton />}
+        </div>
 
-                return (
-                  <ul
-                    key={announcement["id"]}
-                    className="announcement"
-                    onClick={() => {
-                      setSelectedAnnouncement(announcement);
-                      setShowAnnouncementModal(true);
-                    }}
-                  >
-                    {announcement["announcementTitle"]} - 
-                    {" "}{time} - 
-                    {" "}{announcement["announcementText"]}
-                  </ul>
-                );
-              })}
-            </div>
-            {memberType === "executive" || memberType === "owner" && <AnnouncementCreationButton />}
+        <div className="announcement-container">
+          <div className="announcement-header">
+            <h1>Announcements</h1>
           </div>
+          <div className="scroll">
+            {announcements.map((announcement) => {
+              const time = announcement["announcementTime"].slice(0, -14);
+
+              return (
+                <ul
+                  key={announcement["id"]}
+                  className="announcement"
+                  onClick={() => {
+                    setSelectedAnnouncement(announcement);
+                    setShowAnnouncementModal(true);
+                  }}
+                >
+                  {announcement["announcementTitle"]} - {time} -{" "}
+                  {announcement["announcementText"]}
+                </ul>
+              );
+            })}
+          </div>
+          {memberType === "executive" ||
+            (memberType === "owner" && <AnnouncementCreationButton />)}
         </div>
         {showPopup && <div className="popup">Club has been joined!</div>}
       </div>
