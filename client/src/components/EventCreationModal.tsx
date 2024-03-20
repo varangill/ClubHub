@@ -19,7 +19,7 @@ export default function ClubCreationModal(props) {
     const clubId = props.clubId;
 
     try { 
-        await postData(`announcements/create-event/:event-id`, {
+        await postData(`event/create-event/:event-id`, {
             clubId,
             userId,
             title,

@@ -1,7 +1,7 @@
 import db from "../database/database";
 
 async function fetchClubInfo(clubId) {
-  const query = "SELECT * FROM clubs WHERE id = $1";
+  const query = " SELECT * FROM clubs WHERE id = $1";
   const res = await db.query(query, [clubId]);
 
   const club = res.rows[0];
@@ -9,7 +9,20 @@ async function fetchClubInfo(clubId) {
 }
 
 async function fetchClubs() {
-  const query = "SELECT * FROM clubs";
+  //Also fetch the tags for each club
+  const query = `
+    SELECT
+      c.id,
+      c."clubName",
+      c."clubDesc",
+      STRING_AGG(t."tagName", ', ') AS tagNames
+    FROM
+      clubs c
+    LEFT JOIN club_tags ct ON c.id = ct."clubId"
+    LEFT JOIN tags t ON ct."tagId" = t.id
+    GROUP BY
+      c.id;
+  `;
   const res = await db.query(query, []);
 
   const clubs = res.rows;
@@ -58,6 +71,19 @@ async function fetchClubMemberships(clubId) {
   return membershipsRes.rows;
 }
 
+async function fetchBannedMembers(clubId) {
+  //query to get a list of all the banned members
+  const query = `
+  SELECT bannedUsers.name AS "BannedUserName",banners.name AS "BannerName", bans."banDate" AS "BanDate", bans."userId", bannedUsers.*
+  FROM bans
+  JOIN users AS bannedUsers ON bans."userId" = bannedUsers."id"
+  JOIN users AS banners ON bans."bannerId" = banners."id"
+  WHERE bans."clubId" = $1
+  `;
+  const res = await db.query(query, [clubId]);
+  return res.rows;
+}
+
 async function fetchClubOwner(clubId) {
   // return the owner of the given club
   const membershipsQuery = `
@@ -90,22 +116,22 @@ async function banClubMember(userId, clubId, bannerId) {
 }
 
 async function unbanClubMember(userId, clubId) {
-  const query = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const deleteBanQuery = `DELETE FROM bans WHERE "clubId" = $1 AND "userId" = $2`;
+  const res = await db.query(deleteBanQuery, [clubId, userId]);
 
   return res;
 }
 
 async function promoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'executive' WHERE "userId" = $1 AND "clubId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const res = await db.query(query, [userId, clubId]);
 
   return res;
 }
 
 async function demoteClubMember(userId, clubId) {
   const query = `UPDATE memberships SET "membershipType" = 'member' WHERE "userId" = $1 AND "clubId" = $2`;
-  const res = await db.query(query, [clubId, userId]);
+  const res = await db.query(query, [userId, clubId]);
 
   return res;
 }
@@ -122,6 +148,7 @@ async function transferClubOwnership(newOwnerId, oldOwnerId, clubId) {
 
 export {
   fetchClubInfo,
+  fetchBannedMembers,
   fetchClubs,
   createNewClub,
   fetchClubMemberships,

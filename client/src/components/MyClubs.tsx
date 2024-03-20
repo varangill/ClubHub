@@ -19,7 +19,7 @@ export default function MyClubs() {
     <div className="my-clubs-container">
       <NavBar />
       <h2 className="club-heading">My Clubs</h2>
-      <ClubList clubs={clubs} />
+      <ClubList clubs={clubs} isAllPage={false} />
     </div>
   );
 }

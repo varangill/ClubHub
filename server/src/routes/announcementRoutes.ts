@@ -66,6 +66,24 @@
  *                 description: Club Id
  *               userId:
  *                 type: string
+ *                 format: id
+ *                 description: ID of user creating announcement
+ *               announcementTitle:
+ *                 type: string
+ *                 format: string
+ *                 description: Announcement Title
+ *               announcementText:
+ *                 type: string
+ *                 format: string
+ *                 description: Announcement Description
+ *             required:
+ *               - clubId
+ *               - userId
+ *               - announcementTitle
+ *               - announcementText
+ *     responses:
+ *       '201':
+ *         description: Announcement created successfully
  */
 
 import { Router } from "express";
@@ -73,12 +91,9 @@ import announcementController from "../controllers/announcementController";
 const router = Router();
 
 router.get("/:id", announcementController.getAnnouncementInfo)
-router.get("/event/:event-id", announcementController.getEventInfo)
 router.get("/club/:id", announcementController.getClubAnnouncements)
-router.get("/club/events/:id", announcementController.getClubEvents)
 router.post("/create-announcement", announcementController.createAnnouncement)
-router.post("/create-event/:event-id", announcementController.createEvent)
 router.delete("/:id", announcementController.deleteExistingAnnouncement)
-router.delete("/event/:event-id", announcementController.deleteExistingEvent)
+
 
 export default router;

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavigationBar";
 import MemberEditModal from "./MemberEditModal";
 import ClubSettingsModal from "./ClubSettingsModal";
 import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
+
 import EventCreationModal from "./EventCreationModal";
 import ViewApplicationsModal from "./ViewApplicationsModal"
 import { getData, postData, deleteData } from "../api";
@@ -19,6 +20,7 @@ export default function ClubPage() {
   const [showCreateAnnouncementModal, setShowCreateAnnouncementModal] = 
     useState(false);
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);  
+
   const [showViewApplicationsModal, setShowViewApplicationsModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
@@ -33,7 +35,7 @@ export default function ClubPage() {
   const [clubStatus, setClubStatus] = useState("open");
   const [memberType, setMemberType] = useState("");
   const [members, setMembers] = useState([]); //Stores the current members of the club
-  const [announcements, setAnnouncements] = useState([]);
+  const [announcements, setAnnouncements] = useState<any>([]);
 
   const { id } = useParams();
   const { user } = useAuth();
@@ -48,22 +50,24 @@ export default function ClubPage() {
     updateAnnouncementList();
     updateMemberList();
     updateClubInfo();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
+  //unbanMember
 
   const updateAnnouncementList = async () => {
     try {
       getData(`announcements/club/${id}`).then((res) => {
-        setAnnouncements(res)
+        setAnnouncements(res);
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const updateEventList = async () => {
     try {
-      getData(`announcements/club/events/${id}`).then((res) => {
+      getData(`event/club/events/${id}`).then((res) => {
         setEvents(res)
       });
     } catch (err) {
@@ -123,12 +127,17 @@ export default function ClubPage() {
   const ApplyButton = () => {
     return (
       <div className="join-button-container">
-        <button onClick={() => {navigate(`/application_form/${id}`);}} className="join-button">
+        <button
+          onClick={() => {
+            navigate(`/member_application_form/${id}`);
+          }}
+          className="join-button"
+        >
           Apply to Join
         </button>
       </div>
-    )
-  }
+    );
+  };
 
   const leaveClub = () => {
     deleteData(`users/leave-club`, {
@@ -137,6 +146,8 @@ export default function ClubPage() {
     }).then((res) => {
       setMemberType(res.membershipType);
     });
+
+    deleteData(`filled-applications/executive/${user?.id}`, {})
   };
 
   const LeaveButton = () => {
@@ -166,15 +177,46 @@ export default function ClubPage() {
 
   const AnnouncementCreationButton = () => {
     return (
+      <button
+        onClick={() => {
+          setShowCreateAnnouncementModal(true);
+        }}
+        className="announcement-button"
+      >
+        Create Announcement
+      </button>
+    );
+  };
+
+  const ExecutiveApplicationButton = () => {
+    return (
+      <div className="view-applications-container">
+      <button
+        onClick={() => {
+          navigate(`/executive_application_form/${id}`);
+        }}
+        className="apply-executive-button"
+      >
+        Apply to be an Executive
+      </button>
+      </div>
+    )
+  }
+
+  const ViewApplicationsButton = () => {
+    return (
+      <div className="view-applications-container">
         <button
           onClick={() => {
-            setShowCreateAnnouncementModal(true);
+            setShowViewApplicationsModal(true);
           }}
-          className="announcement-button"
+          className="view-applications-button"
         >
-          Create Announcement
+          View Applications
         </button>
+      </div>
     );
+
   };
 
 
@@ -259,6 +301,7 @@ const EventCreationButton = () => {
         />
       )}
               {showViewApplicationsModal && (
+
           <ViewApplicationsModal
             hideModal={() => {
               setShowViewApplicationsModal(false);
@@ -269,6 +312,7 @@ const EventCreationButton = () => {
             requestUpdate={updateMemberList}
           />
         )}
+
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
 
@@ -324,17 +368,54 @@ const EventCreationButton = () => {
           </div>
           <div class="scroll">
             {announcements.map((announcement, index) => {
+
               return (
-                <ul key={announcement["id"]} class="announcement" onClick={() => {setSelectedAnnouncement(announcement); setShowAnnouncementModal(true);}}>
-                  {announcement["announcementTitle"]} - {announcement["announcementText"]}
-                </ul>
-              )
+                <div key={member["userId"]}>
+                  {member["name"]}
+                  {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
+                    <MoreVertical
+                      onClick={() => {
+                        setSelectedMember(member);
+                        setShowMemberModal(true);
+                      }}
+                    />
+                  ) : null}
+                </div>
+              );
             })}
           </div>
-            {memberType != "member" && <AnnouncementCreationButton />}
+          <div className="announcement-container">
+            <div className="announcement-header">
+              <h1>Announcements</h1>
+            </div>
+            <div className="scroll">
+              {announcements.map((announcement) => {
+                const time = announcement["announcementTime"].slice(0, -14)
+
+                return (
+                  <ul
+                    key={announcement["id"]}
+                    className="announcement"
+                    onClick={() => {
+                      setSelectedAnnouncement(announcement);
+                      setShowAnnouncementModal(true);
+                    }}
+                  >
+                    {announcement["announcementTitle"]} - 
+                    {" "}{time} - 
+                    {" "}{announcement["announcementText"]}
+                  </ul>
+                );
+              })}
+            </div>
+            {memberType === "executive" || memberType === "owner" && <AnnouncementCreationButton />}
           </div>
+        </div>
+        {showPopup && <div className="popup">Club has been joined!</div>}
       </div>
-      {showPopup && <div className="popup">Club has been joined!</div>}
+      <div>
+        <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
+      </div>
     </div>
   );
 }

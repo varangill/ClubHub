@@ -14,20 +14,14 @@ const config: { [key: string]: Knex.Config } = {
     },
   },
 
-  //TO-DO: UPDATE PROD CONNECTION
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
+      database: "postgres",
+      host: "34.28.131.1",
+      port: 5432,
+      user: "postgres",
+      password: "postgres",
     },
   },
 };
