@@ -70,8 +70,6 @@
 
 import { Router } from "express";
 import announcementController from "../controllers/announcementController";
-
-
 const router = Router();
 
 router.get("/:id", announcementController.getAnnouncementInfo)
