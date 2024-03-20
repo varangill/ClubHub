@@ -39,9 +39,9 @@ async function fetchClubAnnouncements(clubId) {
     return announcements;
   }
 
-  async function fetchClubEvents(event_id) {
-    const query = `SELECT * FROM events WHERE "event_id" = $1 ORDER BY "event_date" DESC`;
-    const res = await db.query(query, [event_id])
+  async function fetchClubEvents(clubId) {
+    const query = `SELECT * FROM events WHERE "club_id" = $1 ORDER BY "event_date" DESC`;
+    const res = await db.query(query, [clubId])
 
     const events = res.rows;
     return events;

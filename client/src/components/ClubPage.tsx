@@ -295,7 +295,7 @@ const EventCreationButton = () => {
             {events.map((events, index) => {
               return (
                 <ul key={events["id"]} class="announcement" onClick={() => {setSelectedEvent(events); setShowEventModal(true);}}>
-                  {events["eventTitle"]} - {events["eventText"]}
+          <li>{events["title"]} - {new Date(events["event_date"]).toLocaleDateString()} - {events["location"]} - {events["eventText"]}</li>
                 </ul>
               )
             })}
