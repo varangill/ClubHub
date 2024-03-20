@@ -10,10 +10,14 @@ export default function AllClubs() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    fetchClubs();
+  }, []);
+
+  const fetchClubs = () => {
     getData("clubs").then((res) => {
       setClubs(res);
     });
-  }, []);
+  };
 
   const findClubsByTag = (tag) => {
     getData(`tags/${tag["id"]}`).then((clubsRes) => {
@@ -36,6 +40,7 @@ export default function AllClubs() {
         clubs={clubs}
         isAllPage={true}
         tagSelectorUpdate={findClubsByTag}
+        reloadClubs={fetchClubs}
       />
       <Button
         variant="success"
