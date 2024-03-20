@@ -186,6 +186,10 @@
   width: 90%;
 }
 
+.selected-tag {
+  background-color: #d4d4d4 !important; /* Light grey background for selected items */
+  color: #000 !important; /* Black text color */
+
 .application-submit {
   margin-left: 50px;
   margin-bottom: 30px;

@@ -15,6 +15,12 @@ export default function AllClubs() {
     });
   }, []);
 
+  const findClubsByTag = (tag) => {
+    getData(`tags/${tag["id"]}`).then((clubsRes) => {
+      setClubs(clubsRes);
+    });
+  };
+
   return (
     <div className="my-clubs-container">
       <NavBar />
@@ -26,7 +32,11 @@ export default function AllClubs() {
         />
       )}
       <h2 className="club-heading">All Clubs</h2>
-      <ClubList clubs={clubs} />
+      <ClubList
+        clubs={clubs}
+        isAllPage={true}
+        tagSelectorUpdate={findClubsByTag}
+      />
       <Button
         variant="success"
         size="lg"

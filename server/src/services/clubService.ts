@@ -9,7 +9,20 @@ async function fetchClubInfo(clubId) {
 }
 
 async function fetchClubs() {
-  const query = "SELECT * FROM clubs";
+  //Also fetch the tags for each club
+  const query = `
+    SELECT
+      c.id,
+      c."clubName",
+      c."clubDesc",
+      STRING_AGG(t."tagName", ', ') AS tagNames
+    FROM
+      clubs c
+    LEFT JOIN club_tags ct ON c.id = ct."clubId"
+    LEFT JOIN tags t ON ct."tagId" = t.id
+    GROUP BY
+      c.id;
+  `;
   const res = await db.query(query, []);
 
   const clubs = res.rows;
