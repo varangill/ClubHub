@@ -8,12 +8,15 @@ async function fetchAnnouncementInfo(announcementId) {
     return announcement;
 }
 
+
 async function createNewAnnouncement(clubId, userId, announcementTitle, announcementText) {
     const query = `INSERT INTO announcements ("clubId", "userId", "announcementTitle", "announcementText") VALUES ($1, $2, $3, $4) RETURNING id`;
     const res = await db.query(query, [clubId, userId, announcementTitle, announcementText]);
 
     return res.rows[0];
 }
+
+
 
 async function fetchClubAnnouncements(clubId) {
     const query = `SELECT * FROM announcements WHERE "clubId" = $1 ORDER BY "announcementTime" DESC`;
@@ -23,6 +26,7 @@ async function fetchClubAnnouncements(clubId) {
     return announcements;
   }
 
+
 async function deleteAnnouncement(id) {
     const query = `DELETE FROM announcements WHERE "id" = $1`;
     const res = await db.query(query, [id]);
@@ -30,9 +34,11 @@ async function deleteAnnouncement(id) {
     return res;
 }
 
+
 export {
     fetchAnnouncementInfo,
     createNewAnnouncement,
     fetchClubAnnouncements,
     deleteAnnouncement,
+
 };

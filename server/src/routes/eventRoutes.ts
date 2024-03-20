@@ -17,7 +17,7 @@
  *         description: Announcement ID
  *     responses:
  *       '200':
- *         description: Successful response         
+ *         description: Successful response
  *   delete:
  *     summary: Deletes announcement based on ID
  *     description: Delete announcement based on ID
@@ -87,13 +87,12 @@
  */
 
 import { Router } from "express";
-import announcementController from "../controllers/announcementController";
+import eventController from "../controllers/eventController";
 const router = Router();
 
-router.get("/:id", announcementController.getAnnouncementInfo)
-router.get("/club/:id", announcementController.getClubAnnouncements)
-router.post("/create-announcement", announcementController.createAnnouncement)
-router.delete("/:id", announcementController.deleteExistingAnnouncement)
-
+router.get("/event/:event-id", eventController.getEventInfo);
+router.get("/club/events/:id", eventController.getClubEvents);
+router.post("/create-event/:event-id", eventController.createEvent);
+router.delete("/:id", eventController.deleteExistingEvent);
 
 export default router;

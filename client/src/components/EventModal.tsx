@@ -3,17 +3,17 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { getData, deleteData } from "../api";
 
-export default function AnnouncementsModal(props) {
+export default function EventModal(props) {
   const [author, setAuthor] = useState("");
 
   useEffect(() => {
-    getData(`users/getUser/${props.announcement.userId}`).then((res) => {
+    getData(`users/getUser/${props.event.userId}`).then((res) => {
       setAuthor(res.name);
     });
   });
 
-  const deleteAnnouncement = () => {
-    deleteData(`announcements/${props.announcement.id}`, {}).then(() => {
+  const deleteEvent = () => {
+    deleteData(`event/${props.event.event_id}`, {}).then(() => {
       props.requestUpdate();
       props.hideModal();
     });
@@ -28,14 +28,15 @@ export default function AnnouncementsModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          {props.announcement.announcementTitle} - {author}
+          {props.event.title} - {author} <br />
+          {props.event.event_date.substring(0, 10)}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.announcement.announcementText}</Modal.Body>
+      <Modal.Body>{props.event.eventText}</Modal.Body>
       <Modal.Footer>
         {props.currMemberType === "executive" ||
         props.currMemberType === "owner" ? (
-          <Button variant="danger" onClick={deleteAnnouncement}>
+          <Button variant="danger" onClick={deleteEvent}>
             Delete
           </Button>
         ) : null}
