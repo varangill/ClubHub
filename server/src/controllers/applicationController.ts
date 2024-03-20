@@ -2,6 +2,8 @@ import {
     fetchApplications,
     fetchApplicationInfo,
     fetchClubApplication,
+    fetchExecutiveClubApplication,
+    fetchMemberClubApplication,
     fetchLatestClubApplication,
     createApplication,
     deleteApplication,
@@ -29,10 +31,30 @@ async function getApplicationInfo(req, res, next) {
 
 async function getClubApplications(req, res, next) {
     try {
-        const fetchedData = await fetchClubApplication(req.params.id)
-        res.json(fetchedData)
+        const fetchedData = await fetchClubApplication(req.params.id);
+        res.json(fetchedData);
     } catch (err) {
         console.error(`Error fetching club applications`, err.message);
+        next(err);
+    }
+}
+
+async function getExecutiveClubApplication(req, res, next) {
+    try {
+        const fetchedData = await fetchExecutiveClubApplication(req.params.id);
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error retrieving executive club application`);
+        next(err);
+    }
+}
+
+async function getMemberClubApplication(req, res, next) {
+    try {
+        const fetchedData = await fetchMemberClubApplication(req.params.id);
+        res.json(fetchedData);
+    } catch (err) {
+        console.error(`Error retrieving member club application`);
         next(err);
     }
 }
@@ -54,7 +76,6 @@ async function createNewApplication(req, res, next) {
             req.body.userId,
             req.body.type,
             req.body.appText,
-            req.body.applicationTime
         );
         res.send(newApplicationId)
     } catch (err) {
@@ -77,6 +98,8 @@ const applicationController = {
     getApplications,
     getApplicationInfo,
     getClubApplications,
+    getExecutiveClubApplication,
+    getMemberClubApplication,
     getLatestClubApplication,
     createNewApplication,
     deleteExistingApplication,

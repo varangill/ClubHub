@@ -32,7 +32,7 @@ async function createAnnouncement(req, res, next) {
 
 async function getClubAnnouncements(req, res, next) {
     try {
-        const fetchedData = await fetchClubAnnouncements(req.params.id)
+        const fetchedData = await fetchClubAnnouncements(req.params.id);
         res.json(fetchedData);
     } catch (err) {
         console.error(`Error fetching announcements`, err.message);
@@ -46,7 +46,7 @@ async function deleteExistingAnnouncement(req, res, next) {
         res.send({ message: "Announcement Deleted"});
     } catch (err) {
         console.error(`Error deleting announcement`, err.message);
-        next(err)
+        next(err);
     }
 }
 
