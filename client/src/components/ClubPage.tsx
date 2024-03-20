@@ -6,7 +6,6 @@ import ClubSettingsModal from "./ClubSettingsModal";
 import AnnouncementCreationModal from "./AnnouncementCreationModal";
 import AnnouncementsModal from "./AnnouncementModal";
 import EventCreationModal from "./EventCreationModal";
-
 import ViewApplicationsModal from "./ViewApplicationsModal"
 import { getData, postData, deleteData } from "../api";
 import { useAuth } from "../AuthContext";
