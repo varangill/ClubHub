@@ -5,7 +5,7 @@ import { getData, deleteData } from "../api";
 
 export default function EventModal(props) {
   const [author, setAuthor] = useState("");
-  console.log(props.event);
+
   useEffect(() => {
     getData(`users/getUser/${props.event.userId}`).then((res) => {
       setAuthor(res.name);

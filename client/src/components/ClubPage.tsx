@@ -301,6 +301,8 @@ export default function ClubPage() {
           }}
           clubId={id}
           announcement={selectedAnnouncement}
+          currMemberType={memberType}
+          requestUpdate={updateAnnouncementList}
         />
       )}
       {showEventModal && (
