@@ -52,7 +52,7 @@ async function createEvent(req, res, next) {
             req.body.event_date,
             req.body.location,
             req.body.userId,
-            req.body.evenText
+            req.body.eventText
         );
         res.send(newEventId);
     } catch (err) {

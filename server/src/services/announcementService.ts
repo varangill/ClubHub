@@ -9,7 +9,7 @@ async function fetchAnnouncementInfo(announcementId) {
 }
 
 async function fetchEventInfo(event_id) {
-    const query = "SELECT * FROM evebts WHERE id = $1";
+    const query = "SELECT * FROM events WHERE id = $1";
     const res = await db.query(query, [event_id]);
 
     const event = res.rows[0];

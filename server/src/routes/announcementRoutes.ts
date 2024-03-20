@@ -78,7 +78,7 @@ const router = Router();
 router.get("/:id", announcementController.getAnnouncementInfo)
 router.get("/event/:event-id", announcementController.getEventInfo)
 router.get("/club/:id", announcementController.getClubAnnouncements)
-router.get("/club/event-id", announcementController.getClubEvents)
+router.get("/club/events/:id", announcementController.getClubEvents)
 router.post("/create-announcement", announcementController.createAnnouncement)
 router.post("/create-event/:event-id", announcementController.createEvent)
 router.delete("/:id", announcementController.deleteExistingAnnouncement)

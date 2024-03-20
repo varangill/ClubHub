@@ -62,7 +62,7 @@ export default function ClubPage() {
 
   const updateEventList = async () => {
     try {
-      getData(`announcements/club/event/${id}`).then((res) => {
+      getData(`announcements/club/events/${id}`).then((res) => {
         setEvents(res)
       });
     } catch (err) {
@@ -220,7 +220,7 @@ const EventCreationButton = () => {
           memberType={memberType}
           userId={user?.id}
           clubId={id}
-          requestUpdate={updateMemberList}
+          requestUpdate={showEventModal}
         />
       )}
       {showSettingsModal && (
@@ -295,7 +295,7 @@ const EventCreationButton = () => {
             {events.map((events, index) => {
               return (
                 <ul key={events["id"]} class="announcement" onClick={() => {setSelectedEvent(events); setShowEventModal(true);}}>
-                  {events["announcementTitle"]} - {events["announcementText"]}
+                  {events["eventTitle"]} - {events["eventText"]}
                 </ul>
               )
             })}
