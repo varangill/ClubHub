@@ -70,8 +70,7 @@
 
 import { Router } from "express";
 import announcementController from "../controllers/announcementController";
-import { fetchClubAnnouncements } from "../services/announcementService";
-import { fetchClubEvents } from "../services/announcementService";
+
 
 const router = Router();
 
