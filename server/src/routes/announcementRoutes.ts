@@ -66,11 +66,28 @@
  *                 description: Club Id
  *               userId:
  *                 type: string
+ *                 format: id
+ *                 description: ID of user creating announcement
+ *               announcementTitle:
+ *                 type: string
+ *                 format: string
+ *                 description: Announcement Title
+ *               announcementText:
+ *                 type: string
+ *                 format: string
+ *                 description: Announcement Description
+ *             required:
+ *               - clubId
+ *               - userId
+ *               - announcementTitle
+ *               - announcementText
+ *     responses:
+ *       '201':
+ *         description: Announcement created successfully
  */
 
 import { Router } from "express";
 import announcementController from "../controllers/announcementController";
-import { fetchClubAnnouncements } from "../services/announcementService";
 const router = Router();
 
 router.get("/:id", announcementController.getAnnouncementInfo)

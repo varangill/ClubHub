@@ -1,0 +1,15 @@
+service: clubhub-client
+runtime: nodejs20 # or the latest supported version
+
+handlers:
+  - url: /(.*\.(gif|png|jpg|css|js|ico|woff|woff2))$
+    static_files: dist/\1
+    upload: dist/(.*\.(gif|png|jpg|css|js|ico|woff|woff2))$
+    secure: always
+
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+    http_headers:
+      X-Frame-Options: "DENY"

@@ -3,6 +3,8 @@ import { Knex } from "knex";
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
   await knex("announcements").del();
+  await knex("applications").del();
+  await knex("filled-applications").del();
   await knex("memberships").del();
   await knex("clubs").del();
   await knex("users").del();
