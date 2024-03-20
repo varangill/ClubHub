@@ -12,12 +12,14 @@ export default function ApplicationForm() {
     const [clubName, setClubName] = useState("");
     const [inputFields, setInputFields] = useState([]);
     const [listData, setListData] = useState([]);
-    const [appText, setAppText] = useState("11");
+    const [appText, setAppText] = useState("");
     const { user } = useAuth();
     const [type, setType] = useState("executive");
 
     useEffect(() => {
-        
+        getData(`clubs/${id}`).then((res) => {
+            setClubName(res.clubName);
+        })
     })
 
     const createApplication = async () => {
@@ -39,7 +41,7 @@ export default function ApplicationForm() {
     }
 
     const updateString = () => {
-        let wholeString = ""
+        let wholeString = "";
 
         if(inputFields)
             wholeString = inputFields[0];
@@ -50,10 +52,7 @@ export default function ApplicationForm() {
             }
         }
 
-        console.log(inputFields)
-        console.log(wholeString)
         setAppText(wholeString)
-        console.log(appText)
     }
 
     const handleAddInputField = () => {
@@ -74,14 +73,13 @@ export default function ApplicationForm() {
     };
     
     const handleSubmit = (event) => {
-        const result = window.confirm("Are you sure you want to submit?")
+        const result = window.confirm("Are you sure you want to submit?");
         if(result) {
             event.preventDefault();
             const newData = inputFields.filter(input => input.trim() !== '');
             setListData([...listData, ...newData]);
-            console.log(listData)
             createApplication();
-            navigate(`/club/${id}`)
+            navigate(`/club/${id}`);
         }
     };
 
@@ -126,7 +124,7 @@ export default function ApplicationForm() {
                         </div>
                         ))}
                         <button type="button" class="add" onClick={handleAddInputField}>+</button>
-                        <button type="submit" class="submit">Submit</button>
+                        <button type="submit" class="submit" onClick={updateString}>Submit</button>
                     </form>
                     </div>
                 </div>
