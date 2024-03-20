@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getData } from "../api";
@@ -18,19 +19,20 @@ interface OwnerData {
 interface ClubListProps {
   clubs: Club[];
   isAllPage: boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   tagSelectorUpdate: Function;
+  reloadClubs: Function;
 }
 
 export default function ClubList({
   clubs,
   isAllPage,
   tagSelectorUpdate,
+  reloadClubs,
 }: ClubListProps) {
   const [query, setQuery] = useState("");
   const [owners, setOwners] = useState<OwnerData>({});
   const [tags, setTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState();
+  const [selectedTag, setSelectedTag] = useState({ tagName: "Any" });
 
   useEffect(() => {
     getData(`tags`).then((allTags) => {
@@ -68,6 +70,11 @@ export default function ClubList({
     tagSelectorUpdate(tag);
   };
 
+  const selectAnyTag = () => {
+    setSelectedTag({ tagName: "Any" });
+    reloadClubs();
+  };
+
   return (
     <>
       <div className="my-clubs-container">
@@ -81,9 +88,10 @@ export default function ClubList({
           />
           {isAllPage ? (
             <DropdownButton
-              title={selectedTag ? selectedTag["tagName"] : "Select Tag"}
+              title={selectedTag["tagName"]}
               className="club-list-tags-dropdown"
             >
+              <Dropdown.Item onClick={selectAnyTag}>Any</Dropdown.Item>
               {tags.map((tag) => (
                 <Dropdown.Item
                   key={tag["id"]}

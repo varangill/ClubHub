@@ -6,7 +6,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex("chat_messages").del();
   await knex("announcements").del();
   await knex("applications").del();
-  await knex("filled-applications").del();
+  await knex("filled_applications").del();
   await knex("memberships").del();
   await knex("bans").del();
   await knex("tags").del();
