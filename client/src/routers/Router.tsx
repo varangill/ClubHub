@@ -9,6 +9,8 @@ import SignUp from "../components/SignUp";
 import MemberApplicationForm from "../components/MemberApplicationForm"
 import ExecutiveApplicationForm from "../components/ExecutiveApplicationForm"
 import ApplicationFormCreation from "../components/ApplicationFormCreation"
+import ConfirmAccount from "../components/ConfirmAccount";
+import RegisterUser from "../components/RegisterUser";
 
 export default function Router() {
   return (
@@ -24,6 +26,8 @@ export default function Router() {
         <Route path="/executive_application_form/:id" element={<ExecutiveApplicationForm/>} />
         <Route path="/member_application_form/:id" element={<MemberApplicationForm />} />
         <Route path="/application_form_creation/:id" element={<ApplicationFormCreation />} />
+        <Route path="/account-confirm/:email" element={<ConfirmAccount />} />
+        <Route path="/register-user/:email" element={<RegisterUser />} />
       </Routes>
     </BrowserRouter>
   );

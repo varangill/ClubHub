@@ -24,7 +24,7 @@ async function fetchUserClubs(userId) {
 
 async function createNewUser(name, email, password) {
   const hashedPassword = await hashPassword(password);
-  const query = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
+  const query = "INSERT INTO users (name, email, password, is_registered) VALUES ($1, $2, $3, FALSE)";
   const res = await db.query(query, [name, email, hashedPassword]);
 
   return res;
@@ -42,7 +42,8 @@ async function authenticateLogin(email, passwordInput) {
     //If password matches, send user data
     const id = userInfo["id"];
     const name = userInfo["name"];
-    return { isValid, id, name };
+    const is_registered = userInfo["is_registered"];
+    return { isValid, id, name, is_registered };
   } else {
     //If password doesn't match, do not sent user data
     return { isValid };
@@ -85,6 +86,13 @@ async function getMembership(userId, clubId) {
   return membership;
 }
 
+async function registerUserData(email) {
+  const query = `UPDATE users SET "is_registered" = TRUE WHERE "email" = $1`;
+  const res = await db.query(query, [email]);
+
+  return res.rows[0];
+}
+
 export {
   fetchUserInfo,
   fetchUserClubs,
@@ -93,4 +101,5 @@ export {
   joinClub,
   leaveClub,
   getMembership,
+  registerUserData,
 };

@@ -19,9 +19,14 @@ export default function Login() {
                 password: password,
             });
             if (res.authenticated) {
-                const account = { id: res.id, name: res.name, email: email };
-                login(account);
-                navigate("/");
+                const account = { id: res.id, name: res.name, email: email, is_registered: res.is_registered };
+                if (res.is_registered) {
+                    login(account);
+                    navigate("/");
+                }
+                else {
+                    setErrorMessage("This account has not been registered yet.");
+                }
             }
             else {
                 setErrorMessage("Username or password is incorrect.");

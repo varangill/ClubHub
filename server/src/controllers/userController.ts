@@ -6,7 +6,9 @@ import {
   joinClub,
   leaveClub,
   getMembership,
+  registerUserData,
 } from "../services/userService";
+import nodemailer from 'nodemailer';
 
 async function getUserInfo(req, res, next) {
   try {
@@ -19,6 +21,11 @@ async function getUserInfo(req, res, next) {
 }
 
 async function createUser(req, res, next) {
+  const env_domain = 'http://localhost:5174'; //change to local port
+  
+  //email: official.clubhub@gmail.com
+  //pswd: guiFUfsdfhsJKI8934nmfskd!
+
   try {
     const fetchedData = await createNewUser(
       req.body.name,
@@ -26,6 +33,33 @@ async function createUser(req, res, next) {
       req.body.password
     );
     res.send(fetchedData);
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      secure: false,
+        auth: {
+            user: 'official.clubhub@gmail.com',
+            pass: 'wjevfsawqpyrdxka'
+        }
+    });
+    
+    const mailOptions = {
+        from: 'official.clubhub@gmail.com',
+        to: `${req.body.email}`,
+        subject: 'ClubHub: Email Verification',
+        html: `
+          <p>Please click the following link to verify your email:</p>
+          <a href="${env_domain}/register-user/${req.body.email}">Verify Email</a>
+        `
+    };
+    
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending verification email:', error);
+        } else {
+            console.log('Verification email sent:', info.response);
+        }
+    });
   } catch (err) {
     console.error(`Error creating user`, err.message);
     next(err);
@@ -39,7 +73,7 @@ async function loginUser(req, res, next) {
       req.body.password
     );
     if (loginAuth.isValid) {
-      res.send({ authenticated: true, id: loginAuth.id, name: loginAuth.name });
+      res.send({ authenticated: true, id: loginAuth.id, name: loginAuth.name, is_registered: loginAuth.is_registered });
     } else {
       res.send({ authenticated: false });
     }
@@ -93,6 +127,18 @@ async function userLeaveClub(req, res, next) {
   }
 }
 
+async function registerUser(req, res, next) {
+  try {
+    await registerUserData(
+      req.body.email
+    );
+    res.send({ message: "Updated User" });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+}
+
 const userController = {
   getUserInfo,
   getUserClubs,
@@ -101,6 +147,7 @@ const userController = {
   getClubMembership,
   userJoinClub,
   userLeaveClub,
+  registerUser,
 };
 
 export default userController;
