@@ -199,19 +199,9 @@ const EventCreationButton = () => {
 
   return (
     <div className="club-detail-container">
+      <div className="club-detail-container"></div>
       <NavBar />
-      {showCreateEventModal && (
-        <EventCreationModal
-          hideModal={() => {
-            setShowCreateEventModal(false);
-          }}
-          member={selectedMember}
-          memberType={memberType}
-          userId={user?.id}
-          clubId={id}
-          requestUpdate={showEventModal}
-        />
-      )}
+
       {showMemberModal && (
         <MemberEditModal
           hideModal={() => {
@@ -222,6 +212,18 @@ const EventCreationButton = () => {
           userId={user?.id}
           clubId={id}
           requestUpdate={updateMemberList}
+        />
+      )}
+      {showCreateEventModal && (
+        <EventCreationModal
+          hideModal={() => {
+            setShowCreateEventModal(false);
+          }}
+          member={selectedMember}
+          memberType={memberType}
+          userId={user?.id}
+          clubId={id}
+          requestUpdate={showEventModal}
         />
       )}
       {showSettingsModal && (
@@ -256,11 +258,23 @@ const EventCreationButton = () => {
           announcement={selectedAnnouncement}
         />
       )}
+              {showViewApplicationsModal && (
+          <ViewApplicationsModal
+            hideModal={() => {
+              setShowViewApplicationsModal(false);
+            }}
+            clubId={id}
+            userId={user?.id}
+            memberType={memberType}
+            requestUpdate={updateMemberList}
+          />
+        )}
       <h2 className="club-heading">{clubName}</h2>
       <h5 class="club-desc">{clubDesc}</h5>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-      {memberType != "member" && <SettingsButton/>}
+      {memberType === "executive" || memberType === "owner" && <><SettingsButton/><ViewApplicationsButton/></>}
+        {memberType === "member" && <ExecutiveApplicationButton />}
       {memberType === "none" && clubStatus === "open" ? (
         <JoinButton />
       ) : memberType === "none" && clubStatus === "application" ? (
