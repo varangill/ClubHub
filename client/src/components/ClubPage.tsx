@@ -199,18 +199,6 @@ const EventCreationButton = () => {
   return (
     <div className="club-detail-container">
       <NavBar />
-      {showMemberModal && (
-        <MemberEditModal
-          hideModal={() => {
-            setShowMemberModal(false);
-          }}
-          member={selectedMember}
-          memberType={memberType}
-          userId={user?.id}
-          clubId={id}
-          requestUpdate={updateMemberList}
-        />
-      )}
       {showCreateEventModal && (
         <EventCreationModal
           hideModal={() => {
@@ -221,6 +209,18 @@ const EventCreationButton = () => {
           userId={user?.id}
           clubId={id}
           requestUpdate={showEventModal}
+        />
+      )}
+      {showMemberModal && (
+        <MemberEditModal
+          hideModal={() => {
+            setShowMemberModal(false);
+          }}
+          member={selectedMember}
+          memberType={memberType}
+          userId={user?.id}
+          clubId={id}
+          requestUpdate={updateMemberList}
         />
       )}
       {showSettingsModal && (
