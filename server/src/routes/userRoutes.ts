@@ -172,6 +172,8 @@ import { Router } from "express";
 import userController from "../controllers/userController";
 const router = Router();
 
+router.delete("/:id", userController.deleteUserAccount);
+router.get("/", userController.getAllUsers);
 router.get("/getUser/:id", userController.getUserInfo);
 router.get("/clubs/:id", userController.getUserClubs);
 router.post("/create-user", userController.createUser);

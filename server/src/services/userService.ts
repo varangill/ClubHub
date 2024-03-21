@@ -22,9 +22,24 @@ async function fetchUserClubs(userId) {
   return res.rows;
 }
 
+async function fetchAllUsers() {
+  const query = "SELECT * FROM users";
+  const res = await db.query(query, []);
+
+  return res.rows;
+}
+
+async function deleteUser(userId) {
+  const query = `DELETE FROM users WHERE "id" = $1`;
+  const res = await db.query(query, [userId]);
+
+  return res;
+}
+
 async function createNewUser(name, email, password) {
   const hashedPassword = await hashPassword(password);
-  const query = "INSERT INTO users (name, email, password, is_registered) VALUES ($1, $2, $3, FALSE)";
+  const query =
+    "INSERT INTO users (name, email, password, is_registered) VALUES ($1, $2, $3, FALSE)";
   const res = await db.query(query, [name, email, hashedPassword]);
 
   return res;
@@ -102,4 +117,6 @@ export {
   leaveClub,
   getMembership,
   registerUserData,
+  fetchAllUsers,
+  deleteUser,
 };

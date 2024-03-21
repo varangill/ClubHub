@@ -7,6 +7,8 @@ import {
   leaveClub,
   getMembership,
   registerUserData,
+  fetchAllUsers,
+  deleteUser,
 } from "../services/userService";
 import nodemailer from "nodemailer";
 
@@ -16,6 +18,26 @@ async function getUserInfo(req, res, next) {
     res.json(fetchedData);
   } catch (err) {
     console.error(`Error fetching user info`, err.message);
+    next(err);
+  }
+}
+
+async function getAllUsers(req, res, next) {
+  try {
+    const fetchedData = await fetchAllUsers();
+    res.json(fetchedData);
+  } catch (err) {
+    console.error(`Error fetching users`, err.message);
+    next(err);
+  }
+}
+
+async function deleteUserAccount(req, res, next) {
+  try {
+    await deleteUser(req.params.id);
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    console.error(`Error fetching users`, err.message);
     next(err);
   }
 }
@@ -151,6 +173,8 @@ const userController = {
   userJoinClub,
   userLeaveClub,
   registerUser,
+  getAllUsers,
+  deleteUserAccount,
 };
 
 export default userController;
