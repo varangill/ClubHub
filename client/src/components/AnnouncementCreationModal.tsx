@@ -48,6 +48,7 @@ export default function ClubCreationModal(props) {
                     value={announcementTitle}
                     maxLength="80"
                     onChange={(e) => setTitle(e.target.value)}
+                    style={{marginBottom: 10}}
                 />
             </div>
             <div>

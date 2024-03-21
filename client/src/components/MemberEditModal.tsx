@@ -79,9 +79,9 @@ export default function MemberEditModal(props) {
     return (
       <div>
         {props.membershipType === "member" ? (
-          <Button onClick={onPromote}>Promote to Executive</Button>
+          <Button onClick={onPromote} style={{marginBottom: 10}}>Promote to Executive</Button>
         ) : (
-          <Button onClick={onDemote}>Demote to Member</Button>
+          <Button onClick={onDemote} style={{marginBottom: 10}}>Demote to Member</Button>
         )}
       </div>
     );
@@ -107,18 +107,8 @@ export default function MemberEditModal(props) {
       <Modal.Body>
         <div>
           <div>
-            <Button
-              variant="primary"
-              onClick={() => {
-                console.log("Clicked message button"); //To be done
-              }}
-            >
-              Message
-            </Button>
-          </div>
-          <div>
             {doesUserOutrankSelectedMember ? (
-              <ExecutiveRankButton
+              <ExecutiveRankButton 
                 membershipType={props.member["membershipType"]}
               />
             ) : null}
@@ -126,12 +116,12 @@ export default function MemberEditModal(props) {
           {doesUserOutrankSelectedMember ? (
             <div>
               <div>
-                <Button variant="primary" onClick={onKick}>
+                <Button variant="primary" onClick={onKick} style={{marginBottom: 10}}>
                   Kick
                 </Button>
               </div>
               <div>
-                <Button variant="primary" onClick={onBan}>
+                <Button variant="primary" onClick={onBan} style={{marginBottom: 10}}>
                   Ban
                 </Button>
               </div>
@@ -140,7 +130,7 @@ export default function MemberEditModal(props) {
         </div>
         {props.memberType === "owner" ? (
           <div>
-            <Button variant="primary" onClick={onTransferOwnership}>
+            <Button variant="primary" onClick={onTransferOwnership} style={{marginBottom: 10}}>
               Transfer Ownership
             </Button>
           </div>
