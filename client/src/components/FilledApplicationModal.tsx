@@ -20,11 +20,9 @@ export default function FilledApplicationsModal(props) {
     getData(`applications/${props.application["applicationId"]}`).then(
       (res) => {
         setQuestionsString(res.appText);
+        setApplicationQuestions(res.appText.split(","));
       }
     );
-
-    const splitQuestions = questionsString.split(",");
-    setApplicationQuestions(splitQuestions);
 
     const splitAnswers = props.application["appText"].split(",");
     setResponses(splitAnswers);
@@ -33,8 +31,6 @@ export default function FilledApplicationsModal(props) {
 
   const approve = async () => {
     if (type === "executive") {
-      console.log("type", type);
-      console.log("ids", userId, props.clubId);
       await postData(`clubs/promote-member`, {
         userId: userId,
         clubId: props.clubId,
@@ -43,6 +39,7 @@ export default function FilledApplicationsModal(props) {
       await deleteData(`filled-applications/executive/${userId}`, {}).then(
         () => {
           props.hideModal();
+          props.requestUpdate();
         }
       );
     }
@@ -65,6 +62,7 @@ export default function FilledApplicationsModal(props) {
 
       await deleteData(`filled-applications/member/${userId}`, {}).then(() => {
         props.hideModal();
+        props.requestUpdate();
       });
     }
   };

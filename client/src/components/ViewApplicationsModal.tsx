@@ -20,6 +20,20 @@ export default function ViewApplicationsModal(props) {
         });
     }, []);    
 
+    const updateApplicationsList = async () => {
+        try {
+            await getData(`filled-applications/executive/${props.clubId}`).then((res)=> {
+                setExecutiveApplications(res)
+            });
+
+            getData(`filled-applications/member/${props.clubId}`).then((res)=> {
+                setMemberApplications(res)
+            });
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <Modal show={true}
         onHide={() => {
@@ -40,6 +54,7 @@ export default function ViewApplicationsModal(props) {
                             }}
                             clubId={props.clubId}
                             application={selectedApplication}
+                            requestUpdate={updateApplicationsList}
                         />
                     )}
                     <h1>
