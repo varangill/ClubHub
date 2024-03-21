@@ -345,7 +345,7 @@ export default function ClubPage() {
         <JoinButton />
       ) : memberType === "none" && clubStatus === "application" ? (
         <ApplyButton />
-      ) : memberType === "owner" || memberType === "none" ? null : (
+      ) : memberType === "owner" || memberType === "none" || memberType === "" ? null : (
         <LeaveButton />
       )}
       <div className="first-row">
