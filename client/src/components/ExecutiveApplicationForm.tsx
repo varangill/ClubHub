@@ -18,6 +18,11 @@ export default function ApplicationForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        getData(`applications/executive/${id}`).then((res) => {
+            setApplication(res)
+            setApplicationQuestions(res[0]["appText"].split(","));
+        });
+
         getData(`clubs/${id}`).then((res) => {
             setClubName(res.clubName);
         });
@@ -25,8 +30,6 @@ export default function ApplicationForm() {
         getData(`users/getUser/${user?.id}`).then((res) => {
             setName(res.name)
         })
-
-        retrieveInfo();
     }, []);
 
     const handleInputChange = (index, value) => {
@@ -74,18 +77,6 @@ export default function ApplicationForm() {
             navigate(`/club/${id}`);
         }
     };
-
-    const retrieveInfo = async () => {
-        try {
-            await getData(`applications/executive/${id}`).then((res) => {
-                setApplication(res)
-            });
-            setApplicationQuestions(application[0]["appText"].split(","));
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
 
     return (
         <div>
