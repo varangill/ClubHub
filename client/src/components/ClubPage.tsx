@@ -389,7 +389,7 @@ export default function ClubPage() {
               );
             })}
           </div>
-          {memberType != "member" && <EventCreationButton />}
+          {memberType === "executive" || memberType === "owner" && <EventCreationButton />}
         </div>
 
         <div className="block-section announcements">
