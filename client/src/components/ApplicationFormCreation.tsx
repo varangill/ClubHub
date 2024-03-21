@@ -20,7 +20,7 @@ export default function ApplicationForm() {
         getData(`clubs/${id}`).then((res) => {
             setClubName(res.clubName);
         })
-    })
+    }, []);
 
     const createApplication = async () => {
         const userId = user?.id;

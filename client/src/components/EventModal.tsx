@@ -10,7 +10,7 @@ export default function EventModal(props) {
     getData(`users/getUser/${props.event.userId}`).then((res) => {
       setAuthor(res.name);
     });
-  });
+  }, []);
 
   const deleteEvent = () => {
     deleteData(`event/${props.event.event_id}`, {}).then(() => {

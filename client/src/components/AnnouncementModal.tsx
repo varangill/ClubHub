@@ -10,7 +10,7 @@ export default function AnnouncementsModal(props) {
     getData(`users/getUser/${props.announcement.userId}`).then((res) => {
       setAuthor(res.name);
     });
-  });
+  }, []);
 
   const deleteAnnouncement = () => {
     deleteData(`announcements/${props.announcement.id}`, {}).then(() => {

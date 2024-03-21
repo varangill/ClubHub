@@ -28,7 +28,7 @@ export default function ApplicationForm() {
         })
 
         retrieveInfo();
-    })
+    }, []);
 
     const handleInputChange = (index, value) => {
         const newInputValues = [...inputValues];

@@ -18,7 +18,7 @@ export default function ViewApplicationsModal(props) {
         getData(`filled-applications/member/${props.clubId}`).then((res)=> {
             setMemberApplications(res)
         });
-    });    
+    }, []);    
 
     return (
         <Modal show={true}
