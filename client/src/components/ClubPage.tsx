@@ -106,6 +106,7 @@ export default function ClubPage() {
     }).then((res) => {
       if (res.membershipType === "member") {
         setMemberType(res.membershipType);
+        updateMemberList();
         setShowPopup(true);
         setTimeout(() => {
           setShowPopup(false); // Hide the popup after a few seconds
@@ -114,7 +115,6 @@ export default function ClubPage() {
         alert("You are banned from this club.");
       }
     });
-    updateMemberList();
   };
 
   const JoinButton = () => {
@@ -148,9 +148,9 @@ export default function ClubPage() {
       clubId: id,
     }).then((res) => {
       setMemberType(res.membershipType);
+      updateMemberList();
     });
 
-    updateMemberList();
     deleteData(`filled-applications/executive/${user?.id}`, {});
   };
 
