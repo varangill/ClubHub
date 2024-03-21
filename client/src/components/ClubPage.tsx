@@ -171,7 +171,7 @@ export default function ClubPage() {
           onClick={() => {
             setShowSettingsModal(true);
           }}
-          className="join-button"
+          className={memberType === "executive" ? "join-button2" : memberType === "owner" ? "join-button" : ""}
         >
           Settings
         </button>
@@ -214,7 +214,7 @@ export default function ClubPage() {
           onClick={() => {
             setShowViewApplicationsModal(true);
           }}
-          className="view-applications-button"
+          className={memberType === "executive" ? "view-applications-button2" : memberType === "owner" ? "view-applications-button" : ""}
         >
           View Applications
         </button>
@@ -334,8 +334,7 @@ export default function ClubPage() {
       <br></br>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-      {(memberType === "executive" || memberType === "owner") && 
-        (
+      {(memberType === "executive" || memberType === "owner") && (
           <>
             <SettingsButton />
             <ViewApplicationsButton />
@@ -356,7 +355,7 @@ export default function ClubPage() {
             return (
               <div key={member["userId"]}>
                 {member["name"]}
-                {user?.id != member["userId"] ? ( //Don't render menu option if member is the logged in user
+                {user?.id != member["userId"] && (memberType === "member" || memberType === "executive" || memberType === "owner") ? ( //Don't render menu option if member is the logged in user
                   <MoreVertical
                     onClick={() => {
                       setSelectedMember(member);
@@ -419,7 +418,7 @@ export default function ClubPage() {
         </div>
         {showPopup && <div className="popup">Club has been joined!</div>}
       </div>
-      {(memberType !== "none" || memberType !== undefined) && (
+      {(memberType === "member" || memberType === "executive" || memberType === "owner") && (
         <div className="club-message-board">
           <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
         </div>
