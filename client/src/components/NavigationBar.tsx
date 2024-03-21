@@ -47,14 +47,6 @@ export default function NavigationBar() {
               >
                 <ClipboardList />All Clubs
               </Nav.Link>
-
-              <Nav.Link
-              onClick={() => {
-                navigate("/profile");
-              }}
-              >
-              <User2 />View Profile
-              </Nav.Link>
             </Nav>
             <div className="justify-content-end">
 

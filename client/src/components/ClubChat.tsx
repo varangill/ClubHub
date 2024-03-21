@@ -60,7 +60,7 @@ export default function ClubChat(props) {
   return (
     <div>
       <center>
-        <h2>Club Messaging Board</h2>
+        <h1 className="section-header">Club Messaging Board</h1>
       </center>
       <div className="chat-messages-container">
         <div className="chat-messages">
@@ -72,7 +72,8 @@ export default function ClubChat(props) {
           <div ref={messagesBottomRef} />{" "}
           {/* empty div to track bottom of chat */}
         </div>
-        <input
+      </div>
+      <input
           type="text"
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
@@ -89,7 +90,6 @@ export default function ClubChat(props) {
         <Button onClick={sendMessage} className="chat-send-button">
           Send
         </Button>
-      </div>
     </div>
   );
 }

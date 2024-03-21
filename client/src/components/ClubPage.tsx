@@ -185,7 +185,7 @@ export default function ClubPage() {
         }}
         className="announcement-button"
       >
-        Create Announcement
+        +
       </button>
     );
   };
@@ -327,9 +327,9 @@ export default function ClubPage() {
           requestUpdate={updateMemberList}
         />
       )}
-
       <h2 className="club-heading">{clubName}</h2>
-      <h5 class="club-desc">{clubDesc}</h5>
+      <h5 className="club-desc">{clubDesc}</h5>
+      <br></br>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
       {memberType === "executive" ||
@@ -347,9 +347,9 @@ export default function ClubPage() {
       ) : memberType === "owner" ? null : (
         <LeaveButton />
       )}
-      <div class="first-row">
-        <div class="members">
-          <h1>Members</h1>
+      <div className="first-row">
+        <div className="block-section members">
+          <h1 className="section-header">Members</h1>
           {members.map((member) => {
             return (
               <div key={member["userId"]}>
@@ -367,10 +367,8 @@ export default function ClubPage() {
           })}
         </div>
 
-        <div className="announcement-container">
-          <div className="announcement-header">
-            <h1>Events</h1>
-          </div>
+        <div className="block-section events">
+          <h1 className="section-header">Events</h1>
           <div className="scroll">
             {events.map((events) => {
               return (
@@ -394,10 +392,8 @@ export default function ClubPage() {
           {memberType != "member" && <EventCreationButton />}
         </div>
 
-        <div className="announcement-container">
-          <div className="announcement-header">
-            <h1>Announcements</h1>
-          </div>
+        <div className="block-section announcements">
+          <h1 className="section-header">Announcements</h1>
           <div className="scroll">
             {announcements.map((announcement) => {
               const time = announcement["announcementTime"].slice(0, -14);
@@ -422,7 +418,7 @@ export default function ClubPage() {
         </div>
         {showPopup && <div className="popup">Club has been joined!</div>}
       </div>
-      <div>
+      <div className="club-message-board">
         <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
       </div>
     </div>

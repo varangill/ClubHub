@@ -59,16 +59,26 @@
 
 .announcement-button {
   position: absolute;
-  top: 5px;
-  left: 30%;
+  top: 15px;
+  right: 20px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: white;
+  color: purple;
   cursor: pointer;
   font-size: 16px;
   transition: filter 0.3s ease;
+}
+
+.club-message-board {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border: 2px solid purple;
+  background-color: #993399;
 }
 
 .announcement-button:hover {
@@ -88,15 +98,46 @@
 }
 
 .members {
+  width: 20%;
+  margin-right: 10px;
+}
+
+.events {
+  width: 30%;
+  margin-right: 10px;
+}
+
+.announcements {
   width: 50%;
 }
 
+.block-section {
+  position: relative;
+  height: 500px;
+  padding: 20px;
+  border: 2px solid purple;
+  background-color: #993399;
+  color: white !important;
+}
+
+.section-header {
+  border-bottom: 3px solid white;
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+}
+
 .club-desc {
-  padding-left: 20px;
+  width: 100%;
+  text-align: center;
+  color: purple;
 }
 
 .club-heading {
-  padding-left: 20px;
+  width: 100%;
+  text-align: center;
+  font-size:70px;
+  color: purple
 }
 
 .announcement {
@@ -117,14 +158,14 @@
   background-color: lightgray;
 }
 
-.announcement-header {
-  border-bottom: 1px solid gray;
+.scroll {
+  max-height: 380px;
+  overflow-y: scroll;
 }
 
-.scroll {
-  max-height: 100px;
-  overflow-y: scroll;
-  border: 1px solid black;
+.scroll::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 .view-applications-container {
@@ -174,16 +215,28 @@
 }
 
 .chat-messages-container {
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: white;
+  margin-bottom: 10px;
 }
 
 .chat-send-button {
   margin-left: 10px;
+  background-color: white;
+  color: purple;
+  border: 1px solid white;
+}
+
+.chat-send-button:hover {
+  background-color: #993399;
+  color: white;
+  border: 1px solid white;
 }
 
 .chat-text-input {
-  width: 90%;
+  width: 94%;
+  margin-left: 6px;
 }
 
 .selected-tag {
