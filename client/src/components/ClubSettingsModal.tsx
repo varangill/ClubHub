@@ -115,28 +115,31 @@ export default function ClubSettingsModal(props) {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <p>Club Name: </p>
+          <p class="text">Club Name: </p>
           <input
             type="text"
             placeholder="Club name"
             value={clubName}
             onChange={(e) => setClubName(e.target.value)}
+            style={{marginBottom: 10}}
           />
         </div>
         <div>
-          <p>Club Description: </p>
+          <p class="text">Club Description: </p>
           <input
             type="text"
             placeholder="Club description"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
+            style={{marginBottom: 10}}
           />
         </div>
         <div>
-          <p>Join Status: </p>
+          <p class="text">Join Status: </p>
           <select
             onChange={(e) => setJoinStatus(e.target.value)}
             value={joinStatus}
+            style={{marginBottom: 10}}
           >
             <option value="open">Open</option>
             <option value="application">Application</option>
@@ -148,7 +151,7 @@ export default function ClubSettingsModal(props) {
               <BannedMembersSection />
             ) //only executive and owners can see the banned section
           }
-          <ClubTagsDropdown clubId={props.clubId} />
+          <ClubTagsDropdown clubId={props.clubId}/>
         </div>
       </Modal.Body>
       <Modal.Footer>

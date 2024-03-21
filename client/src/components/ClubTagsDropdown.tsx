@@ -43,7 +43,7 @@ export default function ClubTagsDropdown(props) {
   };
 
   return (
-    <Dropdown autoClose="outside">
+    <Dropdown autoClose="outside" style={{padding: 0, marginLeft: 0}}>
       <Dropdown.Toggle>Choose Tags</Dropdown.Toggle>
 
       <Dropdown.Menu>

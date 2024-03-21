@@ -114,6 +114,7 @@ export default function ClubPage() {
         alert("You are banned from this club.");
       }
     });
+    updateMemberList();
   };
 
   const JoinButton = () => {
@@ -149,6 +150,7 @@ export default function ClubPage() {
       setMemberType(res.membershipType);
     });
 
+    updateMemberList();
     deleteData(`filled-applications/executive/${user?.id}`, {});
   };
 
@@ -332,19 +334,19 @@ export default function ClubPage() {
       <br></br>
 
       {/* Render join button if user isn't a member, otherwise render the leave button for non-owners (members, executives) */}
-      {memberType === "executive" ||
-        (memberType === "owner" && (
+      {(memberType === "executive" || memberType === "owner") && 
+        (
           <>
             <SettingsButton />
             <ViewApplicationsButton />
           </>
-        ))}
+        )}
       {memberType === "member" && <ExecutiveApplicationButton />}
       {memberType === "none" && clubStatus === "open" ? (
         <JoinButton />
       ) : memberType === "none" && clubStatus === "application" ? (
         <ApplyButton />
-      ) : memberType === "owner" || memberType !== "none" && memberType !== null ? null : (
+      ) : memberType === "owner" || memberType === "none" ? null : (
         <LeaveButton />
       )}
       <div className="first-row">
@@ -389,7 +391,7 @@ export default function ClubPage() {
               );
             })}
           </div>
-          {memberType === "executive" || memberType === "owner" && <EventCreationButton />}
+          {(memberType === "executive" || memberType === "owner") && <EventCreationButton />}
         </div>
 
         <div className="block-section announcements">
@@ -413,14 +415,15 @@ export default function ClubPage() {
               );
             })}
           </div>
-          {memberType === "executive" ||
-            (memberType === "owner" && <AnnouncementCreationButton />)}
+          {(memberType === "executive" || memberType === "owner") && <AnnouncementCreationButton />}
         </div>
         {showPopup && <div className="popup">Club has been joined!</div>}
       </div>
-      <div className="club-message-board">
-        <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
-      </div>
+      {(memberType !== "none" || memberType !== undefined) && (
+        <div className="club-message-board">
+          <ClubChat clubId={id} userId={user?.id} userName={user?.name} />
+        </div>
+      )}
     </div>
   );
 }

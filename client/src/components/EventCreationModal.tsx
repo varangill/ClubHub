@@ -72,6 +72,7 @@ export default function ClubCreationModal(props) {
                     value={event_date}
                     maxLength="80"
                     onChange={(e) => setDate(e.target.value)}
+                    style={{marginBottom: 10}}
                 />
             </div>
             <div>
@@ -81,6 +82,7 @@ export default function ClubCreationModal(props) {
                     value={location}
                     maxLength="80"
                     onChange={(e) => setLocation(e.target.value)}
+                    style={{marginBottom: 10}}
                 />
             </div>
         </Modal.Body>
